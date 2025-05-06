@@ -1,0 +1,358 @@
+December 1, 2024 > 22:24:29 |  app.api.utils : 19 |   ❌ ERROR  |  No session_id cookie found  
+December 1, 2024 > 22:24:29 |  app.api.utils : 32 |   ❌ ERROR  |  Error getting user_id: 404: Please set the cookie  
+December 1, 2024 > 22:24:36 |  app.api.utils : 19 |   ❌ ERROR  |  No session_id cookie found  
+December 1, 2024 > 22:24:36 |  app.api.utils : 32 |   ❌ ERROR  |  Error getting user_id: 404: Please set the cookie  
+December 1, 2024 > 23:06:02 |  app.api.utils : 19 |   ❌ ERROR  |  No session_id cookie found  
+December 1, 2024 > 23:06:02 |  app.api.utils : 32 |   ❌ ERROR  |  Error getting user_id: 404: Please set the cookie  
+December 1, 2024 > 23:06:32 |  app.api.utils : 19 |   ❌ ERROR  |  No session_id cookie found  
+December 1, 2024 > 23:06:32 |  app.api.utils : 32 |   ❌ ERROR  |  Error getting user_id: 404: Please set the cookie  
+December 1, 2024 > 23:07:28 |  app.api.utils : 19 |   ❌ ERROR  |  No session_id cookie found  
+December 1, 2024 > 23:07:28 |  app.api.utils : 32 |   ❌ ERROR  |  Error getting user_id: 404: Please set the cookie  
+December 1, 2024 > 23:09:06 |  app.api.utils : 19 |   ❌ ERROR  |  No session_id cookie found  
+December 1, 2024 > 23:09:06 |  app.api.utils : 32 |   ❌ ERROR  |  Error getting user_id: 404: Please set the cookie  
+December 1, 2024 > 23:09:20 |  app.shared.db.init : 26 |   ❌ ERROR  |  (psycopg.errors.InvalidTextRepresentation) invalid input syntax for type uuid: "undefined"
+CONTEXT:  unnamed portal parameter $1 = '...'
+[SQL: SELECT message."Id", message.user_id, message.chat_id, message.message_text, message.message_type, message.created_at 
+FROM message LEFT OUTER JOIN feedback ON feedback.message_id = message."Id" 
+WHERE message.chat_id = %(chat_id_1)s::UUID AND (feedback.rating != %(rating_1)s::INTEGER OR feedback.message_id IS NULL) ORDER BY message.created_at ASC]
+[parameters: {'chat_id_1': 'undefined', 'rating_1': 0}]
+(Background on this error at: https://sqlalche.me/e/20/9h9h)  
+December 1, 2024 > 23:09:50 |  app.shared.db.init : 26 |   ❌ ERROR  |  (psycopg.errors.InvalidTextRepresentation) invalid input syntax for type uuid: "undefined"
+CONTEXT:  unnamed portal parameter $1 = '...'
+[SQL: SELECT message."Id", message.user_id, message.chat_id, message.message_text, message.message_type, message.created_at 
+FROM message LEFT OUTER JOIN feedback ON feedback.message_id = message."Id" 
+WHERE message.chat_id = %(chat_id_1)s::UUID AND (feedback.rating != %(rating_1)s::INTEGER OR feedback.message_id IS NULL) ORDER BY message.created_at ASC]
+[parameters: {'chat_id_1': 'undefined', 'rating_1': 0}]
+(Background on this error at: https://sqlalche.me/e/20/9h9h)  
+December 1, 2024 > 23:16:05 |  app.shared.db.init : 26 |   ❌ ERROR  |  (psycopg.errors.InvalidTextRepresentation) invalid input syntax for type uuid: "undefined"
+CONTEXT:  unnamed portal parameter $1 = '...'
+[SQL: SELECT message."Id", message.user_id, message.chat_id, message.message_text, message.message_type, message.created_at 
+FROM message LEFT OUTER JOIN feedback ON feedback.message_id = message."Id" 
+WHERE message.chat_id = %(chat_id_1)s::UUID AND (feedback.rating != %(rating_1)s::INTEGER OR feedback.message_id IS NULL) ORDER BY message.created_at ASC]
+[parameters: {'chat_id_1': 'undefined', 'rating_1': 0}]
+(Background on this error at: https://sqlalche.me/e/20/9h9h)  
+December 2, 2024 > 01:56:32 |  app.api.utils : 29 |   ❌ ERROR  |  User not found. Please reset the cookie.  
+December 2, 2024 > 01:56:32 |  app.api.utils : 32 |   ❌ ERROR  |  Error getting user_id: 404: User not found. Please reset the cookie.  
+December 2, 2024 > 02:15:08 |  app.api.utils : 29 |   ❌ ERROR  |  User not found. Please reset the cookie.  
+December 2, 2024 > 02:15:08 |  app.api.utils : 32 |   ❌ ERROR  |  Error getting user_id: 404: User not found. Please reset the cookie.  
+December 2, 2024 > 02:26:09 |  app.api.utils : 19 |   ❌ ERROR  |  No session_id cookie found  
+December 2, 2024 > 02:26:09 |  app.api.utils : 32 |   ❌ ERROR  |  Error getting user_id: 404: Please set the cookie  
+December 2, 2024 > 02:26:48 |  app.api.utils : 19 |   ❌ ERROR  |  No session_id cookie found  
+December 2, 2024 > 02:26:48 |  app.api.utils : 32 |   ❌ ERROR  |  Error getting user_id: 404: Please set the cookie  
+December 2, 2024 > 02:28:20 |  app.api.utils : 19 |   ❌ ERROR  |  No session_id cookie found  
+December 2, 2024 > 02:28:20 |  app.api.utils : 32 |   ❌ ERROR  |  Error getting user_id: 404: Please set the cookie  
+December 2, 2024 > 02:28:39 |  app.api.utils : 29 |   ❌ ERROR  |  User not found. Please reset the cookie.  
+December 2, 2024 > 02:28:39 |  app.api.utils : 32 |   ❌ ERROR  |  Error getting user_id: 404: User not found. Please reset the cookie.  
+December 2, 2024 > 02:38:34 |  app.shared.db.init : 26 |   ❌ ERROR  |  (psycopg.errors.InvalidTextRepresentation) invalid input syntax for type uuid: "undefined"
+CONTEXT:  unnamed portal parameter $3 = '...'
+[SQL: INSERT INTO message ("Id", user_id, chat_id, message_text, message_type, created_at) VALUES (%(Id)s::UUID, %(user_id)s::UUID, %(chat_id)s::UUID, %(message_text)s::VARCHAR, %(message_type)s::VARCHAR, %(created_at)s::TIMESTAMP WITHOUT TIME ZONE)]
+[parameters: {'Id': UUID('dd5af3cf-bf72-48d4-b856-efc83d51b072'), 'user_id': UUID('270b125b-8be1-4f09-ac2b-95ef7de033d3'), 'chat_id': 'undefined', 'message_text': 'hi', 'message_type': 'simple', 'created_at': datetime.datetime(2024, 12, 2, 2, 38, 34, 367656)}]
+(Background on this error at: https://sqlalche.me/e/20/9h9h)  
+December 2, 2024 > 02:47:46 |  app.shared.db.init : 26 |   ❌ ERROR  |  (psycopg.errors.InvalidTextRepresentation) invalid input syntax for type uuid: "undefined"
+CONTEXT:  unnamed portal parameter $3 = '...'
+[SQL: INSERT INTO message ("Id", user_id, chat_id, message_text, message_type, created_at) VALUES (%(Id)s::UUID, %(user_id)s::UUID, %(chat_id)s::UUID, %(message_text)s::VARCHAR, %(message_type)s::VARCHAR, %(created_at)s::TIMESTAMP WITHOUT TIME ZONE)]
+[parameters: {'Id': UUID('3c2f29bf-2a97-4cc6-af41-8a6dab735e98'), 'user_id': UUID('270b125b-8be1-4f09-ac2b-95ef7de033d3'), 'chat_id': 'undefined', 'message_text': 'hey', 'message_type': 'simple', 'created_at': datetime.datetime(2024, 12, 2, 2, 47, 46, 497358)}]
+(Background on this error at: https://sqlalche.me/e/20/9h9h)  
+December 2, 2024 > 02:48:25 |  app.shared.db.init : 26 |   ❌ ERROR  |  (psycopg.errors.InvalidTextRepresentation) invalid input syntax for type uuid: "undefined"
+CONTEXT:  unnamed portal parameter $3 = '...'
+[SQL: INSERT INTO message ("Id", user_id, chat_id, message_text, message_type, created_at) VALUES (%(Id)s::UUID, %(user_id)s::UUID, %(chat_id)s::UUID, %(message_text)s::VARCHAR, %(message_type)s::VARCHAR, %(created_at)s::TIMESTAMP WITHOUT TIME ZONE)]
+[parameters: {'Id': UUID('0a441b85-ed6b-4344-9376-9c44f64b9929'), 'user_id': UUID('270b125b-8be1-4f09-ac2b-95ef7de033d3'), 'chat_id': 'undefined', 'message_text': 'hey', 'message_type': 'simple', 'created_at': datetime.datetime(2024, 12, 2, 2, 48, 25, 120555)}]
+(Background on this error at: https://sqlalche.me/e/20/9h9h)  
+December 2, 2024 > 02:53:54 |  app.shared.db.init : 26 |   ❌ ERROR  |  (psycopg.errors.InvalidTextRepresentation) invalid input syntax for type uuid: "undefined"
+CONTEXT:  unnamed portal parameter $3 = '...'
+[SQL: INSERT INTO message ("Id", user_id, chat_id, message_text, message_type, created_at) VALUES (%(Id)s::UUID, %(user_id)s::UUID, %(chat_id)s::UUID, %(message_text)s::VARCHAR, %(message_type)s::VARCHAR, %(created_at)s::TIMESTAMP WITHOUT TIME ZONE)]
+[parameters: {'Id': UUID('2de99a20-682f-495e-a6ab-5ba1c316feb4'), 'user_id': UUID('270b125b-8be1-4f09-ac2b-95ef7de033d3'), 'chat_id': 'undefined', 'message_text': 'hi', 'message_type': 'simple', 'created_at': datetime.datetime(2024, 12, 2, 2, 53, 54, 240568)}]
+(Background on this error at: https://sqlalche.me/e/20/9h9h)  
+December 2, 2024 > 02:54:19 |  app.shared.db.init : 26 |   ❌ ERROR  |  (psycopg.errors.InvalidTextRepresentation) invalid input syntax for type uuid: "undefined"
+CONTEXT:  unnamed portal parameter $3 = '...'
+[SQL: INSERT INTO message ("Id", user_id, chat_id, message_text, message_type, created_at) VALUES (%(Id)s::UUID, %(user_id)s::UUID, %(chat_id)s::UUID, %(message_text)s::VARCHAR, %(message_type)s::VARCHAR, %(created_at)s::TIMESTAMP WITHOUT TIME ZONE)]
+[parameters: {'Id': UUID('fb810cab-e20a-4488-87fe-f34fc8d75f06'), 'user_id': UUID('270b125b-8be1-4f09-ac2b-95ef7de033d3'), 'chat_id': 'undefined', 'message_text': 'hi', 'message_type': 'simple', 'created_at': datetime.datetime(2024, 12, 2, 2, 54, 19, 23225)}]
+(Background on this error at: https://sqlalche.me/e/20/9h9h)  
+December 2, 2024 > 09:46:16 |  app.api.utils : 29 |   ❌ ERROR  |  User not found. Please reset the cookie.  
+December 2, 2024 > 09:46:16 |  app.api.utils : 32 |   ❌ ERROR  |  Error getting user_id: 404: User not found. Please reset the cookie.  
+December 2, 2024 > 09:46:40 |  app.api.utils : 29 |   ❌ ERROR  |  User not found. Please reset the cookie.  
+December 2, 2024 > 09:46:40 |  app.api.utils : 32 |   ❌ ERROR  |  Error getting user_id: 404: User not found. Please reset the cookie.  
+December 2, 2024 > 09:47:05 |  app.shared.db.init : 26 |   ❌ ERROR  |  (psycopg.errors.InvalidTextRepresentation) invalid input syntax for type uuid: "undefined"
+CONTEXT:  unnamed portal parameter $3 = '...'
+[SQL: INSERT INTO message ("Id", user_id, chat_id, message_text, message_type, created_at) VALUES (%(Id)s::UUID, %(user_id)s::UUID, %(chat_id)s::UUID, %(message_text)s::VARCHAR, %(message_type)s::VARCHAR, %(created_at)s::TIMESTAMP WITHOUT TIME ZONE)]
+[parameters: {'Id': UUID('b9ebcbd7-445f-435d-a256-a3406e0edb21'), 'user_id': UUID('cd3dc464-b8a5-4774-bf4a-8a0333ae76c5'), 'chat_id': 'undefined', 'message_text': 'hi', 'message_type': 'simple', 'created_at': datetime.datetime(2024, 12, 2, 9, 47, 5, 329471)}]
+(Background on this error at: https://sqlalche.me/e/20/9h9h)  
+December 2, 2024 > 09:48:43 |  app.shared.db.init : 26 |   ❌ ERROR  |  (psycopg.errors.InvalidTextRepresentation) invalid input syntax for type uuid: "undefined"
+CONTEXT:  unnamed portal parameter $3 = '...'
+[SQL: INSERT INTO message ("Id", user_id, chat_id, message_text, message_type, created_at) VALUES (%(Id)s::UUID, %(user_id)s::UUID, %(chat_id)s::UUID, %(message_text)s::VARCHAR, %(message_type)s::VARCHAR, %(created_at)s::TIMESTAMP WITHOUT TIME ZONE)]
+[parameters: {'Id': UUID('a9b899e7-12b6-4500-a51b-705f13265c78'), 'user_id': UUID('cd3dc464-b8a5-4774-bf4a-8a0333ae76c5'), 'chat_id': 'undefined', 'message_text': 'hey', 'message_type': 'simple', 'created_at': datetime.datetime(2024, 12, 2, 9, 48, 43, 630462)}]
+(Background on this error at: https://sqlalche.me/e/20/9h9h)  
+December 2, 2024 > 10:24:16 |  app.shared.db.init : 26 |   ❌ ERROR  |  (psycopg.errors.InvalidTextRepresentation) invalid input syntax for type uuid: "undefined"
+CONTEXT:  unnamed portal parameter $3 = '...'
+[SQL: INSERT INTO message ("Id", user_id, chat_id, message_text, message_type, created_at) VALUES (%(Id)s::UUID, %(user_id)s::UUID, %(chat_id)s::UUID, %(message_text)s::VARCHAR, %(message_type)s::VARCHAR, %(created_at)s::TIMESTAMP WITHOUT TIME ZONE)]
+[parameters: {'Id': UUID('a70580e7-2da6-4fea-a03f-705c1386c2cc'), 'user_id': UUID('cd3dc464-b8a5-4774-bf4a-8a0333ae76c5'), 'chat_id': 'undefined', 'message_text': 'hi', 'message_type': 'simple', 'created_at': datetime.datetime(2024, 12, 2, 10, 24, 16, 166599)}]
+(Background on this error at: https://sqlalche.me/e/20/9h9h)  
+December 2, 2024 > 10:30:10 |  app.shared.db.init : 26 |   ❌ ERROR  |  (psycopg.errors.InvalidTextRepresentation) invalid input syntax for type uuid: "undefined"
+CONTEXT:  unnamed portal parameter $3 = '...'
+[SQL: INSERT INTO message ("Id", user_id, chat_id, message_text, message_type, created_at) VALUES (%(Id)s::UUID, %(user_id)s::UUID, %(chat_id)s::UUID, %(message_text)s::VARCHAR, %(message_type)s::VARCHAR, %(created_at)s::TIMESTAMP WITHOUT TIME ZONE)]
+[parameters: {'Id': UUID('6f2df72d-fd3c-449e-bf18-a755ef1f7d94'), 'user_id': UUID('cd3dc464-b8a5-4774-bf4a-8a0333ae76c5'), 'chat_id': 'undefined', 'message_text': 'hey', 'message_type': 'simple', 'created_at': datetime.datetime(2024, 12, 2, 10, 30, 10, 630235)}]
+(Background on this error at: https://sqlalche.me/e/20/9h9h)  
+December 2, 2024 > 10:30:10 |  app.shared.db.init : 26 |   ❌ ERROR  |  (psycopg.errors.InvalidTextRepresentation) invalid input syntax for type uuid: "undefined"
+CONTEXT:  unnamed portal parameter $3 = '...'
+[SQL: INSERT INTO message ("Id", user_id, chat_id, message_text, message_type, created_at) VALUES (%(Id)s::UUID, %(user_id)s::UUID, %(chat_id)s::UUID, %(message_text)s::VARCHAR, %(message_type)s::VARCHAR, %(created_at)s::TIMESTAMP WITHOUT TIME ZONE)]
+[parameters: {'Id': UUID('ef668490-0cf5-4155-9fd9-77dfe3c8cbd8'), 'user_id': UUID('cd3dc464-b8a5-4774-bf4a-8a0333ae76c5'), 'chat_id': 'undefined', 'message_text': 'hey', 'message_type': 'simple', 'created_at': datetime.datetime(2024, 12, 2, 10, 30, 10, 641474)}]
+(Background on this error at: https://sqlalche.me/e/20/9h9h)  
+December 2, 2024 > 10:30:47 |  app.shared.db.init : 26 |   ❌ ERROR  |  (psycopg.errors.InvalidTextRepresentation) invalid input syntax for type uuid: "undefined"
+CONTEXT:  unnamed portal parameter $3 = '...'
+[SQL: INSERT INTO message ("Id", user_id, chat_id, message_text, message_type, created_at) VALUES (%(Id)s::UUID, %(user_id)s::UUID, %(chat_id)s::UUID, %(message_text)s::VARCHAR, %(message_type)s::VARCHAR, %(created_at)s::TIMESTAMP WITHOUT TIME ZONE)]
+[parameters: {'Id': UUID('c79a7611-5690-41b6-bf72-c4eb4e9a373d'), 'user_id': UUID('cd3dc464-b8a5-4774-bf4a-8a0333ae76c5'), 'chat_id': 'undefined', 'message_text': 'hi', 'message_type': 'simple', 'created_at': datetime.datetime(2024, 12, 2, 10, 30, 47, 6693)}]
+(Background on this error at: https://sqlalche.me/e/20/9h9h)  
+December 2, 2024 > 10:32:46 |  app.shared.db.init : 26 |   ❌ ERROR  |  (psycopg.errors.InvalidTextRepresentation) invalid input syntax for type uuid: "undefined"
+CONTEXT:  unnamed portal parameter $3 = '...'
+[SQL: INSERT INTO message ("Id", user_id, chat_id, message_text, message_type, created_at) VALUES (%(Id)s::UUID, %(user_id)s::UUID, %(chat_id)s::UUID, %(message_text)s::VARCHAR, %(message_type)s::VARCHAR, %(created_at)s::TIMESTAMP WITHOUT TIME ZONE)]
+[parameters: {'Id': UUID('d68b3fd5-9eb7-40c6-8784-a8abaa0f7167'), 'user_id': UUID('cd3dc464-b8a5-4774-bf4a-8a0333ae76c5'), 'chat_id': 'undefined', 'message_text': 'hi', 'message_type': 'simple', 'created_at': datetime.datetime(2024, 12, 2, 10, 32, 46, 509820)}]
+(Background on this error at: https://sqlalche.me/e/20/9h9h)  
+December 2, 2024 > 10:35:48 |  app.shared.db.init : 26 |   ❌ ERROR  |  (psycopg.errors.InvalidTextRepresentation) invalid input syntax for type uuid: "undefined"
+CONTEXT:  unnamed portal parameter $3 = '...'
+[SQL: INSERT INTO message ("Id", user_id, chat_id, message_text, message_type, created_at) VALUES (%(Id)s::UUID, %(user_id)s::UUID, %(chat_id)s::UUID, %(message_text)s::VARCHAR, %(message_type)s::VARCHAR, %(created_at)s::TIMESTAMP WITHOUT TIME ZONE)]
+[parameters: {'Id': UUID('420dae0c-6344-460b-b756-b2a859efb38f'), 'user_id': UUID('cd3dc464-b8a5-4774-bf4a-8a0333ae76c5'), 'chat_id': 'undefined', 'message_text': 'hey', 'message_type': 'simple', 'created_at': datetime.datetime(2024, 12, 2, 10, 35, 48, 804340)}]
+(Background on this error at: https://sqlalche.me/e/20/9h9h)  
+December 2, 2024 > 10:40:26 |  app.shared.db.init : 26 |   ❌ ERROR  |  (psycopg.errors.InvalidTextRepresentation) invalid input syntax for type uuid: "undefined"
+CONTEXT:  unnamed portal parameter $3 = '...'
+[SQL: INSERT INTO message ("Id", user_id, chat_id, message_text, message_type, created_at) VALUES (%(Id)s::UUID, %(user_id)s::UUID, %(chat_id)s::UUID, %(message_text)s::VARCHAR, %(message_type)s::VARCHAR, %(created_at)s::TIMESTAMP WITHOUT TIME ZONE)]
+[parameters: {'Id': UUID('fa21d234-b8d8-4df2-b9fb-f1cdff7638a9'), 'user_id': UUID('cd3dc464-b8a5-4774-bf4a-8a0333ae76c5'), 'chat_id': 'undefined', 'message_text': 'hi ', 'message_type': 'simple', 'created_at': datetime.datetime(2024, 12, 2, 10, 40, 26, 270056)}]
+(Background on this error at: https://sqlalche.me/e/20/9h9h)  
+December 2, 2024 > 10:52:54 |  app.shared.db.init : 26 |   ❌ ERROR  |  (psycopg.errors.InvalidTextRepresentation) invalid input syntax for type uuid: "undefined"
+CONTEXT:  unnamed portal parameter $3 = '...'
+[SQL: INSERT INTO message ("Id", user_id, chat_id, message_text, message_type, created_at) VALUES (%(Id)s::UUID, %(user_id)s::UUID, %(chat_id)s::UUID, %(message_text)s::VARCHAR, %(message_type)s::VARCHAR, %(created_at)s::TIMESTAMP WITHOUT TIME ZONE)]
+[parameters: {'Id': UUID('3e1a48c1-946a-42f9-8e4e-2a33c1b46acf'), 'user_id': UUID('cd3dc464-b8a5-4774-bf4a-8a0333ae76c5'), 'chat_id': 'undefined', 'message_text': 'hi', 'message_type': 'simple', 'created_at': datetime.datetime(2024, 12, 2, 10, 52, 54, 485871)}]
+(Background on this error at: https://sqlalche.me/e/20/9h9h)  
+December 2, 2024 > 10:53:12 |  app.shared.db.init : 26 |   ❌ ERROR  |  (psycopg.errors.InvalidTextRepresentation) invalid input syntax for type uuid: "undefined"
+CONTEXT:  unnamed portal parameter $3 = '...'
+[SQL: INSERT INTO message ("Id", user_id, chat_id, message_text, message_type, created_at) VALUES (%(Id)s::UUID, %(user_id)s::UUID, %(chat_id)s::UUID, %(message_text)s::VARCHAR, %(message_type)s::VARCHAR, %(created_at)s::TIMESTAMP WITHOUT TIME ZONE)]
+[parameters: {'Id': UUID('b1efa6a1-8c8a-46cc-9d9c-54f4c360698a'), 'user_id': UUID('cd3dc464-b8a5-4774-bf4a-8a0333ae76c5'), 'chat_id': 'undefined', 'message_text': 'hey', 'message_type': 'simple', 'created_at': datetime.datetime(2024, 12, 2, 10, 53, 12, 592653)}]
+(Background on this error at: https://sqlalche.me/e/20/9h9h)  
+December 2, 2024 > 10:59:39 |  app.shared.db.init : 26 |   ❌ ERROR  |  (psycopg.errors.InvalidTextRepresentation) invalid input syntax for type uuid: "undefined"
+CONTEXT:  unnamed portal parameter $3 = '...'
+[SQL: INSERT INTO message ("Id", user_id, chat_id, message_text, message_type, created_at) VALUES (%(Id)s::UUID, %(user_id)s::UUID, %(chat_id)s::UUID, %(message_text)s::VARCHAR, %(message_type)s::VARCHAR, %(created_at)s::TIMESTAMP WITHOUT TIME ZONE)]
+[parameters: {'Id': UUID('af5b808e-334f-4cb1-a1f5-36d36cd0e8e7'), 'user_id': UUID('cd3dc464-b8a5-4774-bf4a-8a0333ae76c5'), 'chat_id': 'undefined', 'message_text': 'hi', 'message_type': 'simple', 'created_at': datetime.datetime(2024, 12, 2, 10, 59, 39, 524742)}]
+(Background on this error at: https://sqlalche.me/e/20/9h9h)  
+December 2, 2024 > 11:00:56 |  app.shared.db.init : 26 |   ❌ ERROR  |  (psycopg.errors.InvalidTextRepresentation) invalid input syntax for type uuid: "undefined"
+CONTEXT:  unnamed portal parameter $3 = '...'
+[SQL: INSERT INTO message ("Id", user_id, chat_id, message_text, message_type, created_at) VALUES (%(Id)s::UUID, %(user_id)s::UUID, %(chat_id)s::UUID, %(message_text)s::VARCHAR, %(message_type)s::VARCHAR, %(created_at)s::TIMESTAMP WITHOUT TIME ZONE)]
+[parameters: {'Id': UUID('e4961c90-2131-484d-84ea-fc8c9b78d93b'), 'user_id': UUID('cd3dc464-b8a5-4774-bf4a-8a0333ae76c5'), 'chat_id': 'undefined', 'message_text': 'hi', 'message_type': 'simple', 'created_at': datetime.datetime(2024, 12, 2, 11, 0, 56, 673357)}]
+(Background on this error at: https://sqlalche.me/e/20/9h9h)  
+December 2, 2024 > 11:18:28 |  app.shared.db.init : 26 |   ❌ ERROR  |  (psycopg.errors.InvalidTextRepresentation) invalid input syntax for type uuid: "undefined"
+CONTEXT:  unnamed portal parameter $3 = '...'
+[SQL: INSERT INTO message ("Id", user_id, chat_id, message_text, message_type, created_at) VALUES (%(Id)s::UUID, %(user_id)s::UUID, %(chat_id)s::UUID, %(message_text)s::VARCHAR, %(message_type)s::VARCHAR, %(created_at)s::TIMESTAMP WITHOUT TIME ZONE)]
+[parameters: {'Id': UUID('8a085d61-3638-4311-b5cf-5600781b1f91'), 'user_id': UUID('cd3dc464-b8a5-4774-bf4a-8a0333ae76c5'), 'chat_id': 'undefined', 'message_text': 'hi', 'message_type': 'simple', 'created_at': datetime.datetime(2024, 12, 2, 11, 18, 28, 787262)}]
+(Background on this error at: https://sqlalche.me/e/20/9h9h)  
+December 2, 2024 > 11:20:46 |  app.shared.db.init : 26 |   ❌ ERROR  |  (psycopg.errors.InvalidTextRepresentation) invalid input syntax for type uuid: "undefined"
+CONTEXT:  unnamed portal parameter $3 = '...'
+[SQL: INSERT INTO message ("Id", user_id, chat_id, message_text, message_type, created_at) VALUES (%(Id)s::UUID, %(user_id)s::UUID, %(chat_id)s::UUID, %(message_text)s::VARCHAR, %(message_type)s::VARCHAR, %(created_at)s::TIMESTAMP WITHOUT TIME ZONE)]
+[parameters: {'Id': UUID('b34cc049-4115-4797-bd6c-b74c8ffd2743'), 'user_id': UUID('cd3dc464-b8a5-4774-bf4a-8a0333ae76c5'), 'chat_id': 'undefined', 'message_text': 'hi', 'message_type': 'simple', 'created_at': datetime.datetime(2024, 12, 2, 11, 20, 46, 116626)}]
+(Background on this error at: https://sqlalche.me/e/20/9h9h)  
+December 2, 2024 > 13:00:23 |  app.api.utils : 29 |   ❌ ERROR  |  User not found. Please reset the cookie.  
+December 2, 2024 > 13:00:23 |  app.api.utils : 32 |   ❌ ERROR  |  Error getting user_id: 404: User not found. Please reset the cookie.  
+December 2, 2024 > 13:00:42 |  app.shared.db.init : 29 |   ❌ ERROR  |  (builtins.AttributeError) 'str' object has no attribute 'hex'
+[SQL: SELECT message."Id", message.user_id, message.chat_id, message.message_text, message.message_type, message.created_at 
+FROM message LEFT OUTER JOIN feedback ON feedback.message_id = message."Id" 
+WHERE message.chat_id = ? AND (feedback.rating != ? OR feedback.message_id IS NULL) ORDER BY message.created_at ASC]
+[parameters: [{}]]  
+December 2, 2024 > 13:00:49 |  app.shared.db.init : 29 |   ❌ ERROR  |  (builtins.AttributeError) 'str' object has no attribute 'hex'
+[SQL: INSERT INTO message ("Id", user_id, chat_id, message_text, message_type, created_at) VALUES (?, ?, ?, ?, ?, ?)]
+[parameters: [{'Id': UUID('b350d58f-f78f-404d-a708-9931a96c013d'), 'user_id': UUID('d8079b03-f31b-411b-b8f8-8eef796e2da1'), 'message_type': 'simple', 'message_text': 'hi', 'created_at': datetime.datetime(2024, 12, 2, 13, 0, 49, 798971), 'chat_id': '08e6306a-4143-4ade-b9f5-94ec3d3e58fd'}]]  
+December 2, 2024 > 13:01:09 |  app.shared.db.init : 29 |   ❌ ERROR  |  (builtins.AttributeError) 'str' object has no attribute 'hex'
+[SQL: SELECT message."Id", message.user_id, message.chat_id, message.message_text, message.message_type, message.created_at 
+FROM message LEFT OUTER JOIN feedback ON feedback.message_id = message."Id" 
+WHERE message.chat_id = ? AND (feedback.rating != ? OR feedback.message_id IS NULL) ORDER BY message.created_at ASC]
+[parameters: [{}]]  
+December 2, 2024 > 13:01:13 |  app.shared.db.init : 29 |   ❌ ERROR  |  (builtins.AttributeError) 'str' object has no attribute 'hex'
+[SQL: INSERT INTO message ("Id", user_id, chat_id, message_text, message_type, created_at) VALUES (?, ?, ?, ?, ?, ?)]
+[parameters: [{'Id': UUID('89189d04-0eed-468d-a6a9-56acfb01d9e7'), 'user_id': UUID('8b4dc61f-27b6-4f66-921a-355d6bd06dcd'), 'message_type': 'simple', 'message_text': 'hi', 'created_at': datetime.datetime(2024, 12, 2, 13, 1, 13, 623262), 'chat_id': '08e6306a-4143-4ade-b9f5-94ec3d3e58fd'}]]  
+December 2, 2024 > 13:11:59 |  app.api.routes : 20 |   ❌ ERROR  |  Failed to load module message: (sqlite3.OperationalError) unable to open database file
+(Background on this error at: https://sqlalche.me/e/20/e3q8)  
+December 2, 2024 > 13:11:59 |  app.api.routes : 20 |   ❌ ERROR  |  Failed to load module cookie: (sqlite3.OperationalError) unable to open database file
+(Background on this error at: https://sqlalche.me/e/20/e3q8)  
+December 2, 2024 > 13:11:59 |  app.api.routes : 20 |   ❌ ERROR  |  Failed to load module chat: (sqlite3.OperationalError) unable to open database file
+(Background on this error at: https://sqlalche.me/e/20/e3q8)  
+December 2, 2024 > 13:11:59 |  app.api.routes : 20 |   ❌ ERROR  |  Failed to load module messages: (sqlite3.OperationalError) unable to open database file
+(Background on this error at: https://sqlalche.me/e/20/e3q8)  
+December 2, 2024 > 13:12:00 |  app.api.routes : 20 |   ❌ ERROR  |  Failed to load module message: (sqlite3.OperationalError) unable to open database file
+(Background on this error at: https://sqlalche.me/e/20/e3q8)  
+December 2, 2024 > 13:12:00 |  app.api.routes : 20 |   ❌ ERROR  |  Failed to load module cookie: (sqlite3.OperationalError) unable to open database file
+(Background on this error at: https://sqlalche.me/e/20/e3q8)  
+December 2, 2024 > 13:12:00 |  app.api.routes : 20 |   ❌ ERROR  |  Failed to load module chat: (sqlite3.OperationalError) unable to open database file
+(Background on this error at: https://sqlalche.me/e/20/e3q8)  
+December 2, 2024 > 13:12:00 |  app.api.routes : 20 |   ❌ ERROR  |  Failed to load module messages: (sqlite3.OperationalError) unable to open database file
+(Background on this error at: https://sqlalche.me/e/20/e3q8)  
+December 2, 2024 > 13:14:11 |  app.api.routes : 20 |   ❌ ERROR  |  Failed to load module message: name 'db_folder' is not defined  
+December 2, 2024 > 13:14:11 |  app.api.routes : 20 |   ❌ ERROR  |  Failed to load module cookie: name 'db_folder' is not defined  
+December 2, 2024 > 13:14:11 |  app.api.routes : 20 |   ❌ ERROR  |  Failed to load module chat: name 'db_folder' is not defined  
+December 2, 2024 > 13:14:11 |  app.api.routes : 20 |   ❌ ERROR  |  Failed to load module messages: name 'db_folder' is not defined  
+December 2, 2024 > 13:14:58 |  app.api.utils : 29 |   ❌ ERROR  |  User not found. Please reset the cookie.  
+December 2, 2024 > 13:14:58 |  app.api.utils : 32 |   ❌ ERROR  |  Error getting user_id: 404: User not found. Please reset the cookie.  
+December 2, 2024 > 13:15:23 |  app.shared.db.init : 32 |   ❌ ERROR  |  (builtins.AttributeError) 'str' object has no attribute 'hex'
+[SQL: SELECT message."Id", message.user_id, message.chat_id, message.message_text, message.message_type, message.created_at 
+FROM message LEFT OUTER JOIN feedback ON feedback.message_id = message."Id" 
+WHERE message.chat_id = ? AND (feedback.rating != ? OR feedback.message_id IS NULL) ORDER BY message.created_at ASC]
+[parameters: [{}]]  
+December 2, 2024 > 13:21:07 |  app.shared.db.init : 32 |   ❌ ERROR  |  (builtins.AttributeError) 'str' object has no attribute 'hex'
+[SQL: SELECT message."Id", message.user_id, message.chat_id, message.message_text, message.message_type, message.created_at 
+FROM message LEFT OUTER JOIN feedback ON feedback.message_id = message."Id" 
+WHERE message.chat_id = ? AND (feedback.rating != ? OR feedback.message_id IS NULL) ORDER BY message.created_at ASC]
+[parameters: [{}]]  
+December 2, 2024 > 13:24:53 |  app.shared.db.init : 32 |   ❌ ERROR  |  (builtins.AttributeError) 'str' object has no attribute 'hex'
+[SQL: SELECT message."Id", message.user_id, message.chat_id, message.message_text, message.message_type, message.created_at 
+FROM message LEFT OUTER JOIN feedback ON feedback.message_id = message."Id" 
+WHERE message.chat_id = ? AND (feedback.rating != ? OR feedback.message_id IS NULL) ORDER BY message.created_at ASC]
+[parameters: [{}]]  
+December 2, 2024 > 13:28:14 |  app.shared.db.init : 32 |   ❌ ERROR  |  (builtins.AttributeError) 'str' object has no attribute 'hex'
+[SQL: SELECT chat."Id", chat.created_at, chat.user_id, chat.title 
+FROM chat 
+WHERE chat.user_id = ? ORDER BY chat.created_at DESC]
+[parameters: [{}]]  
+December 2, 2024 > 13:28:14 |  app.shared.db.init : 32 |   ❌ ERROR  |  (builtins.AttributeError) 'str' object has no attribute 'hex'
+[SQL: SELECT message."Id", message.user_id, message.chat_id, message.message_text, message.message_type, message.created_at 
+FROM message LEFT OUTER JOIN feedback ON feedback.message_id = message."Id" 
+WHERE message.chat_id = ? AND (feedback.rating != ? OR feedback.message_id IS NULL) ORDER BY message.created_at ASC]
+[parameters: [{}]]  
+December 2, 2024 > 13:37:34 |  app.shared.db.init : 32 |   ❌ ERROR  |  (builtins.AttributeError) 'str' object has no attribute 'hex'
+[SQL: SELECT message."Id", message.user_id, message.chat_id, message.message_text, message.message_type, message.created_at 
+FROM message LEFT OUTER JOIN feedback ON feedback.message_id = message."Id" 
+WHERE message.chat_id = ? AND (feedback.rating != ? OR feedback.message_id IS NULL) ORDER BY message.created_at ASC]
+[parameters: [{}]]  
+December 2, 2024 > 13:38:19 |  app.shared.db.init : 32 |   ❌ ERROR  |  (builtins.AttributeError) 'str' object has no attribute 'hex'
+[SQL: SELECT message."Id", message.user_id, message.chat_id, message.message_text, message.message_type, message.created_at 
+FROM message LEFT OUTER JOIN feedback ON feedback.message_id = message."Id" 
+WHERE message.chat_id = ? AND (feedback.rating != ? OR feedback.message_id IS NULL) ORDER BY message.created_at ASC]
+[parameters: [{}]]  
+December 2, 2024 > 13:39:05 |  app.shared.db.init : 32 |   ❌ ERROR  |  (builtins.AttributeError) 'str' object has no attribute 'hex'
+[SQL: SELECT message."Id", message.user_id, message.chat_id, message.message_text, message.message_type, message.created_at 
+FROM message LEFT OUTER JOIN feedback ON feedback.message_id = message."Id" 
+WHERE message.chat_id = ? AND (feedback.rating != ? OR feedback.message_id IS NULL) ORDER BY message.created_at ASC]
+[parameters: [{}]]  
+December 2, 2024 > 13:42:57 |  app.shared.db.init : 32 |   ❌ ERROR  |  (builtins.AttributeError) 'str' object has no attribute 'hex'
+[SQL: SELECT message."Id", message.user_id, message.chat_id, message.message_text, message.message_type, message.created_at 
+FROM message LEFT OUTER JOIN feedback ON feedback.message_id = message."Id" 
+WHERE message.chat_id = ? AND (feedback.rating != ? OR feedback.message_id IS NULL) ORDER BY message.created_at ASC]
+[parameters: [{}]]  
+December 2, 2024 > 13:45:19 |  app.shared.db.init : 32 |   ❌ ERROR  |  (builtins.AttributeError) 'str' object has no attribute 'hex'
+[SQL: SELECT message."Id", message.user_id, message.chat_id, message.message_text, message.message_type, message.created_at 
+FROM message LEFT OUTER JOIN feedback ON feedback.message_id = message."Id" 
+WHERE message.chat_id = ? AND (feedback.rating != ? OR feedback.message_id IS NULL) ORDER BY message.created_at ASC]
+[parameters: [{}]]  
+December 2, 2024 > 13:48:44 |  app.shared.db.init : 32 |   ❌ ERROR  |  (builtins.AttributeError) 'str' object has no attribute 'hex'
+[SQL: SELECT message."Id", message.user_id, message.chat_id, message.message_text, message.message_type, message.created_at 
+FROM message LEFT OUTER JOIN feedback ON feedback.message_id = message."Id" 
+WHERE message.chat_id = ? AND (feedback.rating != ? OR feedback.message_id IS NULL) ORDER BY message.created_at ASC]
+[parameters: [{}]]  
+December 2, 2024 > 13:51:24 |  app.shared.db.init : 32 |   ❌ ERROR  |  Level 'fuck yse ' does not exist  
+December 2, 2024 > 13:51:24 |  app.api.utils : 33 |   ❌ ERROR  |  Error getting user_id: Level 'fuck yse ' does not exist  
+December 2, 2024 > 14:01:53 |  app.shared.db.init : 32 |   ❌ ERROR  |  (builtins.AttributeError) 'str' object has no attribute 'hex'
+[SQL: SELECT message."Id", message.user_id, message.chat_id, message.message_text, message.message_type, message.created_at 
+FROM message LEFT OUTER JOIN feedback ON feedback.message_id = message."Id" 
+WHERE message.chat_id = ? AND (feedback.rating != ? OR feedback.message_id IS NULL) ORDER BY message.created_at ASC]
+[parameters: [{}]]  
+December 2, 2024 > 14:02:19 |  app.shared.db.init : 32 |   ❌ ERROR  |  (builtins.AttributeError) 'str' object has no attribute 'hex'
+[SQL: SELECT message."Id", message.user_id, message.chat_id, message.message_text, message.message_type, message.created_at 
+FROM message LEFT OUTER JOIN feedback ON feedback.message_id = message."Id" 
+WHERE message.chat_id = ? AND (feedback.rating != ? OR feedback.message_id IS NULL) ORDER BY message.created_at ASC]
+[parameters: [{}]]  
+December 2, 2024 > 14:02:53 |  app.shared.db.init : 32 |   ❌ ERROR  |  (builtins.AttributeError) 'str' object has no attribute 'hex'
+[SQL: SELECT message."Id", message.user_id, message.chat_id, message.message_text, message.message_type, message.created_at 
+FROM message LEFT OUTER JOIN feedback ON feedback.message_id = message."Id" 
+WHERE message.chat_id = ? AND (feedback.rating != ? OR feedback.message_id IS NULL) ORDER BY message.created_at ASC]
+[parameters: [{}]]  
+December 2, 2024 > 14:05:01 |  app.shared.db.init : 32 |   ❌ ERROR  |  (builtins.AttributeError) 'str' object has no attribute 'hex'
+[SQL: SELECT message."Id", message.user_id, message.chat_id, message.message_text, message.message_type, message.created_at 
+FROM message 
+WHERE message.chat_id = ? ORDER BY message.created_at ASC]
+[parameters: [{}]]  
+December 2, 2024 > 14:09:23 |  app.shared.db.init : 32 |   ❌ ERROR  |  (builtins.AttributeError) 'str' object has no attribute 'hex'
+[SQL: INSERT INTO message ("Id", user_id, chat_id, message_text, message_type, created_at) VALUES (?, ?, ?, ?, ?, ?)]
+[parameters: [{'message_text': 'hi', 'user_id': UUID('deb5c361-8f83-4f01-b2d9-73e2441f85c8'), 'message_type': 'simple', 'chat_id': '248d526b-9038-4229-908c-df49f5e65bbe', 'created_at': datetime.datetime(2024, 12, 2, 14, 9, 23, 482280), 'Id': UUID('f543452f-f3d6-4446-9f0c-13c3e7fb5576')}]]  
+December 2, 2024 > 14:10:49 |  app.shared.db.init : 32 |   ❌ ERROR  |  (builtins.AttributeError) 'str' object has no attribute 'hex'
+[SQL: INSERT INTO message ("Id", user_id, chat_id, message_text, message_type, created_at) VALUES (?, ?, ?, ?, ?, ?)]
+[parameters: [{'user_id': UUID('00000000-0000-0000-0000-000000000000'), 'Id': UUID('bdcb1dd4-10fe-49eb-8b1a-ebc168452070'), 'message_text': 'Hello! How can I assist ... (6 characters truncated) ... oday?', 'message_type': 'simple', 'created_at': datetime.datetime(2024, 12, 2, 14, 10, 49, 488447), 'chat_id': '248d526b-9038-4229-908c-df49f5e65bbe'}]]  
+December 2, 2024 > 14:10:55 |  app.shared.db.init : 32 |   ❌ ERROR  |  (builtins.AttributeError) 'str' object has no attribute 'hex'
+[SQL: INSERT INTO message ("Id", user_id, chat_id, message_text, message_type, created_at) VALUES (?, ?, ?, ?, ?, ?)]
+[parameters: [{'user_id': UUID('00000000-0000-0000-0000-000000000000'), 'Id': UUID('8bf16968-8d1f-44de-aab9-ecdad4127551'), 'message_text': "I'm just a computer pro ... (88 characters truncated) ...  today?", 'message_type': 'simple', 'created_at': datetime.datetime(2024, 12, 2, 14, 10, 55, 8949), 'chat_id': '248d526b-9038-4229-908c-df49f5e65bbe'}]]  
+December 3, 2024 > 10:46:12 |  app.api.routes : 20 |   ❌ ERROR  |  Failed to load module message: cannot import name 'stream_text' from 'app.features.stream.main' (/Users/parsa/Desk/projects/university/slmops-project/application/slmops-application-qa/backend/app/features/stream/main.py)  
+December 3, 2024 > 10:52:42 |  app.api.routes : 20 |   ❌ ERROR  |  Failed to load module message: invalid syntax. Perhaps you forgot a comma? (main.py, line 43)  
+December 3, 2024 > 10:52:42 |  app.api.routes : 20 |   ❌ ERROR  |  Failed to load module messages: invalid syntax. Perhaps you forgot a comma? (main.py, line 43)  
+December 3, 2024 > 17:26:09 |  app.api.routes : 20 |   ❌ ERROR  |  Failed to load module message: No module named 'app.features.stream.utils.tools'  
+December 3, 2024 > 17:28:30 |  app.api.routes : 20 |   ❌ ERROR  |  Failed to load module message: No module named 'app.features.stream.utils.tools'  
+December 3, 2024 > 17:28:48 |  app.api.routes : 20 |   ❌ ERROR  |  Failed to load module message: No module named 'app.features.stream.utils.tools'  
+December 3, 2024 > 17:31:02 |  app.api.routes : 20 |   ❌ ERROR  |  Failed to load module message: No module named 'app.features.stream.utils.tools'  
+December 3, 2024 > 17:56:30 |  app.api.routes : 20 |   ❌ ERROR  |  Failed to load module message: No module named 'app.shared.libs'  
+December 3, 2024 > 17:56:30 |  app.api.routes : 20 |   ❌ ERROR  |  Failed to load module messages: No module named 'app.shared.libs'  
+December 3, 2024 > 17:56:30 |  app.api.routes : 20 |   ❌ ERROR  |  Failed to load module message: No module named 'app.shared.libs'  
+December 3, 2024 > 17:56:30 |  app.api.routes : 20 |   ❌ ERROR  |  Failed to load module messages: No module named 'app.shared.libs'  
+December 3, 2024 > 17:57:18 |  app.api.routes : 20 |   ❌ ERROR  |  Failed to load module message: No module named 'app.shared.libs.libs'  
+December 3, 2024 > 17:57:18 |  app.api.routes : 20 |   ❌ ERROR  |  Failed to load module messages: cannot import name 'UIMessage' from 'app.shared.libs.openai.prompt' (/Users/parsa/Desk/projects/university/slmops-project/application/slmops-application-qa/backend/app/shared/libs/openai/prompt.py)  
+December 3, 2024 > 17:57:27 |  app.api.routes : 20 |   ❌ ERROR  |  Failed to load module message: No module named 'app.shared.libs.libs'  
+December 3, 2024 > 17:57:27 |  app.api.routes : 20 |   ❌ ERROR  |  Failed to load module messages: cannot import name 'UIMessage' from 'app.shared.libs.openai.prompt' (/Users/parsa/Desk/projects/university/slmops-project/application/slmops-application-qa/backend/app/shared/libs/openai/prompt.py)  
+December 3, 2024 > 17:58:03 |  app.api.routes : 20 |   ❌ ERROR  |  Failed to load module message: No module named 'app.shared.libs.libs'  
+December 3, 2024 > 18:00:07 |  app.api.routes : 20 |   ❌ ERROR  |  Failed to load module message: No module named 'app.shared.libs.libs'  
+December 3, 2024 > 18:00:10 |  app.api.routes : 20 |   ❌ ERROR  |  Failed to load module message: No module named 'app.shared.libs.libs'  
+December 3, 2024 > 18:00:11 |  app.api.routes : 20 |   ❌ ERROR  |  Failed to load module message: No module named 'app.shared.libs.libs'  
+December 3, 2024 > 18:00:57 |  app.api.routes : 20 |   ❌ ERROR  |  Failed to load module  <module 'message' from '/Users/parsa/Desk/projects/university/slmops-project/application/slmops-application-qa/backend/app/api/routes/message.py'> message: No module named 'app.shared.libs.libs'  
+December 3, 2024 > 18:01:00 |  app.api.routes : 20 |   ❌ ERROR  |  Failed to load module <module 'message' from '/Users/parsa/Desk/projects/university/slmops-project/application/slmops-application-qa/backend/app/api/routes/message.py'> message: No module named 'app.shared.libs.libs'  
+December 3, 2024 > 18:02:40 |  app.api.routes : 20 |   ❌ ERROR  |  Failed to load module <module 'message' from '/Users/parsa/Desk/projects/university/slmops-project/application/slmops-application-qa/backend/app/api/routes/message.py'> message: No module named 'app.shared.libs.libs'  
+December 3, 2024 > 18:02:45 |  app.api.routes : 20 |   ❌ ERROR  |  Failed to load module <module 'message' from '/Users/parsa/Desk/projects/university/slmops-project/application/slmops-application-qa/backend/app/api/routes/message.py'> message: No module named 'app.shared.libs.libs'  
+December 3, 2024 > 18:02:46 |  app.api.routes : 20 |   ❌ ERROR  |  Failed to load module <module 'message' from '/Users/parsa/Desk/projects/university/slmops-project/application/slmops-application-qa/backend/app/api/routes/message.py'> message: No module named 'app.shared.libs.libs'  
+December 3, 2024 > 18:03:25 |  app.api.routes : 20 |   ❌ ERROR  |  Failed to load module <module 'message' from '/Users/parsa/Desk/projects/university/slmops-project/application/slmops-application-qa/backend/app/api/routes/message.py'> message: No module named 'app.shared.libs.libs'  
+December 3, 2024 > 18:03:48 |  app.api.routes : 20 |   ❌ ERROR  |  Failed to load module <module 'message' from '/Users/parsa/Desk/projects/university/slmops-project/application/slmops-application-qa/backend/app/api/routes/message.py'> message: No module named 'app.shared.libs.libs'  
+December 3, 2024 > 18:04:17 |  app.api.routes : 20 |   ❌ ERROR  |  Failed to load module <module 'message' from '/Users/parsa/Desk/projects/university/slmops-project/application/slmops-application-qa/backend/app/api/routes/message.py'> message: No module named 'app.shared.libs.libs'  
+December 3, 2024 > 18:04:48 |  app.api.routes : 20 |   ❌ ERROR  |  Failed to load module <module 'message' from '/Users/parsa/Desk/projects/university/slmops-project/application/slmops-application-qa/backend/app/api/routes/message.py'> message: No module named 'app.shared.libs.libs'  
+December 3, 2024 > 18:04:48 |  app.api.routes : 20 |   ❌ ERROR  |  Failed to load module <module 'message' from '/Users/parsa/Desk/projects/university/slmops-project/application/slmops-application-qa/backend/app/api/routes/message.py'> message: No module named 'app.shared.libs.libs'  
+December 3, 2024 > 18:06:10 |  app.api.routes : 20 |   ❌ ERROR  |  Failed to load module <module 'message' from '/Users/parsa/Desk/projects/university/slmops-project/application/slmops-application-qa/backend/app/api/routes/message.py'> message: No module named 'app.shared.libs.libs'  
+December 3, 2024 > 18:06:22 |  app.api.routes : 20 |   ❌ ERROR  |  Failed to load module <module 'message' from '/Users/parsa/Desk/projects/university/slmops-project/application/slmops-application-qa/backend/app/api/routes/message.py'> message: No module named 'app.features.libs'  
+December 3, 2024 > 18:06:26 |  app.api.routes : 20 |   ❌ ERROR  |  Failed to load module <module 'message' from '/Users/parsa/Desk/projects/university/slmops-project/application/slmops-application-qa/backend/app/api/routes/message.py'> message: No module named 'app.features.libs'  
+December 3, 2024 > 18:06:27 |  app.api.routes : 20 |   ❌ ERROR  |  Failed to load module <module 'message' from '/Users/parsa/Desk/projects/university/slmops-project/application/slmops-application-qa/backend/app/api/routes/message.py'> message: No module named 'app.features.libs'  
+December 4, 2024 > 17:25:27 |  app.api.routes : 20 |   ❌ ERROR  |  Failed to load module <module 'message' from '/Users/parsa/Desk/projects/university/slmops-project/application/slmops-application-qa/backend/app/api/routes/message.py'> message: [Errno 8] nodename nor servname provided, or not known  
+December 4, 2024 > 17:25:29 |  app.api.routes : 20 |   ❌ ERROR  |  Failed to load module <module 'message' from '/Users/parsa/Desk/projects/university/slmops-project/application/slmops-application-qa/backend/app/api/routes/message.py'> message: [Errno 8] nodename nor servname provided, or not known  
+December 4, 2024 > 17:27:20 |  app.api.routes : 20 |   ❌ ERROR  |  Failed to load module <module 'message' from '/Users/parsa/Desk/projects/university/slmops-project/application/slmops-application-qa/backend/app/api/routes/message.py'> message: [Errno 8] nodename nor servname provided, or not known  
+December 4, 2024 > 17:27:22 |  app.api.routes : 20 |   ❌ ERROR  |  Failed to load module <module 'message' from '/Users/parsa/Desk/projects/university/slmops-project/application/slmops-application-qa/backend/app/api/routes/message.py'> message: [Errno 8] nodename nor servname provided, or not known  
+December 4, 2024 > 17:28:05 |  app.api.routes : 20 |   ❌ ERROR  |  Failed to load module <module 'message' from '/Users/parsa/Desk/projects/university/slmops-project/application/slmops-application-qa/backend/app/api/routes/message.py'> message: [Errno 8] nodename nor servname provided, or not known  
+December 4, 2024 > 17:28:32 |  app.api.routes : 20 |   ❌ ERROR  |  Failed to load module <module 'message' from '/Users/parsa/Desk/projects/university/slmops-project/application/slmops-application-qa/backend/app/api/routes/message.py'> message: [Errno 8] nodename nor servname provided, or not known  
+December 4, 2024 > 17:31:03 |  app.api.routes : 20 |   ❌ ERROR  |  Failed to load module <module 'message' from '/Users/parsa/Desk/projects/university/slmops-project/application/slmops-application-qa/backend/app/api/routes/message.py'> message: Storage folder /Users/parsa/Desk/projects/university/slmops-project/application/slmops-application-qa/backend/data/vectoredb is already accessed by another instance of Qdrant client. If you require concurrent access, use Qdrant server instead.  
+December 4, 2024 > 17:31:18 |  app.api.routes : 20 |   ❌ ERROR  |  Failed to load module <module 'message' from '/Users/parsa/Desk/projects/university/slmops-project/application/slmops-application-qa/backend/app/api/routes/message.py'> message: Storage folder /Users/parsa/Desk/projects/university/slmops-project/application/slmops-application-qa/backend/data/vectoredb is already accessed by another instance of Qdrant client. If you require concurrent access, use Qdrant server instead.  
+December 4, 2024 > 17:32:20 |  app.api.routes : 20 |   ❌ ERROR  |  Failed to load module <module 'message' from '/Users/parsa/Desk/projects/university/slmops-project/application/slmops-application-qa/backend/app/api/routes/message.py'> message: [Errno 61] Connection refused  
+December 4, 2024 > 17:32:22 |  app.api.routes : 20 |   ❌ ERROR  |  Failed to load module <module 'message' from '/Users/parsa/Desk/projects/university/slmops-project/application/slmops-application-qa/backend/app/api/routes/message.py'> message: Collection demo_collection already exists  
+December 4, 2024 > 17:33:19 |  app.api.routes : 20 |   ❌ ERROR  |  Failed to load module <module 'message' from '/Users/parsa/Desk/projects/university/slmops-project/application/slmops-application-qa/backend/app/api/routes/message.py'> message: [Errno 61] Connection refused  
+December 4, 2024 > 17:33:33 |  app.api.routes : 20 |   ❌ ERROR  |  Failed to load module <module 'message' from '/Users/parsa/Desk/projects/university/slmops-project/application/slmops-application-qa/backend/app/api/routes/message.py'> message: [Errno 61] Connection refused  
+December 4, 2024 > 17:37:09 |  app.api.routes : 20 |   ❌ ERROR  |  Failed to load module <module 'message' from '/Users/parsa/Desk/projects/university/slmops-project/application/slmops-application-qa/backend/app/api/routes/message.py'> message: Storage folder /Users/parsa/Desk/projects/university/slmops-project/application/slmops-application-qa/backend/data/vectoredb is already accessed by another instance of Qdrant client. If you require concurrent access, use Qdrant server instead.  
+December 4, 2024 > 17:38:27 |  app.api.routes : 20 |   ❌ ERROR  |  Failed to load module <module 'message' from '/Users/parsa/Desk/projects/university/slmops-project/application/slmops-application-qa/backend/app/api/routes/message.py'> message: Storage folder /Users/parsa/Desk/projects/university/slmops-project/application/slmops-application-qa/backend/data/vectoredb is already accessed by another instance of Qdrant client. If you require concurrent access, use Qdrant server instead.  
+December 4, 2024 > 17:38:31 |  app.api.routes : 20 |   ❌ ERROR  |  Failed to load module <module 'message' from '/Users/parsa/Desk/projects/university/slmops-project/application/slmops-application-qa/backend/app/api/routes/message.py'> message: Storage folder /Users/parsa/Desk/projects/university/slmops-project/application/slmops-application-qa/backend/data/vectoredb is already accessed by another instance of Qdrant client. If you require concurrent access, use Qdrant server instead.  
+December 5, 2024 > 00:17:45 |  app.api.routes : 20 |   ❌ ERROR  |  Failed to load module <module 'message' from '/Users/parsa/Desk/projects/university/slmops-project/application/slmops-application-qa/backend/app/api/routes/message.py'> message: 'dict' object has no attribute 'markdown'  
+December 5, 2024 > 00:17:46 |  app.api.routes : 20 |   ❌ ERROR  |  Failed to load module <module 'message' from '/Users/parsa/Desk/projects/university/slmops-project/application/slmops-application-qa/backend/app/api/routes/message.py'> message: 'dict' object has no attribute 'markdown'  
+December 5, 2024 > 00:20:18 |  app.api.routes : 20 |   ❌ ERROR  |  Failed to load module <module 'message' from '/Users/parsa/Desk/projects/university/slmops-project/application/slmops-application-qa/backend/app/api/routes/message.py'> message: Expected metadata value to be a str, int, float or bool, got {'question': 'Can I change my seat assignment after I have checked in?', 'answer': 'As long as your boarding pass has not yet been printed, you can still change your seat number after check-in. Click for details.', 'source': 'https://www.turkishairlines.com/en-int/any-questions/check-in-questions/index.html'} which is a dict in upsert.
+
+Try filtering complex metadata from the document using langchain_community.vectorstores.utils.filter_complex_metadata.  
+December 5, 2024 > 00:21:06 |  app.api.routes : 20 |   ❌ ERROR  |  Failed to load module <module 'message' from '/Users/parsa/Desk/projects/university/slmops-project/application/slmops-application-qa/backend/app/api/routes/message.py'> message: Expected metadata value to be a str, int, float or bool, got {'question': 'Can I change my seat assignment after I have checked in?', 'answer': 'As long as your boarding pass has not yet been printed, you can still change your seat number after check-in. Click for details.', 'source': 'https://www.turkishairlines.com/en-int/any-questions/check-in-questions/index.html'} which is a dict in upsert.
+
+Try filtering complex metadata from the document using langchain_community.vectorstores.utils.filter_complex_metadata.  
+December 5, 2024 > 00:21:08 |  app.api.routes : 20 |   ❌ ERROR  |  Failed to load module <module 'message' from '/Users/parsa/Desk/projects/university/slmops-project/application/slmops-application-qa/backend/app/api/routes/message.py'> message: Expected metadata value to be a str, int, float or bool, got {'question': 'Can I change my seat assignment after I have checked in?', 'answer': 'As long as your boarding pass has not yet been printed, you can still change your seat number after check-in. Click for details.', 'source': 'https://www.turkishairlines.com/en-int/any-questions/check-in-questions/index.html'} which is a dict in upsert.
+
+Try filtering complex metadata from the document using langchain_community.vectorstores.utils.filter_complex_metadata.  
+December 5, 2024 > 00:25:22 |  app.api.routes : 20 |   ❌ ERROR  |  Failed to load module <module 'message' from '/Users/parsa/Desk/projects/university/slmops-project/application/slmops-application-qa/backend/app/api/routes/message.py'> message: Expected metadata value to be a str, int, float or bool, got {'question': 'Can I change my seat assignment after I have checked in?', 'answer': 'As long as your boarding pass has not yet been printed, you can still change your seat number after check-in. Click for details.', 'source': 'https://www.turkishairlines.com/en-int/any-questions/check-in-questions/index.html'} which is a dict in upsert.
+
+Try filtering complex metadata from the document using langchain_community.vectorstores.utils.filter_complex_metadata.  
+December 5, 2024 > 00:29:28 |  app.api.routes : 20 |   ❌ ERROR  |  Failed to load module <module 'message' from '/Users/parsa/Desk/projects/university/slmops-project/application/slmops-application-qa/backend/app/api/routes/message.py'> message: Expected metadata value to be a str, int, float or bool, got {'question': 'Can I change my seat assignment after I have checked in?', 'answer': 'As long as your boarding pass has not yet been printed, you can still change your seat number after check-in. Click for details.', 'source': 'https://www.turkishairlines.com/en-int/any-questions/check-in-questions/index.html'} which is a dict in upsert.
+
+Try filtering complex metadata from the document using langchain_community.vectorstores.utils.filter_complex_metadata.  
+December 5, 2024 > 16:08:15 |  fastembed.common.model_management : 264 |   ❌ ERROR  |  Could not download model from HuggingFace: An error happened while trying to locate the files on the Hub and we cannot find the appropriate snapshot folder for the specified revision on the local disk. Please check your internet connection and try again. Falling back to other sources.  
+December 5, 2024 > 16:08:15 |  fastembed.common.model_management : 283 |   ❌ ERROR  |  Could not download model from either source, sleeping for 3.0 seconds, 2 retries left.  
+December 5, 2024 > 16:08:18 |  fastembed.common.model_management : 264 |   ❌ ERROR  |  Could not download model from HuggingFace: An error happened while trying to locate the files on the Hub and we cannot find the appropriate snapshot folder for the specified revision on the local disk. Please check your internet connection and try again. Falling back to other sources.  
+December 5, 2024 > 16:08:18 |  fastembed.common.model_management : 283 |   ❌ ERROR  |  Could not download model from either source, sleeping for 9.0 seconds, 1 retries left.  
+December 5, 2024 > 16:08:27 |  fastembed.common.model_management : 264 |   ❌ ERROR  |  Could not download model from HuggingFace: An error happened while trying to locate the files on the Hub and we cannot find the appropriate snapshot folder for the specified revision on the local disk. Please check your internet connection and try again. Falling back to other sources.  
+December 5, 2024 > 16:08:27 |  fastembed.common.model_management : 283 |   ❌ ERROR  |  Could not download model from either source, sleeping for 27.0 seconds, 0 retries left.  
+December 5, 2024 > 16:08:54 |  app.api.routes : 20 |   ❌ ERROR  |  Failed to load module <module 'message' from '/Users/parsa/Desk/projects/university/slmops-project/application/slmops-application-qa/backend/app/api/routes/message.py'> message: 1 validation error for FastEmbedEmbeddings
+  Value error, Could not load model BAAI/bge-small-en-v1.5 from any source. [type=value_error, input_value={'model_name': 'BAAI/bge-...l': None, 'model': None}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.9/v/value_error  
+December 5, 2024 > 16:08:55 |  fastembed.common.model_management : 264 |   ❌ ERROR  |  Could not download model from HuggingFace: An error happened while trying to locate the files on the Hub and we cannot find the appropriate snapshot folder for the specified revision on the local disk. Please check your internet connection and try again. Falling back to other sources.  
+December 5, 2024 > 16:08:55 |  fastembed.common.model_management : 283 |   ❌ ERROR  |  Could not download model from either source, sleeping for 3.0 seconds, 2 retries left.  
+December 5, 2024 > 16:08:58 |  fastembed.common.model_management : 264 |   ❌ ERROR  |  Could not download model from HuggingFace: An error happened while trying to locate the files on the Hub and we cannot find the appropriate snapshot folder for the specified revision on the local disk. Please check your internet connection and try again. Falling back to other sources.  
+December 5, 2024 > 16:08:58 |  fastembed.common.model_management : 283 |   ❌ ERROR  |  Could not download model from either source, sleeping for 9.0 seconds, 1 retries left.  
+December 5, 2024 > 16:09:07 |  fastembed.common.model_management : 264 |   ❌ ERROR  |  Could not download model from HuggingFace: An error happened while trying to locate the files on the Hub and we cannot find the appropriate snapshot folder for the specified revision on the local disk. Please check your internet connection and try again. Falling back to other sources.  
+December 5, 2024 > 16:09:07 |  fastembed.common.model_management : 283 |   ❌ ERROR  |  Could not download model from either source, sleeping for 27.0 seconds, 0 retries left.  
+December 5, 2024 > 16:09:34 |  app.api.routes : 20 |   ❌ ERROR  |  Failed to load module <module 'message' from '/Users/parsa/Desk/projects/university/slmops-project/application/slmops-application-qa/backend/app/api/routes/message.py'> message: 1 validation error for FastEmbedEmbeddings
+  Value error, Could not load model BAAI/bge-small-en-v1.5 from any source. [type=value_error, input_value={'model_name': 'BAAI/bge-...l': None, 'model': None}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.9/v/value_error  
