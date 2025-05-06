@@ -1,0 +1,18 @@
+version: "3"
+
+tasks:
+  observe-start:
+    vars:
+      PORT: 6006
+    cmds:
+      - "docker pull arizephoenix/phoenix:latest"
+      - "docker run -d --name lmorbits-observing-service -p {{.PORT}}:6006 arizephoenix/phoenix:latest"
+
+  observe-stop:
+    cmds:
+      - "docker stop lmorbits-observing-service"
+
+  observe-remove:
+    cmds:
+      - task: observe-stop
+      - "docker rm lmorbits-observing-service"

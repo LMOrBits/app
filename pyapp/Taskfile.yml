@@ -1,0 +1,9 @@
+version: "3"
+
+includes:
+  local:
+    taskfile: ./tasks/local/Taskfile.yml
+    dir: ./tasks/local
+  remote:
+    taskfile: ./tasks/remote/Taskfile.yml
+    dir: ./tasks/remote
