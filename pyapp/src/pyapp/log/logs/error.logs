@@ -356,3 +356,326 @@ December 5, 2024 > 16:09:07 |  fastembed.common.model_management : 283 |   ❌ E
 December 5, 2024 > 16:09:34 |  app.api.routes : 20 |   ❌ ERROR  |  Failed to load module <module 'message' from '/Users/parsa/Desk/projects/university/slmops-project/application/slmops-application-qa/backend/app/api/routes/message.py'> message: 1 validation error for FastEmbedEmbeddings
   Value error, Could not load model BAAI/bge-small-en-v1.5 from any source. [type=value_error, input_value={'model_name': 'BAAI/bge-...l': None, 'model': None}, input_type=dict]
     For further information visit https://errors.pydantic.dev/2.9/v/value_error  
+May 7, 2025 > 09:37:48 |  serve.utils.mlflow.config : 246 |   ❌ ERROR  |  MLflow error checking qa_model version: INVALID_PARAMETER_VALUE: Registered model alias champion not found.  
+May 7, 2025 > 09:37:48 |  serve.utils.mlflow.config : 208 |   ❌ ERROR  |  MLflow error while adding model qa_model: INVALID_PARAMETER_VALUE: Registered model alias champion not found.  
+May 7, 2025 > 09:38:08 |  serve.utils.mlflow.config : 460 |   ❌ ERROR  |  Error getting path for rag_model: No path found for model rag_model  
+May 7, 2025 > 09:38:10 |  serve._cli.task : 33 |   ❌ ERROR  |  [32mtask: [serve] echo "Starting LlamaCpp server and waiting for it to be ready..."
+[0m[32mtask: [serve] container_id=$(docker run -d \
+  --name lmorbits-llamacpp-rag_model \
+  -p 8000:8000 \
+  -p 8080:8080 \
+  -v /Users/parsa/Desk/projects/university/slmops-project/slmops-thesis/app_projects/app/pyapp/notebooks/models/rag_model/model_path/artifacts:/models \
+  ghcr.io/ggerganov/llama.cpp:server \
+  -m /models/model.gguf)
+
+while ! docker logs $container_id 2>&1 | grep -q "GET /health 127.0.0.1 200"; do
+  echo "Loading model and starting server..."
+  docker logs --tail 10 $container_id
+  sleep 1
+done
+echo "LlamaCpp server is ready!"
+
+[0mdocker: Error response from daemon: Conflict. The container name "/lmorbits-llamacpp-rag_model" is already in use by container "a5cd7303de7a12784e1582eb6e85a63a0e9b15b26539b359caf872c64e69e040". You have to remove (or rename) that container to be able to reuse that name.
+See 'docker run --help'.
+[31mtask: Failed to run task "serve": exit status 125
+[0m  
+May 7, 2025 > 09:38:42 |  serve.servers.llamacpp.serve : 97 |   ❌ ERROR  |  Failed to add server instance: Model ID 'rag_model' already exists  
+May 7, 2025 > 09:38:53 |  serve.servers.llamacpp.serve : 97 |   ❌ ERROR  |  Failed to add server instance: Model ID 'rag_model' already exists  
+May 7, 2025 > 09:40:10 |  serve.utils.mlflow.config : 460 |   ❌ ERROR  |  Error getting path for rag_model: No path found for model rag_model  
+May 7, 2025 > 09:40:42 |  serve._cli.task : 33 |   ❌ ERROR  |  [32mtask: [serve] echo "Starting LlamaCpp server and waiting for it to be ready..."
+[0m[32mtask: [serve] container_id=$(docker run -d \
+  --name lmorbits-llamacpp-rag_model \
+  -p 8000:8000 \
+  -p 8080:8080 \
+  -v /Users/parsa/Desk/projects/university/slmops-project/slmops-thesis/app_projects/app/pyapp/notebooks/d/models/rag_model/model_path/artifacts:/models \
+  ghcr.io/ggerganov/llama.cpp:server \
+  -m /models/model.gguf)
+
+while ! docker logs $container_id 2>&1 | grep -q "GET /health 127.0.0.1 200"; do
+  echo "Loading model and starting server..."
+  docker logs --tail 10 $container_id
+  sleep 1
+done
+echo "LlamaCpp server is ready!"
+
+[0m<|im_start|>user
+Hello<|im_end|>
+<|im_start|>assistant
+Hi there<|im_end|>
+<|im_start|>user
+How are you?<|im_end|>
+<|im_start|>assistant
+'
+main: server is listening on http://0.0.0.0:8080 - starting the main loop
+srv  update_slots: all slots are idle
+<|im_start|>user
+Hello<|im_end|>
+<|im_start|>assistant
+Hi there<|im_end|>
+<|im_start|>user
+How are you?<|im_end|>
+<|im_start|>assistant
+'
+main: server is listening on http://0.0.0.0:8080 - starting the main loop
+srv  update_slots: all slots are idle
+<|im_start|>user
+Hello<|im_end|>
+<|im_start|>assistant
+Hi there<|im_end|>
+<|im_start|>user
+How are you?<|im_end|>
+<|im_start|>assistant
+'
+main: server is listening on http://0.0.0.0:8080 - starting the main loop
+srv  update_slots: all slots are idle
+<|im_start|>user
+Hello<|im_end|>
+<|im_start|>assistant
+Hi there<|im_end|>
+<|im_start|>user
+How are you?<|im_end|>
+<|im_start|>assistant
+'
+main: server is listening on http://0.0.0.0:8080 - starting the main loop
+srv  update_slots: all slots are idle
+<|im_start|>user
+Hello<|im_end|>
+<|im_start|>assistant
+Hi there<|im_end|>
+<|im_start|>user
+How are you?<|im_end|>
+<|im_start|>assistant
+'
+main: server is listening on http://0.0.0.0:8080 - starting the main loop
+srv  update_slots: all slots are idle
+<|im_start|>user
+Hello<|im_end|>
+<|im_start|>assistant
+Hi there<|im_end|>
+<|im_start|>user
+How are you?<|im_end|>
+<|im_start|>assistant
+'
+main: server is listening on http://0.0.0.0:8080 - starting the main loop
+srv  update_slots: all slots are idle
+<|im_start|>user
+Hello<|im_end|>
+<|im_start|>assistant
+Hi there<|im_end|>
+<|im_start|>user
+How are you?<|im_end|>
+<|im_start|>assistant
+'
+main: server is listening on http://0.0.0.0:8080 - starting the main loop
+srv  update_slots: all slots are idle
+<|im_start|>user
+Hello<|im_end|>
+<|im_start|>assistant
+Hi there<|im_end|>
+<|im_start|>user
+How are you?<|im_end|>
+<|im_start|>assistant
+'
+main: server is listening on http://0.0.0.0:8080 - starting the main loop
+srv  update_slots: all slots are idle
+<|im_start|>user
+Hello<|im_end|>
+<|im_start|>assistant
+Hi there<|im_end|>
+<|im_start|>user
+How are you?<|im_end|>
+<|im_start|>assistant
+'
+main: server is listening on http://0.0.0.0:8080 - starting the main loop
+srv  update_slots: all slots are idle
+<|im_start|>user
+Hello<|im_end|>
+<|im_start|>assistant
+Hi there<|im_end|>
+<|im_start|>user
+How are you?<|im_end|>
+<|im_start|>assistant
+'
+main: server is listening on http://0.0.0.0:8080 - starting the main loop
+srv  update_slots: all slots are idle
+<|im_start|>user
+Hello<|im_end|>
+<|im_start|>assistant
+Hi there<|im_end|>
+<|im_start|>user
+How are you?<|im_end|>
+<|im_start|>assistant
+'
+main: server is listening on http://0.0.0.0:8080 - starting the main loop
+srv  update_slots: all slots are idle
+<|im_start|>user
+Hello<|im_end|>
+<|im_start|>assistant
+Hi there<|im_end|>
+<|im_start|>user
+How are you?<|im_end|>
+<|im_start|>assistant
+'
+main: server is listening on http://0.0.0.0:8080 - starting the main loop
+srv  update_slots: all slots are idle
+<|im_start|>user
+Hello<|im_end|>
+<|im_start|>assistant
+Hi there<|im_end|>
+<|im_start|>user
+How are you?<|im_end|>
+<|im_start|>assistant
+'
+main: server is listening on http://0.0.0.0:8080 - starting the main loop
+srv  update_slots: all slots are idle
+<|im_start|>user
+Hello<|im_end|>
+<|im_start|>assistant
+Hi there<|im_end|>
+<|im_start|>user
+How are you?<|im_end|>
+<|im_start|>assistant
+'
+main: server is listening on http://0.0.0.0:8080 - starting the main loop
+srv  update_slots: all slots are idle
+<|im_start|>user
+Hello<|im_end|>
+<|im_start|>assistant
+Hi there<|im_end|>
+<|im_start|>user
+How are you?<|im_end|>
+<|im_start|>assistant
+'
+main: server is listening on http://0.0.0.0:8080 - starting the main loop
+srv  update_slots: all slots are idle
+<|im_start|>user
+Hello<|im_end|>
+<|im_start|>assistant
+Hi there<|im_end|>
+<|im_start|>user
+How are you?<|im_end|>
+<|im_start|>assistant
+'
+main: server is listening on http://0.0.0.0:8080 - starting the main loop
+srv  update_slots: all slots are idle
+<|im_start|>user
+Hello<|im_end|>
+<|im_start|>assistant
+Hi there<|im_end|>
+<|im_start|>user
+How are you?<|im_end|>
+<|im_start|>assistant
+'
+main: server is listening on http://0.0.0.0:8080 - starting the main loop
+srv  update_slots: all slots are idle
+<|im_start|>user
+Hello<|im_end|>
+<|im_start|>assistant
+Hi there<|im_end|>
+<|im_start|>user
+How are you?<|im_end|>
+<|im_start|>assistant
+'
+main: server is listening on http://0.0.0.0:8080 - starting the main loop
+srv  update_slots: all slots are idle
+<|im_start|>user
+Hello<|im_end|>
+<|im_start|>assistant
+Hi there<|im_end|>
+<|im_start|>user
+How are you?<|im_end|>
+<|im_start|>assistant
+'
+main: server is listening on http://0.0.0.0:8080 - starting the main loop
+srv  update_slots: all slots are idle
+<|im_start|>user
+Hello<|im_end|>
+<|im_start|>assistant
+Hi there<|im_end|>
+<|im_start|>user
+How are you?<|im_end|>
+<|im_start|>assistant
+'
+main: server is listening on http://0.0.0.0:8080 - starting the main loop
+srv  update_slots: all slots are idle
+<|im_start|>user
+Hello<|im_end|>
+<|im_start|>assistant
+Hi there<|im_end|>
+<|im_start|>user
+How are you?<|im_end|>
+<|im_start|>assistant
+'
+main: server is listening on http://0.0.0.0:8080 - starting the main loop
+srv  update_slots: all slots are idle
+<|im_start|>user
+Hello<|im_end|>
+<|im_start|>assistant
+Hi there<|im_end|>
+<|im_start|>user
+How are you?<|im_end|>
+<|im_start|>assistant
+'
+main: server is listening on http://0.0.0.0:8080 - starting the main loop
+srv  update_slots: all slots are idle
+<|im_start|>user
+Hello<|im_end|>
+<|im_start|>assistant
+Hi there<|im_end|>
+<|im_start|>user
+How are you?<|im_end|>
+<|im_start|>assistant
+'
+main: server is listening on http://0.0.0.0:8080 - starting the main loop
+srv  update_slots: all slots are idle
+<|im_start|>user
+Hello<|im_end|>
+<|im_start|>assistant
+Hi there<|im_end|>
+<|im_start|>user
+How are you?<|im_end|>
+<|im_start|>assistant
+'
+main: server is listening on http://0.0.0.0:8080 - starting the main loop
+srv  update_slots: all slots are idle
+<|im_start|>user
+Hello<|im_end|>
+<|im_start|>assistant
+Hi there<|im_end|>
+<|im_start|>user
+How are you?<|im_end|>
+<|im_start|>assistant
+'
+main: server is listening on http://0.0.0.0:8080 - starting the main loop
+srv  update_slots: all slots are idle
+<|im_start|>user
+Hello<|im_end|>
+<|im_start|>assistant
+Hi there<|im_end|>
+<|im_start|>user
+How are you?<|im_end|>
+<|im_start|>assistant
+'
+main: server is listening on http://0.0.0.0:8080 - starting the main loop
+srv  update_slots: all slots are idle
+<|im_start|>user
+Hello<|im_end|>
+<|im_start|>assistant
+Hi there<|im_end|>
+<|im_start|>user
+How are you?<|im_end|>
+<|im_start|>assistant
+'
+main: server is listening on http://0.0.0.0:8080 - starting the main loop
+srv  update_slots: all slots are idle
+<|im_start|>user
+Hello<|im_end|>
+<|im_start|>assistant
+Hi there<|im_end|>
+<|im_start|>user
+How are you?<|im_end|>
+<|im_start|>assistant
+'
+main: server is listening on http://0.0.0.0:8080 - starting the main loop
+srv  update_slots: all slots are idle
+  
