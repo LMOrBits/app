@@ -1,0 +1,25 @@
+version: "3"
+vars:
+  CONTAINER_NAME: "lmorbits-obeservation"
+  IMAGE_NAME: "arizephoenix/phoenix:latest"
+tasks:
+  start:
+    vars:
+      PORT: "{{.PORT | default 6006}}"
+      GRPC_PORT: "{{.GRPC_PORT | default 4317}}"
+    cmds:
+      - "docker pull {{.IMAGE_NAME}}"
+      - "docker run -d --name {{.CONTAINER_NAME}} -p {{.PORT}}:6006 -p {{.GRPC_PORT}}:4317 {{.IMAGE_NAME}}"
+
+  stop:
+    cmds:
+      - "docker stop {{.CONTAINER_NAME}}"
+
+  remove:
+    cmds:
+      - task: stop
+      - "docker rm {{.CONTAINER_NAME}}"
+
+  status:
+    cmds:
+      - "docker ps | grep {{.CONTAINER_NAME}} | wc -l"

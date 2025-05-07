@@ -1,17 +1,82 @@
 from loguru import logger
+from taskpy import TaskCLI
+from pathlib import Path
 tracer = None
 
-try :
-  from openinference.instrumentation.langchain import LangChainInstrumentor
-  from phoenix.otel import register
-  from opentelemetry import trace
-  tracer_provider_mango = register(
-      project_name="mango-app",
-      set_global_tracer_provider=False,
-      verbose=False
-  )
-  LangChainInstrumentor().instrument(tracer_provider=tracer_provider_mango)
-  trace.set_tracer_provider(tracer_provider_mango)
-  tracer = trace.get_tracer(__name__)
-except Exception as e:
-  logger.error(f"Error in phoenix observation: {e}")
+class PhoenixObservation:
+  @property
+  def port(self):
+    return 6006
+
+  @property
+  def grpc_port(self):
+    return 4317
+
+  def __init__(self):
+    self.task = TaskCLI(Path(__file__).parent )
+  
+  
+  def is_running(self):
+      try:
+        answer = self.task.run("status")
+        return int(answer.stdout.strip())!= 0
+      except Exception as e:
+        logger.error(f"Error in phoenix observation: {e}")
+        return False 
+
+  def start(self):
+    try:
+      status = self.is_running()
+      if status:
+        logger.info("Phoenix is already running")
+      else: 
+        self.task.run("start", port=self.port, grpc_port=self.grpc_port)
+    except Exception as e:
+      logger.error(f"Error in phoenix observation: {e}")
+
+  def stop(self):
+    try:
+      status = self.is_running()
+      if not status:
+        logger.info("Phoenix is not running")
+      else:
+        self.task.run("stop")
+    except Exception as e:
+      logger.error(f"Error in phoenix observation: {e}")
+  
+  def remove(self):
+    try:
+      self.task.run("remove")
+    except Exception as e:
+      logger.error(f"Error in phoenix observation: {e}")
+
+
+class PhonexLangChainInstrumentor:
+  tracer_provider = None
+
+  def __init__(self, project_name: str= "lmorbits-phoenix" , app_name: str= "app1"):
+    try:
+      self.app_name = app_name
+      self.project_name = project_name
+      from opentelemetry import trace
+      from openinference.instrumentation.langchain import LangChainInstrumentor
+      from phoenix.otel import register
+
+      self.tracer_provider = register(
+        project_name=self.project_name,
+        set_global_tracer_provider=False,
+        verbose=False
+      ) 
+      LangChainInstrumentor().instrument(tracer_provider=self.tracer_provider)
+      trace.set_tracer_provider(self.tracer_provider)
+      
+
+    except Exception as e:
+      logger.error(f"Error in phoenix observation: {e}")
+  
+  def get_tracer(self , module_name:str):
+    from opentelemetry import trace
+    return trace.get_tracer(f"{self.app_name}.{module_name}")
+    
+  
+  
