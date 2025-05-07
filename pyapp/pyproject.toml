@@ -7,7 +7,7 @@ authors = [{ name = "parsa", email = "parsa.miraghaie@gmail.com" }]
 requires-python = ">=3.12"
 dependencies = [
   "go-task-bin>=3.43.3",
-  "ipykernel>=6.29.5",
+
   "litellm>=1.68.0",
   "loguru>=0.7.3",
   "pydantic>=2.11.4",
@@ -21,8 +21,11 @@ build-backend = "hatchling.build"
 
 
 [dependency-groups]
-dev = ["pytest>=8.3.5"]
-
+dev-serve = [
+  { include-group = "local-langchain-embeddings" },
+  { include-group = "dev" },
+]
+dev = ["pytest>=8.3.5", "ipykernel>=6.29.5"]
 
 local = ["arize-phoenix-otel>=0.9.2"]
 
@@ -61,4 +64,5 @@ python_files = "test_*.py"
 python_functions = "test_*"
 
 [tool.uv.sources]
-serve = { git = "https://github.com/Parsa-Mir/serve.git" }
+# serve = { git = "https://github.com/Parsa-Mir/serve.git" }
+serve = { path = "../serve", editable = true }
