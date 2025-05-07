@@ -1,82 +1,51 @@
-from loguru import logger
-from taskpy import TaskCLI
-from pathlib import Path
-tracer = None
+from .instance import PhonexLangChainInstrumentor, PhonexObservation
+from openinference.instrumentation import using_session
+from openinference.semconv.trace import SpanAttributes
+from opentelemetry import trace # wherever your context manager lives
+from functools import wraps
 
-class PhoenixObservation:
-  @property
-  def port(self):
-    return 6006
+PhonexLangChainInstrumentor()
+observation = PhonexObservation()
+observation.start()
 
-  @property
-  def grpc_port(self):
-    return 4317
+def traced_agent(name: str, propagate_session: bool = True, tracer_name:str="lmorbits-trace"):
+    """
+    Decorator that wraps a function in a span named `name`,
+    automatically sets SESSION_ID, INPUT_VALUE, and OUTPUT_VALUE,
+    and (optionally) enters using_session(session_id) around the call.
+    """
+    tracer = trace.get_tracer(tracer_name)
+    def decorator(fn):
+        @wraps(fn)
+        def wrapper(messages: list[dict], session_id: str, *args, **kwargs):
+            # start the OpenTelemetry span
+            with tracer.start_as_current_span(
+                name=name,
+                attributes={SpanAttributes.OPENINFERENCE_SPAN_KIND: "agent"}
+            ) as span:
+                # record session and input
+                span.set_attribute(SpanAttributes.SESSION_ID, session_id)
+                last_msg = messages[-1].get("content")
+                span.set_attribute(SpanAttributes.INPUT_VALUE, last_msg)
 
-  def __init__(self):
-    self.task = TaskCLI(Path(__file__).parent )
-  
-  
-  def is_running(self):
-      try:
-        answer = self.task.run("status")
-        return int(answer.stdout.strip())!= 0
-      except Exception as e:
-        logger.error(f"Error in phoenix observation: {e}")
-        return False 
+                # optionally propagate session into sub‐spans
+                if propagate_session:
+                    with using_session(session_id):
+                        result = fn(messages, session_id, *args, **kwargs)
+                else:
+                    result = fn(messages, session_id, *args, **kwargs)
 
-  def start(self):
-    try:
-      status = self.is_running()
-      if status:
-        logger.info("Phoenix is already running")
-      else: 
-        self.task.run("start", port=self.port, grpc_port=self.grpc_port)
-    except Exception as e:
-      logger.error(f"Error in phoenix observation: {e}")
+                # record the output
+                # assume returned object has .content
+                output = getattr(result, "content", result)
+                span.set_attribute(SpanAttributes.OUTPUT_VALUE, output)
 
-  def stop(self):
-    try:
-      status = self.is_running()
-      if not status:
-        logger.info("Phoenix is not running")
-      else:
-        self.task.run("stop")
-    except Exception as e:
-      logger.error(f"Error in phoenix observation: {e}")
-  
-  def remove(self):
-    try:
-      self.task.run("remove")
-    except Exception as e:
-      logger.error(f"Error in phoenix observation: {e}")
+                return result
+        return wrapper
+    return decorator
 
 
-class PhonexLangChainInstrumentor:
-  tracer_provider = None
-
-  def __init__(self, project_name: str= "lmorbits-phoenix" , app_name: str= "app1"):
-    try:
-      self.app_name = app_name
-      self.project_name = project_name
-      from opentelemetry import trace
-      from openinference.instrumentation.langchain import LangChainInstrumentor
-      from phoenix.otel import register
-
-      self.tracer_provider = register(
-        project_name=self.project_name,
-        set_global_tracer_provider=False,
-        verbose=False
-      ) 
-      LangChainInstrumentor().instrument(tracer_provider=self.tracer_provider)
-      trace.set_tracer_provider(self.tracer_provider)
-      
-
-    except Exception as e:
-      logger.error(f"Error in phoenix observation: {e}")
-  
-  def get_tracer(self , module_name:str):
-    from opentelemetry import trace
-    return trace.get_tracer(f"{self.app_name}.{module_name}")
-    
-  
-  
+# @traced_agent(name="app1")
+# def assistant2(messages: list[dict], session_id: str):
+#     # now you only have to do your business logic
+#     return chain.invoke(messages)
