@@ -1,4 +1,5 @@
 version = 1
+revision = 1
 requires-python = ">=3.12"
 resolution-markers = [
     "python_full_version >= '3.13' and sys_platform != 'win32'",
@@ -2341,6 +2342,7 @@ requires-dist = [
     { name = "serve", extras = ["mlflow-llamacpp"], editable = "../serve" },
     { name = "taskpy", git = "https://github.com/Parsa-Mir/taskpy.git" },
 ]
+provides-extras = ["local-langchain", "local-langchain-embeddings"]
 
 [package.metadata.requires-dev]
 dev = [
@@ -2894,6 +2896,7 @@ requires-dist = [
     { name = "serve", extras = ["llamacpp"], marker = "extra == 'mlflow-llamacpp-gcs'" },
     { name = "tqdm", specifier = ">=4.67.1" },
 ]
+provides-extras = ["llamacpp", "mlflow-llamacpp", "mlflow-llamacpp-gcs"]
 
 [package.metadata.requires-dev]
 llamacpp-dev = [{ name = "serve", extras = ["llamacpp"] }]
