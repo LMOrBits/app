@@ -8,17 +8,32 @@ tasks:
       PORT: "{{.PORT | default 6006}}"
       GRPC_PORT: "{{.GRPC_PORT | default 4317}}"
     cmds:
-      - "docker pull {{.IMAGE_NAME}}"
-      - "docker run -d --name {{.CONTAINER_NAME}} -p {{.PORT}}:6006 -p {{.GRPC_PORT}}:4317 {{.IMAGE_NAME}}"
+      - |
+        if [ "$(docker ps -q --filter "status=exited" -f name={{.CONTAINER_NAME}})" ]; then
+          docker start {{.CONTAINER_NAME}}
+        else
+          container_id=$(docker run -d \
+            --name {{.CONTAINER_NAME}} \
+            -p {{.PORT}}:6006 \
+            -p {{.GRPC_PORT}}:4317 \
+            {{.IMAGE_NAME}})
+        fi
 
   stop:
     cmds:
-      - "docker stop {{.CONTAINER_NAME}}"
+      - |
+        if [ "$(docker ps -q -f name={{.CONTAINER_NAME}} | wc -l)" -gt 0 ]; then
+          docker stop $(docker ps -q -f name={{.CONTAINER_NAME}})
+        fi
 
   remove:
     cmds:
-      - task: stop
-      - "docker rm {{.CONTAINER_NAME}}"
+      - |
+        if [ "$(docker ps -q -f name={{.CONTAINER_NAME}})" ]; then
+             docker stop $(docker ps -q -f name={{.CONTAINER_NAME}})
+             
+           fi
+           docker rm $(docker ps -aq -f name={{.CONTAINER_NAME}})
 
   status:
     cmds:

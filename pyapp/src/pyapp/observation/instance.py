@@ -22,7 +22,12 @@ class PhoenixObservation:
   def is_running(self):
       try:
         answer = self.task.run("status")
-        return int(answer.stdout.strip())!= 0
+        status = int(answer.stdout.strip())!= 0
+        if status:
+          logger.debug("Phoenix is running")
+        else:
+          logger.debug("Phoenix is not running")
+        return status
       except Exception as e:
         # logger.error(f"Error in phoenix observation: {e}")
         return False 
@@ -39,11 +44,7 @@ class PhoenixObservation:
 
   def stop(self):
     try:
-      status = self.is_running()
-      if not status:
-        logger.info("Phoenix is not running")
-      else:
-        self.task.run("stop")
+      self.task.run("stop")
     except Exception as e:
       logger.error(f"Error in phoenix observation: {e}")
   
@@ -52,6 +53,7 @@ class PhoenixObservation:
       self.task.run("remove")
     except Exception as e:
       logger.error(f"Error in phoenix observation: {e}")
+
 
 class PhoenixLangChainInstrumentor:
   _instance = None
