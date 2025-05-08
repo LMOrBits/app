@@ -7,55 +7,151 @@ from pyapp.log.log_config import get_logger
 import base64
 logger = get_logger()
 
+import base64
+import inspect
+from functools import wraps
+
+
 ph_instrumentor = PhoenixLangChainInstrumentor()
 observation = PhoenixObservation()
 logger.info("Starting Phoenix observation")
 observation.start()
 
-def traced_agent(name: str, propagate_session: bool = True, tracer_name:str="lmorbits-trace"):
+def traced_agent(
+    name: str,
+    propagate_session: bool = True,
+    tracer_name: str = "lmorbits-trace"
+):
     """
-    Decorator that wraps a function in a span named `name`,
+    Decorator that wraps a sync *or* async function in a span named `name`,
     automatically sets SESSION_ID, INPUT_VALUE, and OUTPUT_VALUE,
     and (optionally) enters using_session(session_id) around the call.
     """
     tracer = trace.get_tracer(tracer_name)
+
     def decorator(fn):
+        is_async = inspect.iscoroutinefunction(fn)
+
+        def _build_span_logic(fn_call):
+            """
+            Returns a function that, when called, will:
+             1) start a span
+             2) set session/input attrs
+             3) (optionally) run under using_session
+             4) capture output attr
+             5) return (result, trace_url)
+            """
+            async def _async_inner(messages, session_id, *args, **kwargs):
+                with tracer.start_as_current_span(
+                    name=name,
+                    attributes={SpanAttributes.OPENINFERENCE_SPAN_KIND: "agent"}
+                ) as span:
+                    # span/context setup
+                    ctx = span.get_span_context()
+                    trace_id_hex = format(ctx.trace_id, "032x")
+                    st_big = base64.b64encode(f"Span:{ctx.index(0)}".encode("utf-8")).decode("utf-8")
+                    trace_url = f"{ph_instrumentor.project_url}/traces/{trace_id_hex}?selectedSpanNodeId={st_big}"
+
+                    span.set_attribute(SpanAttributes.SESSION_ID, session_id)
+                    last_msg = messages[-1].get("content")
+                    span.set_attribute(SpanAttributes.INPUT_VALUE, last_msg)
+
+                    # invoke under session if desired
+                    if propagate_session:
+                        async with using_session(session_id):
+                            result = await fn_call(messages, session_id, *args, **kwargs)
+                    else:
+                        result = await fn_call(messages, session_id, *args, **kwargs)
+
+                    output = getattr(result, "content", result)
+                    span.set_attribute(SpanAttributes.OUTPUT_VALUE, output)
+
+                    return result, trace_url
+
+            def _sync_inner(messages, session_id, *args, **kwargs):
+                with tracer.start_as_current_span(
+                    name=name,
+                    attributes={SpanAttributes.OPENINFERENCE_SPAN_KIND: "agent"}
+                ) as span:
+                    # span/context setup
+                    ctx = span.get_span_context()
+                    trace_id_hex = format(ctx.trace_id, "032x")
+                    st_big = base64.b64encode(f"Span:{ctx.index(0)}".encode("utf-8")).decode("utf-8")
+                    trace_url = f"{ph_instrumentor.project_url}/traces/{trace_id_hex}?selectedSpanNodeId={st_big}"
+
+                    span.set_attribute(SpanAttributes.SESSION_ID, session_id)
+                    last_msg = messages[-1].get("content")
+                    span.set_attribute(SpanAttributes.INPUT_VALUE, last_msg)
+
+                    # invoke under session if desired
+                    if propagate_session:
+                        with using_session(session_id):
+                            result = fn_call(messages, session_id, *args, **kwargs)
+                    else:
+                        result = fn_call(messages, session_id, *args, **kwargs)
+
+                    output = getattr(result, "content", result)
+                    span.set_attribute(SpanAttributes.OUTPUT_VALUE, output)
+
+                    return result, trace_url
+
+            return _async_inner if is_async else _sync_inner
+
+        wrapped = _build_span_logic(fn)
+        wrapped = wraps(fn)(wrapped)
+        return wrapped
+
+    return decorator
+
+def async_generator_traced_agent(
+    name: str,
+    propagate_session: bool = True,
+    tracer_name: str = "lmorbits-trace"
+):
+    """
+    Decorator for async generator functions that wraps them in a span named `name`,
+    automatically sets SESSION_ID, INPUT_VALUE, and OUTPUT_VALUE,
+    and (optionally) enters using_session(session_id) around the call.
+    Supports functions that use async for and yield results.
+    """
+    tracer = trace.get_tracer(tracer_name)
+
+    def decorator(fn):
+        if not inspect.isasyncgenfunction(fn):
+            raise TypeError("async_generator_traced_agent can only be used with async generator functions")
+
         @wraps(fn)
-        def wrapper(messages: list[dict], session_id: str, *args, **kwargs):
-            # start the OpenTelemetry span
+        async def wrapped(messages, session_id, *args, **kwargs):
             with tracer.start_as_current_span(
                 name=name,
                 attributes={SpanAttributes.OPENINFERENCE_SPAN_KIND: "agent"}
             ) as span:
-                # record session and input
-                trace_id = span.get_span_context().trace_id
-                span_id = span.get_span_context().index(0)
-                text = f"Span:{span_id}"
-                st_big = base64.b64encode(text.encode("utf-8")).decode("utf-8")
-                trace_id_hex = format(trace_id, "032x")  # Converts to 32-character hex
-                
+                # span/context setup
+                ctx = span.get_span_context()
+                trace_id_hex = format(ctx.trace_id, "032x")
+                st_big = base64.b64encode(f"Span:{ctx.index(0)}".encode("utf-8")).decode("utf-8")
                 trace_url = f"{ph_instrumentor.project_url}/traces/{trace_id_hex}?selectedSpanNodeId={st_big}"
-                
+
                 span.set_attribute(SpanAttributes.SESSION_ID, session_id)
                 last_msg = messages[-1].get("content")
                 span.set_attribute(SpanAttributes.INPUT_VALUE, last_msg)
 
-                # optionally propagate session into sub‐spans
+                # invoke under session if desired
                 if propagate_session:
-                    with using_session(session_id):
-                        result = fn(messages, session_id, *args, **kwargs)
+                    async with using_session(session_id):
+                        async for result in fn(messages, session_id, *args, **kwargs):
+                            output = getattr(result, "content", result)
+                            span.set_attribute(SpanAttributes.OUTPUT_VALUE, output)
+                            yield result, trace_url
                 else:
-                    result = fn(messages, session_id, *args, **kwargs)
+                    async for result in fn(messages, session_id, *args, **kwargs):
+                        output = getattr(result, "content", result)
+                        span.set_attribute(SpanAttributes.OUTPUT_VALUE, output)
+                        yield result, trace_url
 
-                # record the output
-                # assume returned object has .content
-                output = getattr(result, "content", result)
-                span.set_attribute(SpanAttributes.OUTPUT_VALUE, output)
+        return wrapped
 
-                return result,trace_url
-        return wrapper
     return decorator
-
 
 # @traced_agent(name="app1")
 # def assistant2(messages: list[dict], session_id: str):
