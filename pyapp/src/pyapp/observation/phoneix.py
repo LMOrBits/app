@@ -27,6 +27,7 @@ def traced_agent(
     automatically sets SESSION_ID, INPUT_VALUE, and OUTPUT_VALUE,
     and (optionally) enters using_session(session_id) around the call.
     """
+
     tracer = trace.get_tracer(tracer_name)
 
     def decorator(fn):

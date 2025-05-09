@@ -1,0 +1,30 @@
+[project]
+name = "t"
+version = "0.0.1"
+description = ""
+author = ""
+dependencies = []
+
+[ml]
+type = "llm"
+provider = "local"
+
+[observability]
+type = "phoenix"
+host_type = "local"
+
+[ml.serve]
+port = 1234
+gguf_relative_path = "model_path/artifacts/model.gguf"
+model_name = "rag_model"
+alias = "champion"
+model_dir = "./"
+
+[ml.litellm]
+model = "openai/custom"
+api_key = "none"
+api_base = "http://localhost:1234/v1"
+temperature = 0.5
+max_tokens = 1000
+top_p = 1.0
+top_k = 50

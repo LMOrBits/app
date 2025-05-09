@@ -1,3 +1,4 @@
+from pathlib import Path
 import click
 from .groups import cli
 from .schemas import Project, ML, Observability, Config
@@ -5,7 +6,6 @@ from dotenv import load_dotenv
 
 from .add_ml import add_ml
 from .utils import read_config,write_config
-
 
 @cli.command()
 @click.option('--name', prompt='Project name', help='Name of the project')
@@ -21,6 +21,7 @@ def init(name: str, version: str, description: str, author: str):
     project = Project(name=name, version=version, description=description, author=author)
     config["project"] = project.model_dump()
     write_config(config,config_dir)
+    Path(config_dir.parent / "appdeps.env").touch(exist_ok=True)
 
 @cli.command()
 def install():
