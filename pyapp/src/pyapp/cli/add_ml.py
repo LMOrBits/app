@@ -1,9 +1,9 @@
 from .groups import cli
 import click
-from .schemas import ML, Serve, Litellm
+from .schemas import ML, Serve, Litellm, Embeddings, EmbeddingsLitellm
 from .utils import read_config,write_config
 
-@click.group()
+@cli.group()
 def ml():
     """Config the model to the project."""
     pass
@@ -14,18 +14,91 @@ def ml():
 def add_ml( type:str, provider:str):
     """Add a the model to the project."""
     config,config_dir = read_config()
-    ml = ML(type=type,provider=provider)
-    config["ml"] = ml.model_dump()
+    ml_config = ML(type=type,provider=provider)
+    config["ml"] = ml_config.model_dump()
+    write_config(config,config_dir)
     click.echo("Configuring the model to the project...")
     if provider == "local":
-        # Call CLI again with subcommand name
         config["ml"]["serve"] = Serve(port=8080,model_name="model",alias="champion").model_dump()
-        write_config(config,config_dir)
-        ml(["add-serve"], standalone_mode=False)
+        ml(["add-local-model"], standalone_mode=False)
     else:
-        config["ml"]["litellm"] = Litellm(model="openai/custom",api_key="none",api_base="http://localhost:8080/v1").model_dump()
-        write_config(config,config_dir)
-        ml(["add-litellm"], standalone_mode=False)
+        if type == "llm":
+            config["ml"]["litellm"] = Litellm(model="openai/custom",api_key="none",api_base="http://localhost:8080/v1").model_dump()
+            ml(["add-litellm"], standalone_mode=False)
+        else:
+            ml(["add-embeddings-litellm"], standalone_mode=False)
+
+@ml.command()
+@click.option(
+    '--model-dir',
+    prompt="Path to the model directory",
+    help="Path to the model directory",
+    type=str,
+    default="./models"
+)
+def add_local_model(model_dir:str):
+    config,config_dir = read_config()
+    ml_schema = ML(**config["ml"])
+    ml_schema.model_dir = model_dir
+    config["ml"] = ml_schema.model_dump()
+    write_config(config,config_dir)
+    if ml_schema.type == "llm":
+        ml(["add-lm-local"], standalone_mode=False)
+    else:
+        ml(["add-embeddings-local"], standalone_mode=False)
+
+@ml.command()
+@click.option(
+    '--port',
+    prompt="Port of the serve",
+    help="Port of the serve",
+    default=1111,
+    type=int
+)
+@click.option(
+    '--model-name',
+    prompt="Name of the model",
+    help="Name of the model",
+    type=str
+)
+@click.option(
+    '--alias',
+    prompt="Alias of the model",
+    help="Alias of the model",
+    type=str,
+    default="champion"
+)
+
+@click.option(
+    "--serving-tech",
+    prompt="Serving tech",
+    help="Serving tech",
+    type=click.Choice(["liteserve"]),
+    default="liteserve"
+)
+def add_embeddings_local(port:int,model_name:str,alias:str,serving_tech:str):
+    """Add a new serve to the project."""
+    embeddings = Embeddings(port=port,model_name=model_name,alias=alias,serving_tech=serving_tech)
+    config,config_dir = read_config()
+    config["ml"]["embeddings"] = embeddings.model_dump()
+    write_config(config,config_dir)
+    click.echo("✅ Created embeddings serve")
+
+@ml.command()
+@click.option(
+    '--model',
+    prompt="Name of the model",
+    help="Name of the model to be used ",
+    type=str
+)
+
+def add_embeddings_litellm(model:str):
+    """Add a new serve to the project."""
+    embeddings = EmbeddingsLitellm(model=model)
+    config,config_dir = read_config()
+    config["ml"]["embeddings"] = embeddings.model_dump()
+    write_config(config,config_dir)
+    click.echo("✅ Created embeddings model please make sure if the model did not work checkout the litellm documentation and provide more details in this section if needed")
 
 @ml.command()
 @click.option(
@@ -48,12 +121,13 @@ def add_ml( type:str, provider:str):
     type=str,
     default="champion"
 )
+
 @click.option(
-    '--model-dir',
-    prompt="Path to the model directory",
-    help="Path to the model directory",
-    type=str,
-    default="./"
+    "--serving-tech",
+    prompt="Serving tech",
+    help="Serving tech",
+    type=click.Choice(["llamacpp"]),
+    default="llamacpp"
 )
 @click.option(
     '--continue-setting',
@@ -62,9 +136,9 @@ def add_ml( type:str, provider:str):
     type=click.Choice(["y", "n"]),
     default="n"
 )
-def add_serve(port:int,model_name:str,alias:str,model_dir:str,continue_setting:bool):
+def add_lm_local(port:int,model_name:str,alias:str,continue_setting:bool,serving_tech:str):
     """Add a new serve to the project."""
-    serve = Serve(port=port,model_name=model_name,alias=alias,model_dir=model_dir)
+    serve = Serve(port=port,model_name=model_name,alias=alias,serving_tech=serving_tech)
     config,config_dir = read_config()
     config["ml"]["serve"] = serve.model_dump()
     config["ml"]["litellm"] = Litellm(model="openai/custom",api_key="none",api_base=f"http://localhost:{port}/v1").model_dump()

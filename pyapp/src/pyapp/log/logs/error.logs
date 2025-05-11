@@ -4221,3 +4221,2177 @@ main: server is listening on http://0.0.0.0:8080 - starting the main loop
 srv  update_slots: all slots are idle
   
 May 8, 2025 > 19:15:30 |  pyapp.observation.instance : 99 |   ❌ ERROR  |  Error in phoenix observation: HTTPConnectionPool(host='localhost', port=6006): Max retries exceeded with url: /v1/projects/lmorbits-phoenix (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x171ec7920>: Failed to establish a new connection: [Errno 61] Connection refused'))  
+May 10, 2025 > 20:50:31 |  serve._cli.task : 33 |   ❌ ERROR  |  "docker rm" requires at least 1 argument.
+See 'docker rm --help'.
+
+Usage:  docker rm [OPTIONS] CONTAINER [CONTAINER...]
+
+Remove one or more containers
+task: Failed to run task "delete": exit status 1
+  
+May 10, 2025 > 20:51:06 |  serve._cli.task : 33 |   ❌ ERROR  |  "docker rm" requires at least 1 argument.
+See 'docker rm --help'.
+
+Usage:  docker rm [OPTIONS] CONTAINER [CONTAINER...]
+
+Remove one or more containers
+task: Failed to run task "delete": exit status 1
+  
+May 10, 2025 > 20:51:07 |  serve._cli.task : 33 |   ❌ ERROR  |  task: [serve] echo "Starting LlamaCpp server and waiting for it to be ready..."
+task: [serve] if [ "$(docker ps -q --filter "status=exited" -f name=lmorbits-llamacpp-rag_model)" ]; then
+  docker start lmorbits-llamacpp-rag_model
+  container_id=$(docker ps -aqf "name=lmorbits-llamacpp-rag_model")
+else
+  container_id=$(docker run -d \
+    --name lmorbits-llamacpp-rag_model \
+    -p 8080:8080 \
+    -v models/rag_model/model_path/artifacts:/models \
+    ghcr.io/ggerganov/llama.cpp:server \
+    -m /models/model.gguf)
+fi
+
+echo "🕐 Waiting for LlamaCpp server to become healthy..."
+while ! docker logs $container_id 2>&1 | grep -q "GET /health 127.0.0.1 200"; do
+  echo "⏳ Still starting..."
+  docker logs --tail 10 $container_id
+  sleep 1
+done
+
+echo "✅ LlamaCpp server is ready!"
+
+docker: Error response from daemon: create models/rag_model/model_path/artifacts: "models/rag_model/model_path/artifacts" includes invalid characters for a local volume name, only "[a-zA-Z0-9][a-zA-Z0-9_.-]" are allowed. If you intended to pass a host directory, use absolute path.
+See 'docker run --help'.
+task: Failed to run task "serve": exit status 125
+  
+May 10, 2025 > 20:55:49 |  serve._cli.task : 33 |   ❌ ERROR  |  task: [serve] echo "Starting LlamaCpp server and waiting for it to be ready..."
+task: [serve] if [ "$(docker ps -q --filter "status=exited" -f name=lmorbits-llamacpp-rag_model)" ]; then
+  docker start lmorbits-llamacpp-rag_model
+  container_id=$(docker ps -aqf "name=lmorbits-llamacpp-rag_model")
+else
+  container_id=$(docker run -d \
+    --name lmorbits-llamacpp-rag_model \
+    -p 8080:8080 \
+    -v models/models/rag_model/model_path/artifacts:/models \
+    ghcr.io/ggerganov/llama.cpp:server \
+    -m /models/model.gguf)
+fi
+
+echo "🕐 Waiting for LlamaCpp server to become healthy..."
+while ! docker logs $container_id 2>&1 | grep -q "GET /health 127.0.0.1 200"; do
+  echo "⏳ Still starting..."
+  docker logs --tail 10 $container_id
+  sleep 1
+done
+
+echo "✅ LlamaCpp server is ready!"
+
+docker: Error response from daemon: create models/models/rag_model/model_path/artifacts: "models/models/rag_model/model_path/artifacts" includes invalid characters for a local volume name, only "[a-zA-Z0-9][a-zA-Z0-9_.-]" are allowed. If you intended to pass a host directory, use absolute path.
+See 'docker run --help'.
+task: Failed to run task "serve": exit status 125
+  
+May 10, 2025 > 21:03:53 |  serve._cli.task : 33 |   ❌ ERROR  |  "docker rm" requires at least 1 argument.
+See 'docker rm --help'.
+
+Usage:  docker rm [OPTIONS] CONTAINER [CONTAINER...]
+
+Remove one or more containers
+task: Failed to run task "delete": exit status 1
+  
+May 10, 2025 > 21:04:25 |  serve._cli.task : 33 |   ❌ ERROR  |  task: [serve] echo "Starting LlamaCpp server and waiting for it to be ready..."
+task: [serve] if [ "$(docker ps -q --filter "status=exited" -f name=lmorbits-llamacpp-rag_model)" ]; then
+  docker start lmorbits-llamacpp-rag_model
+  container_id=$(docker ps -aqf "name=lmorbits-llamacpp-rag_model")
+else
+  container_id=$(docker run -d \
+    --name lmorbits-llamacpp-rag_model \
+    -p 8080:8080 \
+    -v /Users/parsa/Desk/projects/university/slmops-project/slmops-thesis/app_projects/app/pyapp/notebooks/models/rag_model/model_path/artifacts:/models \
+    ghcr.io/ggerganov/llama.cpp:server \
+    -m /models/model.gguf)
+fi
+
+echo "🕐 Waiting for LlamaCpp server to become healthy..."
+while ! docker logs $container_id 2>&1 | grep -q "GET /health 127.0.0.1 200"; do
+  echo "⏳ Still starting..."
+  docker logs --tail 10 $container_id
+  sleep 1
+done
+
+echo "✅ LlamaCpp server is ready!"
+
+llama_model_loader: - kv  28:            tokenizer.ggml.unknown_token_id u32              = 0
+llama_model_loader: - kv  29:               general.quantization_version u32              = 2
+llama_model_loader: - type  f32:   61 tensors
+llama_model_loader: - type q5_0:  166 tensors
+llama_model_loader: - type q8_0:   15 tensors
+llama_model_loader: - type q4_K:   16 tensors
+llama_model_loader: - type q6_K:   14 tensors
+print_info: file format = GGUF V3 (latest)
+print_info: file type   = Q4_K - Medium
+print_info: file size   = 98.87 MiB (6.17 BPW) 
+<|im_start|>user
+Hello<|im_end|>
+<|im_start|>assistant
+Hi there<|im_end|>
+<|im_start|>user
+How are you?<|im_end|>
+<|im_start|>assistant
+'
+main: server is listening on http://0.0.0.0:8080 - starting the main loop
+srv  update_slots: all slots are idle
+<|im_start|>user
+Hello<|im_end|>
+<|im_start|>assistant
+Hi there<|im_end|>
+<|im_start|>user
+How are you?<|im_end|>
+<|im_start|>assistant
+'
+main: server is listening on http://0.0.0.0:8080 - starting the main loop
+srv  update_slots: all slots are idle
+<|im_start|>user
+Hello<|im_end|>
+<|im_start|>assistant
+Hi there<|im_end|>
+<|im_start|>user
+How are you?<|im_end|>
+<|im_start|>assistant
+'
+main: server is listening on http://0.0.0.0:8080 - starting the main loop
+srv  update_slots: all slots are idle
+<|im_start|>user
+Hello<|im_end|>
+<|im_start|>assistant
+Hi there<|im_end|>
+<|im_start|>user
+How are you?<|im_end|>
+<|im_start|>assistant
+'
+main: server is listening on http://0.0.0.0:8080 - starting the main loop
+srv  update_slots: all slots are idle
+<|im_start|>user
+Hello<|im_end|>
+<|im_start|>assistant
+Hi there<|im_end|>
+<|im_start|>user
+How are you?<|im_end|>
+<|im_start|>assistant
+'
+main: server is listening on http://0.0.0.0:8080 - starting the main loop
+srv  update_slots: all slots are idle
+<|im_start|>user
+Hello<|im_end|>
+<|im_start|>assistant
+Hi there<|im_end|>
+<|im_start|>user
+How are you?<|im_end|>
+<|im_start|>assistant
+'
+main: server is listening on http://0.0.0.0:8080 - starting the main loop
+srv  update_slots: all slots are idle
+<|im_start|>user
+Hello<|im_end|>
+<|im_start|>assistant
+Hi there<|im_end|>
+<|im_start|>user
+How are you?<|im_end|>
+<|im_start|>assistant
+'
+main: server is listening on http://0.0.0.0:8080 - starting the main loop
+srv  update_slots: all slots are idle
+<|im_start|>user
+Hello<|im_end|>
+<|im_start|>assistant
+Hi there<|im_end|>
+<|im_start|>user
+How are you?<|im_end|>
+<|im_start|>assistant
+'
+main: server is listening on http://0.0.0.0:8080 - starting the main loop
+srv  update_slots: all slots are idle
+<|im_start|>user
+Hello<|im_end|>
+<|im_start|>assistant
+Hi there<|im_end|>
+<|im_start|>user
+How are you?<|im_end|>
+<|im_start|>assistant
+'
+main: server is listening on http://0.0.0.0:8080 - starting the main loop
+srv  update_slots: all slots are idle
+<|im_start|>user
+Hello<|im_end|>
+<|im_start|>assistant
+Hi there<|im_end|>
+<|im_start|>user
+How are you?<|im_end|>
+<|im_start|>assistant
+'
+main: server is listening on http://0.0.0.0:8080 - starting the main loop
+srv  update_slots: all slots are idle
+<|im_start|>user
+Hello<|im_end|>
+<|im_start|>assistant
+Hi there<|im_end|>
+<|im_start|>user
+How are you?<|im_end|>
+<|im_start|>assistant
+'
+main: server is listening on http://0.0.0.0:8080 - starting the main loop
+srv  update_slots: all slots are idle
+<|im_start|>user
+Hello<|im_end|>
+<|im_start|>assistant
+Hi there<|im_end|>
+<|im_start|>user
+How are you?<|im_end|>
+<|im_start|>assistant
+'
+main: server is listening on http://0.0.0.0:8080 - starting the main loop
+srv  update_slots: all slots are idle
+<|im_start|>user
+Hello<|im_end|>
+<|im_start|>assistant
+Hi there<|im_end|>
+<|im_start|>user
+How are you?<|im_end|>
+<|im_start|>assistant
+'
+main: server is listening on http://0.0.0.0:8080 - starting the main loop
+srv  update_slots: all slots are idle
+<|im_start|>user
+Hello<|im_end|>
+<|im_start|>assistant
+Hi there<|im_end|>
+<|im_start|>user
+How are you?<|im_end|>
+<|im_start|>assistant
+'
+main: server is listening on http://0.0.0.0:8080 - starting the main loop
+srv  update_slots: all slots are idle
+<|im_start|>user
+Hello<|im_end|>
+<|im_start|>assistant
+Hi there<|im_end|>
+<|im_start|>user
+How are you?<|im_end|>
+<|im_start|>assistant
+'
+main: server is listening on http://0.0.0.0:8080 - starting the main loop
+srv  update_slots: all slots are idle
+<|im_start|>user
+Hello<|im_end|>
+<|im_start|>assistant
+Hi there<|im_end|>
+<|im_start|>user
+How are you?<|im_end|>
+<|im_start|>assistant
+'
+main: server is listening on http://0.0.0.0:8080 - starting the main loop
+srv  update_slots: all slots are idle
+<|im_start|>user
+Hello<|im_end|>
+<|im_start|>assistant
+Hi there<|im_end|>
+<|im_start|>user
+How are you?<|im_end|>
+<|im_start|>assistant
+'
+main: server is listening on http://0.0.0.0:8080 - starting the main loop
+srv  update_slots: all slots are idle
+<|im_start|>user
+Hello<|im_end|>
+<|im_start|>assistant
+Hi there<|im_end|>
+<|im_start|>user
+How are you?<|im_end|>
+<|im_start|>assistant
+'
+main: server is listening on http://0.0.0.0:8080 - starting the main loop
+srv  update_slots: all slots are idle
+<|im_start|>user
+Hello<|im_end|>
+<|im_start|>assistant
+Hi there<|im_end|>
+<|im_start|>user
+How are you?<|im_end|>
+<|im_start|>assistant
+'
+main: server is listening on http://0.0.0.0:8080 - starting the main loop
+srv  update_slots: all slots are idle
+<|im_start|>user
+Hello<|im_end|>
+<|im_start|>assistant
+Hi there<|im_end|>
+<|im_start|>user
+How are you?<|im_end|>
+<|im_start|>assistant
+'
+main: server is listening on http://0.0.0.0:8080 - starting the main loop
+srv  update_slots: all slots are idle
+<|im_start|>user
+Hello<|im_end|>
+<|im_start|>assistant
+Hi there<|im_end|>
+<|im_start|>user
+How are you?<|im_end|>
+<|im_start|>assistant
+'
+main: server is listening on http://0.0.0.0:8080 - starting the main loop
+srv  update_slots: all slots are idle
+<|im_start|>user
+Hello<|im_end|>
+<|im_start|>assistant
+Hi there<|im_end|>
+<|im_start|>user
+How are you?<|im_end|>
+<|im_start|>assistant
+'
+main: server is listening on http://0.0.0.0:8080 - starting the main loop
+srv  update_slots: all slots are idle
+<|im_start|>user
+Hello<|im_end|>
+<|im_start|>assistant
+Hi there<|im_end|>
+<|im_start|>user
+How are you?<|im_end|>
+<|im_start|>assistant
+'
+main: server is listening on http://0.0.0.0:8080 - starting the main loop
+srv  update_slots: all slots are idle
+<|im_start|>user
+Hello<|im_end|>
+<|im_start|>assistant
+Hi there<|im_end|>
+<|im_start|>user
+How are you?<|im_end|>
+<|im_start|>assistant
+'
+main: server is listening on http://0.0.0.0:8080 - starting the main loop
+srv  update_slots: all slots are idle
+<|im_start|>user
+Hello<|im_end|>
+<|im_start|>assistant
+Hi there<|im_end|>
+<|im_start|>user
+How are you?<|im_end|>
+<|im_start|>assistant
+'
+main: server is listening on http://0.0.0.0:8080 - starting the main loop
+srv  update_slots: all slots are idle
+<|im_start|>user
+Hello<|im_end|>
+<|im_start|>assistant
+Hi there<|im_end|>
+<|im_start|>user
+How are you?<|im_end|>
+<|im_start|>assistant
+'
+main: server is listening on http://0.0.0.0:8080 - starting the main loop
+srv  update_slots: all slots are idle
+<|im_start|>user
+Hello<|im_end|>
+<|im_start|>assistant
+Hi there<|im_end|>
+<|im_start|>user
+How are you?<|im_end|>
+<|im_start|>assistant
+'
+main: server is listening on http://0.0.0.0:8080 - starting the main loop
+srv  update_slots: all slots are idle
+<|im_start|>user
+Hello<|im_end|>
+<|im_start|>assistant
+Hi there<|im_end|>
+<|im_start|>user
+How are you?<|im_end|>
+<|im_start|>assistant
+'
+main: server is listening on http://0.0.0.0:8080 - starting the main loop
+srv  update_slots: all slots are idle
+  
+May 10, 2025 > 21:04:34 |  serve._cli.task : 33 |   ❌ ERROR  |  task: [serve] echo "Starting LlamaCpp server and waiting for it to be ready..."
+task: [serve] if [ "$(docker ps -q --filter "status=exited" -f name=lmorbits-llamacpp-rag_model)" ]; then
+  docker start lmorbits-llamacpp-rag_model
+  container_id=$(docker ps -aqf "name=lmorbits-llamacpp-rag_model")
+else
+  container_id=$(docker run -d \
+    --name lmorbits-llamacpp-rag_model \
+    -p 8080:8080 \
+    -v /Users/parsa/Desk/projects/university/slmops-project/slmops-thesis/app_projects/app/pyapp/notebooks/models/rag_model/model_path/artifacts:/models \
+    ghcr.io/ggerganov/llama.cpp:server \
+    -m /models/model.gguf)
+fi
+
+echo "🕐 Waiting for LlamaCpp server to become healthy..."
+while ! docker logs $container_id 2>&1 | grep -q "GET /health 127.0.0.1 200"; do
+  echo "⏳ Still starting..."
+  docker logs --tail 10 $container_id
+  sleep 1
+done
+
+echo "✅ LlamaCpp server is ready!"
+
+docker: Error response from daemon: Conflict. The container name "/lmorbits-llamacpp-rag_model" is already in use by container "9ec29e05b8579e38d3548f71cad8d0f26823f8078eb7a9e23b003843be098f5c". You have to remove (or rename) that container to be able to reuse that name.
+See 'docker run --help'.
+task: Failed to run task "serve": exit status 125
+  
+May 10, 2025 > 21:06:13 |  serve._cli.task : 33 |   ❌ ERROR  |  task: [serve] echo "Starting LlamaCpp server and waiting for it to be ready..."
+task: [serve] if [ "$(docker ps -q --filter "status=exited" -f name=lmorbits-llamacpp-rag_model)" ]; then
+  docker start lmorbits-llamacpp-rag_model
+  container_id=$(docker ps -aqf "name=lmorbits-llamacpp-rag_model")
+else
+  container_id=$(docker run -d \
+    --name lmorbits-llamacpp-rag_model \
+    -p 8080:8080 \
+    -v /Users/parsa/Desk/projects/university/slmops-project/slmops-thesis/app_projects/app/pyapp/notebooks/models/rag_model/model_path/artifacts:/models \
+    ghcr.io/ggerganov/llama.cpp:server \
+    -m /models/model.gguf)
+fi
+
+echo "🕐 Waiting for LlamaCpp server to become healthy..."
+while ! docker logs $container_id 2>&1 | grep -q "GET /health 127.0.0.1 200"; do
+  echo "⏳ Still starting..."
+  docker logs --tail 10 $container_id
+  sleep 1
+done
+
+echo "✅ LlamaCpp server is ready!"
+
+llama_model_loader: - kv  28:            tokenizer.ggml.unknown_token_id u32              = 0
+llama_model_loader: - kv  29:               general.quantization_version u32              = 2
+llama_model_loader: - type  f32:   61 tensors
+llama_model_loader: - type q5_0:  166 tensors
+llama_model_loader: - type q8_0:   15 tensors
+llama_model_loader: - type q4_K:   16 tensors
+llama_model_loader: - type q6_K:   14 tensors
+print_info: file format = GGUF V3 (latest)
+print_info: file type   = Q4_K - Medium
+print_info: file size   = 98.87 MiB (6.17 BPW) 
+<|im_start|>user
+Hello<|im_end|>
+<|im_start|>assistant
+Hi there<|im_end|>
+<|im_start|>user
+How are you?<|im_end|>
+<|im_start|>assistant
+'
+main: server is listening on http://0.0.0.0:8080 - starting the main loop
+srv  update_slots: all slots are idle
+<|im_start|>user
+Hello<|im_end|>
+<|im_start|>assistant
+Hi there<|im_end|>
+<|im_start|>user
+How are you?<|im_end|>
+<|im_start|>assistant
+'
+main: server is listening on http://0.0.0.0:8080 - starting the main loop
+srv  update_slots: all slots are idle
+<|im_start|>user
+Hello<|im_end|>
+<|im_start|>assistant
+Hi there<|im_end|>
+<|im_start|>user
+How are you?<|im_end|>
+<|im_start|>assistant
+'
+main: server is listening on http://0.0.0.0:8080 - starting the main loop
+srv  update_slots: all slots are idle
+<|im_start|>user
+Hello<|im_end|>
+<|im_start|>assistant
+Hi there<|im_end|>
+<|im_start|>user
+How are you?<|im_end|>
+<|im_start|>assistant
+'
+main: server is listening on http://0.0.0.0:8080 - starting the main loop
+srv  update_slots: all slots are idle
+<|im_start|>user
+Hello<|im_end|>
+<|im_start|>assistant
+Hi there<|im_end|>
+<|im_start|>user
+How are you?<|im_end|>
+<|im_start|>assistant
+'
+main: server is listening on http://0.0.0.0:8080 - starting the main loop
+srv  update_slots: all slots are idle
+<|im_start|>user
+Hello<|im_end|>
+<|im_start|>assistant
+Hi there<|im_end|>
+<|im_start|>user
+How are you?<|im_end|>
+<|im_start|>assistant
+'
+main: server is listening on http://0.0.0.0:8080 - starting the main loop
+srv  update_slots: all slots are idle
+<|im_start|>user
+Hello<|im_end|>
+<|im_start|>assistant
+Hi there<|im_end|>
+<|im_start|>user
+How are you?<|im_end|>
+<|im_start|>assistant
+'
+main: server is listening on http://0.0.0.0:8080 - starting the main loop
+srv  update_slots: all slots are idle
+<|im_start|>user
+Hello<|im_end|>
+<|im_start|>assistant
+Hi there<|im_end|>
+<|im_start|>user
+How are you?<|im_end|>
+<|im_start|>assistant
+'
+main: server is listening on http://0.0.0.0:8080 - starting the main loop
+srv  update_slots: all slots are idle
+<|im_start|>user
+Hello<|im_end|>
+<|im_start|>assistant
+Hi there<|im_end|>
+<|im_start|>user
+How are you?<|im_end|>
+<|im_start|>assistant
+'
+main: server is listening on http://0.0.0.0:8080 - starting the main loop
+srv  update_slots: all slots are idle
+<|im_start|>user
+Hello<|im_end|>
+<|im_start|>assistant
+Hi there<|im_end|>
+<|im_start|>user
+How are you?<|im_end|>
+<|im_start|>assistant
+'
+main: server is listening on http://0.0.0.0:8080 - starting the main loop
+srv  update_slots: all slots are idle
+<|im_start|>user
+Hello<|im_end|>
+<|im_start|>assistant
+Hi there<|im_end|>
+<|im_start|>user
+How are you?<|im_end|>
+<|im_start|>assistant
+'
+main: server is listening on http://0.0.0.0:8080 - starting the main loop
+srv  update_slots: all slots are idle
+<|im_start|>user
+Hello<|im_end|>
+<|im_start|>assistant
+Hi there<|im_end|>
+<|im_start|>user
+How are you?<|im_end|>
+<|im_start|>assistant
+'
+main: server is listening on http://0.0.0.0:8080 - starting the main loop
+srv  update_slots: all slots are idle
+<|im_start|>user
+Hello<|im_end|>
+<|im_start|>assistant
+Hi there<|im_end|>
+<|im_start|>user
+How are you?<|im_end|>
+<|im_start|>assistant
+'
+main: server is listening on http://0.0.0.0:8080 - starting the main loop
+srv  update_slots: all slots are idle
+<|im_start|>user
+Hello<|im_end|>
+<|im_start|>assistant
+Hi there<|im_end|>
+<|im_start|>user
+How are you?<|im_end|>
+<|im_start|>assistant
+'
+main: server is listening on http://0.0.0.0:8080 - starting the main loop
+srv  update_slots: all slots are idle
+<|im_start|>user
+Hello<|im_end|>
+<|im_start|>assistant
+Hi there<|im_end|>
+<|im_start|>user
+How are you?<|im_end|>
+<|im_start|>assistant
+'
+main: server is listening on http://0.0.0.0:8080 - starting the main loop
+srv  update_slots: all slots are idle
+<|im_start|>user
+Hello<|im_end|>
+<|im_start|>assistant
+Hi there<|im_end|>
+<|im_start|>user
+How are you?<|im_end|>
+<|im_start|>assistant
+'
+main: server is listening on http://0.0.0.0:8080 - starting the main loop
+srv  update_slots: all slots are idle
+<|im_start|>user
+Hello<|im_end|>
+<|im_start|>assistant
+Hi there<|im_end|>
+<|im_start|>user
+How are you?<|im_end|>
+<|im_start|>assistant
+'
+main: server is listening on http://0.0.0.0:8080 - starting the main loop
+srv  update_slots: all slots are idle
+<|im_start|>user
+Hello<|im_end|>
+<|im_start|>assistant
+Hi there<|im_end|>
+<|im_start|>user
+How are you?<|im_end|>
+<|im_start|>assistant
+'
+main: server is listening on http://0.0.0.0:8080 - starting the main loop
+srv  update_slots: all slots are idle
+<|im_start|>user
+Hello<|im_end|>
+<|im_start|>assistant
+Hi there<|im_end|>
+<|im_start|>user
+How are you?<|im_end|>
+<|im_start|>assistant
+'
+main: server is listening on http://0.0.0.0:8080 - starting the main loop
+srv  update_slots: all slots are idle
+<|im_start|>user
+Hello<|im_end|>
+<|im_start|>assistant
+Hi there<|im_end|>
+<|im_start|>user
+How are you?<|im_end|>
+<|im_start|>assistant
+'
+main: server is listening on http://0.0.0.0:8080 - starting the main loop
+srv  update_slots: all slots are idle
+<|im_start|>user
+Hello<|im_end|>
+<|im_start|>assistant
+Hi there<|im_end|>
+<|im_start|>user
+How are you?<|im_end|>
+<|im_start|>assistant
+'
+main: server is listening on http://0.0.0.0:8080 - starting the main loop
+srv  update_slots: all slots are idle
+<|im_start|>user
+Hello<|im_end|>
+<|im_start|>assistant
+Hi there<|im_end|>
+<|im_start|>user
+How are you?<|im_end|>
+<|im_start|>assistant
+'
+main: server is listening on http://0.0.0.0:8080 - starting the main loop
+srv  update_slots: all slots are idle
+<|im_start|>user
+Hello<|im_end|>
+<|im_start|>assistant
+Hi there<|im_end|>
+<|im_start|>user
+How are you?<|im_end|>
+<|im_start|>assistant
+'
+main: server is listening on http://0.0.0.0:8080 - starting the main loop
+srv  update_slots: all slots are idle
+<|im_start|>user
+Hello<|im_end|>
+<|im_start|>assistant
+Hi there<|im_end|>
+<|im_start|>user
+How are you?<|im_end|>
+<|im_start|>assistant
+'
+main: server is listening on http://0.0.0.0:8080 - starting the main loop
+srv  update_slots: all slots are idle
+<|im_start|>user
+Hello<|im_end|>
+<|im_start|>assistant
+Hi there<|im_end|>
+<|im_start|>user
+How are you?<|im_end|>
+<|im_start|>assistant
+'
+main: server is listening on http://0.0.0.0:8080 - starting the main loop
+srv  update_slots: all slots are idle
+<|im_start|>user
+Hello<|im_end|>
+<|im_start|>assistant
+Hi there<|im_end|>
+<|im_start|>user
+How are you?<|im_end|>
+<|im_start|>assistant
+'
+main: server is listening on http://0.0.0.0:8080 - starting the main loop
+srv  update_slots: all slots are idle
+<|im_start|>user
+Hello<|im_end|>
+<|im_start|>assistant
+Hi there<|im_end|>
+<|im_start|>user
+How are you?<|im_end|>
+<|im_start|>assistant
+'
+main: server is listening on http://0.0.0.0:8080 - starting the main loop
+srv  update_slots: all slots are idle
+<|im_start|>user
+Hello<|im_end|>
+<|im_start|>assistant
+Hi there<|im_end|>
+<|im_start|>user
+How are you?<|im_end|>
+<|im_start|>assistant
+'
+main: server is listening on http://0.0.0.0:8080 - starting the main loop
+srv  update_slots: all slots are idle
+  
+May 10, 2025 > 21:07:09 |  taskpy.main : 34 |   ❌ ERROR  |  task: [remove] if [ "$(docker ps -q -f name=lmorbits-obeservation)" ]; then
+     docker stop $(docker ps -q -f name=lmorbits-obeservation)
+     
+   fi
+   docker rm $(docker ps -aq -f name=lmorbits-obeservation)
+
+"docker rm" requires at least 1 argument.
+See 'docker rm --help'.
+
+Usage:  docker rm [OPTIONS] CONTAINER [CONTAINER...]
+
+Remove one or more containers
+task: Failed to run task "remove": exit status 1
+  
+May 11, 2025 > 14:19:13 |  serve._cli.task : 33 |   ❌ ERROR  |  "docker rm" requires at least 1 argument.
+See 'docker rm --help'.
+
+Usage:  docker rm [OPTIONS] CONTAINER [CONTAINER...]
+
+Remove one or more containers
+task: Failed to run task "delete": exit status 1
+  
+May 11, 2025 > 14:20:06 |  serve._cli.task : 33 |   ❌ ERROR  |  "docker rm" requires at least 1 argument.
+See 'docker rm --help'.
+
+Usage:  docker rm [OPTIONS] CONTAINER [CONTAINER...]
+
+Remove one or more containers
+task: Failed to run task "delete": exit status 1
+  
+May 11, 2025 > 14:20:38 |  serve._cli.task : 33 |   ❌ ERROR  |  task: [serve] echo "Starting LlamaCpp server and waiting for it to be ready..."
+task: [serve] if [ "$(docker ps -q --filter "status=exited" -f name=lmorbits-llamacpp-rag_model)" ]; then
+  docker start lmorbits-llamacpp-rag_model
+  container_id=$(docker ps -aqf "name=lmorbits-llamacpp-rag_model")
+else
+  container_id=$(docker run -d \
+    --name lmorbits-llamacpp-rag_model \
+    -p 8080:8080 \
+    -v /Users/parsa/Desk/projects/university/slmops-project/slmops-thesis/app_projects/app/pyapp/notebooks/embed/models/rag_model/model_path/artifacts:/models \
+    ghcr.io/ggerganov/llama.cpp:server \
+    -m /models/model.gguf)
+fi
+
+echo "🕐 Waiting for LlamaCpp server to become healthy..."
+while ! docker logs $container_id 2>&1 | grep -q "GET /health 127.0.0.1 200"; do
+  echo "⏳ Still starting..."
+  docker logs --tail 10 $container_id
+  sleep 1
+done
+
+echo "✅ LlamaCpp server is ready!"
+
+llama_model_loader: - kv  28:            tokenizer.ggml.unknown_token_id u32              = 0
+llama_model_loader: - kv  29:               general.quantization_version u32              = 2
+llama_model_loader: - type  f32:   61 tensors
+llama_model_loader: - type q5_0:  166 tensors
+llama_model_loader: - type q8_0:   15 tensors
+llama_model_loader: - type q4_K:   16 tensors
+llama_model_loader: - type q6_K:   14 tensors
+print_info: file format = GGUF V3 (latest)
+print_info: file type   = Q4_K - Medium
+print_info: file size   = 98.87 MiB (6.17 BPW) 
+<|im_start|>user
+Hello<|im_end|>
+<|im_start|>assistant
+Hi there<|im_end|>
+<|im_start|>user
+How are you?<|im_end|>
+<|im_start|>assistant
+'
+main: server is listening on http://0.0.0.0:8080 - starting the main loop
+srv  update_slots: all slots are idle
+<|im_start|>user
+Hello<|im_end|>
+<|im_start|>assistant
+Hi there<|im_end|>
+<|im_start|>user
+How are you?<|im_end|>
+<|im_start|>assistant
+'
+main: server is listening on http://0.0.0.0:8080 - starting the main loop
+srv  update_slots: all slots are idle
+<|im_start|>user
+Hello<|im_end|>
+<|im_start|>assistant
+Hi there<|im_end|>
+<|im_start|>user
+How are you?<|im_end|>
+<|im_start|>assistant
+'
+main: server is listening on http://0.0.0.0:8080 - starting the main loop
+srv  update_slots: all slots are idle
+<|im_start|>user
+Hello<|im_end|>
+<|im_start|>assistant
+Hi there<|im_end|>
+<|im_start|>user
+How are you?<|im_end|>
+<|im_start|>assistant
+'
+main: server is listening on http://0.0.0.0:8080 - starting the main loop
+srv  update_slots: all slots are idle
+<|im_start|>user
+Hello<|im_end|>
+<|im_start|>assistant
+Hi there<|im_end|>
+<|im_start|>user
+How are you?<|im_end|>
+<|im_start|>assistant
+'
+main: server is listening on http://0.0.0.0:8080 - starting the main loop
+srv  update_slots: all slots are idle
+<|im_start|>user
+Hello<|im_end|>
+<|im_start|>assistant
+Hi there<|im_end|>
+<|im_start|>user
+How are you?<|im_end|>
+<|im_start|>assistant
+'
+main: server is listening on http://0.0.0.0:8080 - starting the main loop
+srv  update_slots: all slots are idle
+<|im_start|>user
+Hello<|im_end|>
+<|im_start|>assistant
+Hi there<|im_end|>
+<|im_start|>user
+How are you?<|im_end|>
+<|im_start|>assistant
+'
+main: server is listening on http://0.0.0.0:8080 - starting the main loop
+srv  update_slots: all slots are idle
+<|im_start|>user
+Hello<|im_end|>
+<|im_start|>assistant
+Hi there<|im_end|>
+<|im_start|>user
+How are you?<|im_end|>
+<|im_start|>assistant
+'
+main: server is listening on http://0.0.0.0:8080 - starting the main loop
+srv  update_slots: all slots are idle
+<|im_start|>user
+Hello<|im_end|>
+<|im_start|>assistant
+Hi there<|im_end|>
+<|im_start|>user
+How are you?<|im_end|>
+<|im_start|>assistant
+'
+main: server is listening on http://0.0.0.0:8080 - starting the main loop
+srv  update_slots: all slots are idle
+<|im_start|>user
+Hello<|im_end|>
+<|im_start|>assistant
+Hi there<|im_end|>
+<|im_start|>user
+How are you?<|im_end|>
+<|im_start|>assistant
+'
+main: server is listening on http://0.0.0.0:8080 - starting the main loop
+srv  update_slots: all slots are idle
+<|im_start|>user
+Hello<|im_end|>
+<|im_start|>assistant
+Hi there<|im_end|>
+<|im_start|>user
+How are you?<|im_end|>
+<|im_start|>assistant
+'
+main: server is listening on http://0.0.0.0:8080 - starting the main loop
+srv  update_slots: all slots are idle
+<|im_start|>user
+Hello<|im_end|>
+<|im_start|>assistant
+Hi there<|im_end|>
+<|im_start|>user
+How are you?<|im_end|>
+<|im_start|>assistant
+'
+main: server is listening on http://0.0.0.0:8080 - starting the main loop
+srv  update_slots: all slots are idle
+<|im_start|>user
+Hello<|im_end|>
+<|im_start|>assistant
+Hi there<|im_end|>
+<|im_start|>user
+How are you?<|im_end|>
+<|im_start|>assistant
+'
+main: server is listening on http://0.0.0.0:8080 - starting the main loop
+srv  update_slots: all slots are idle
+<|im_start|>user
+Hello<|im_end|>
+<|im_start|>assistant
+Hi there<|im_end|>
+<|im_start|>user
+How are you?<|im_end|>
+<|im_start|>assistant
+'
+main: server is listening on http://0.0.0.0:8080 - starting the main loop
+srv  update_slots: all slots are idle
+<|im_start|>user
+Hello<|im_end|>
+<|im_start|>assistant
+Hi there<|im_end|>
+<|im_start|>user
+How are you?<|im_end|>
+<|im_start|>assistant
+'
+main: server is listening on http://0.0.0.0:8080 - starting the main loop
+srv  update_slots: all slots are idle
+<|im_start|>user
+Hello<|im_end|>
+<|im_start|>assistant
+Hi there<|im_end|>
+<|im_start|>user
+How are you?<|im_end|>
+<|im_start|>assistant
+'
+main: server is listening on http://0.0.0.0:8080 - starting the main loop
+srv  update_slots: all slots are idle
+<|im_start|>user
+Hello<|im_end|>
+<|im_start|>assistant
+Hi there<|im_end|>
+<|im_start|>user
+How are you?<|im_end|>
+<|im_start|>assistant
+'
+main: server is listening on http://0.0.0.0:8080 - starting the main loop
+srv  update_slots: all slots are idle
+<|im_start|>user
+Hello<|im_end|>
+<|im_start|>assistant
+Hi there<|im_end|>
+<|im_start|>user
+How are you?<|im_end|>
+<|im_start|>assistant
+'
+main: server is listening on http://0.0.0.0:8080 - starting the main loop
+srv  update_slots: all slots are idle
+<|im_start|>user
+Hello<|im_end|>
+<|im_start|>assistant
+Hi there<|im_end|>
+<|im_start|>user
+How are you?<|im_end|>
+<|im_start|>assistant
+'
+main: server is listening on http://0.0.0.0:8080 - starting the main loop
+srv  update_slots: all slots are idle
+<|im_start|>user
+Hello<|im_end|>
+<|im_start|>assistant
+Hi there<|im_end|>
+<|im_start|>user
+How are you?<|im_end|>
+<|im_start|>assistant
+'
+main: server is listening on http://0.0.0.0:8080 - starting the main loop
+srv  update_slots: all slots are idle
+<|im_start|>user
+Hello<|im_end|>
+<|im_start|>assistant
+Hi there<|im_end|>
+<|im_start|>user
+How are you?<|im_end|>
+<|im_start|>assistant
+'
+main: server is listening on http://0.0.0.0:8080 - starting the main loop
+srv  update_slots: all slots are idle
+<|im_start|>user
+Hello<|im_end|>
+<|im_start|>assistant
+Hi there<|im_end|>
+<|im_start|>user
+How are you?<|im_end|>
+<|im_start|>assistant
+'
+main: server is listening on http://0.0.0.0:8080 - starting the main loop
+srv  update_slots: all slots are idle
+<|im_start|>user
+Hello<|im_end|>
+<|im_start|>assistant
+Hi there<|im_end|>
+<|im_start|>user
+How are you?<|im_end|>
+<|im_start|>assistant
+'
+main: server is listening on http://0.0.0.0:8080 - starting the main loop
+srv  update_slots: all slots are idle
+<|im_start|>user
+Hello<|im_end|>
+<|im_start|>assistant
+Hi there<|im_end|>
+<|im_start|>user
+How are you?<|im_end|>
+<|im_start|>assistant
+'
+main: server is listening on http://0.0.0.0:8080 - starting the main loop
+srv  update_slots: all slots are idle
+<|im_start|>user
+Hello<|im_end|>
+<|im_start|>assistant
+Hi there<|im_end|>
+<|im_start|>user
+How are you?<|im_end|>
+<|im_start|>assistant
+'
+main: server is listening on http://0.0.0.0:8080 - starting the main loop
+srv  update_slots: all slots are idle
+<|im_start|>user
+Hello<|im_end|>
+<|im_start|>assistant
+Hi there<|im_end|>
+<|im_start|>user
+How are you?<|im_end|>
+<|im_start|>assistant
+'
+main: server is listening on http://0.0.0.0:8080 - starting the main loop
+srv  update_slots: all slots are idle
+<|im_start|>user
+Hello<|im_end|>
+<|im_start|>assistant
+Hi there<|im_end|>
+<|im_start|>user
+How are you?<|im_end|>
+<|im_start|>assistant
+'
+main: server is listening on http://0.0.0.0:8080 - starting the main loop
+srv  update_slots: all slots are idle
+<|im_start|>user
+Hello<|im_end|>
+<|im_start|>assistant
+Hi there<|im_end|>
+<|im_start|>user
+How are you?<|im_end|>
+<|im_start|>assistant
+'
+main: server is listening on http://0.0.0.0:8080 - starting the main loop
+srv  update_slots: all slots are idle
+  
+May 11, 2025 > 14:31:32 |  serve._cli.task : 33 |   ❌ ERROR  |  task: [delete] if [ "$(docker ps -q -f name=lmorbits-embedding-rag_models)" ]; then 
+  if [ "$(docker ps -q --filter "status=running" -f name=lmorbits-embedding-rag_models)" ]; then
+    echo "Stopping lmorbits-embedding-rag_models"
+    docker stop lmorbits-embedding-rag_models
+  fi
+  echo "Removing lmorbits-embedding-rag_models"
+  docker rm lmorbits-embedding-rag_models
+else
+  echo "lmorbits-embedding-rag_models is not running"
+fi
+
+  
+May 11, 2025 > 14:32:51 |  serve._cli.task : 33 |   ❌ ERROR  |  task: [delete] if [ "$(docker ps -q -f name=lmorbits-embedding-rag_models)" ]; then 
+  if [ "$(docker ps -q --filter "status=running" -f name=lmorbits-embedding-rag_models)" ]; then
+    echo "Stopping lmorbits-embedding-rag_models"
+    docker stop lmorbits-embedding-rag_models
+  fi
+  echo "Removing lmorbits-embedding-rag_models"
+  docker rm lmorbits-embedding-rag_models
+else
+  echo "lmorbits-embedding-rag_models is not running"
+fi
+
+  
+May 11, 2025 > 14:33:28 |  serve._cli.task : 33 |   ❌ ERROR  |  task: [delete] if [ "$(docker ps -q -f name=lmorbits-embedding-rag_embeddings)" ]; then 
+  if [ "$(docker ps -q --filter "status=running" -f name=lmorbits-embedding-rag_embeddings)" ]; then
+    echo "Stopping lmorbits-embedding-rag_embeddings"
+    docker stop lmorbits-embedding-rag_embeddings
+  fi
+  echo "Removing lmorbits-embedding-rag_embeddings"
+  docker rm lmorbits-embedding-rag_embeddings
+else
+  echo "lmorbits-embedding-rag_embeddings is not running"
+fi
+
+  
+May 11, 2025 > 14:33:50 |  serve._cli.task : 33 |   ❌ ERROR  |  task: [serve] if [ "$(docker ps -q --filter "status=running" -f name=lmorbits-embedding-rag_embeddings)" ]; then
+  echo "lmorbits-embedding-rag_embeddings is already running"
+elif [ "$(docker ps -q --filter "status=exited" -f name=lmorbits-embedding-rag_embeddings)" ]; then
+  echo "Starting lmorbits-embedding-rag_embeddings"
+  docker start lmorbits-embedding-rag_embeddings
+else
+  echo "Building lmorbits-embedding-image image"
+  docker build -t lmorbits-embedding-image -f Dockerfile .
+  docker run -d -p 1111:1111 --name lmorbits-embedding-rag_embeddings lmorbits-embedding-image
+fi
+# health check on /health endpoint
+until curl -s http://localhost:1111/health | grep -q "ok"; do
+  echo "Waiting for lmorbits-embedding-rag_embeddings to be ready..."
+  sleep 1
+done
+
+#0 building with "orbstack" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile: 317B done
+#1 DONE 0.0s
+
+#2 [internal] load metadata for ghcr.io/astral-sh/uv:python3.13-bookworm-slim
+#2 DONE 0.7s
+
+#3 [internal] load .dockerignore
+#3 transferring context: 102B done
+#3 DONE 0.0s
+
+#4 [1/6] FROM ghcr.io/astral-sh/uv:python3.13-bookworm-slim@sha256:d0f50b72ce818caf18da58e8d41cb9f2cb6ef21cd42a12d46efa8e52c17ff87c
+#4 DONE 0.0s
+
+#5 [internal] load build context
+#5 transferring context: 190.20kB 0.0s done
+#5 DONE 0.0s
+
+#6 [2/6] WORKDIR /app
+#6 CACHED
+
+#7 [5/6] RUN uv sync
+#7 CACHED
+
+#8 [3/6] COPY pyproject.toml .
+#8 CACHED
+
+#9 [4/6] COPY uv.lock .
+#9 CACHED
+
+#10 [6/6] COPY . .
+#10 CACHED
+
+#11 exporting to image
+#11 exporting layers done
+#11 writing image sha256:13aa3e85d59daa24f510d7aad0d262b9e238456ad5b8a7a164025d21e66edec8 done
+#11 naming to docker.io/library/lmorbits-embedding-image done
+#11 DONE 0.0s
+
+View build details: docker-desktop://dashboard/build/orbstack/orbstack/u93nzaszobs6iouyytl4p7wtk
+  
+May 11, 2025 > 14:33:50 |  serve._cli.task : 33 |   ❌ ERROR  |  task: [stop] if [ "$(docker ps -q --filter "status=exited" -f name=lmorbits-embedding-rag_embeddings)" ]; then
+  docker stop lmorbits-embedding-rag_embeddings
+fi
+
+  
+May 11, 2025 > 14:48:21 |  serve._cli.task : 33 |   ❌ ERROR  |  task: [serve] if [ "$(docker ps -q --filter "status=running" -f name=lmorbits-embedding-rag_embeddings)" ]; then
+  echo "lmorbits-embedding-rag_embeddings is already running"
+elif [ "$(docker ps -q --filter "status=exited" -f name=lmorbits-embedding-rag_embeddings)" ]; then
+  echo "Starting lmorbits-embedding-rag_embeddings"
+  docker start lmorbits-embedding-rag_embeddings
+else
+  echo "Building lmorbits-embedding-image image"
+  docker build -t lmorbits-embedding-image -f Dockerfile .
+  docker run -d -p 1111:1111 --name lmorbits-embedding-rag_embeddings lmorbits-embedding-image
+fi
+# health check on /health endpoint
+until curl -s http://localhost:1111/health | grep -q "ok"; do
+  echo "Waiting for lmorbits-embedding-rag_embeddings to be ready..."
+  sleep 1
+done
+
+  
+May 11, 2025 > 14:48:21 |  serve._cli.task : 33 |   ❌ ERROR  |  task: [stop] if [ "$(docker ps -q --filter "status=exited" -f name=lmorbits-embedding-rag_embeddings)" ]; then
+  docker stop lmorbits-embedding-rag_embeddings
+fi
+
+  
+May 11, 2025 > 14:49:23 |  serve._cli.task : 33 |   ❌ ERROR  |  task: [serve] if [ "$(docker ps -q --filter "status=running" -f name=lmorbits-embedding-rag_embeddings)" ]; then
+  echo "lmorbits-embedding-rag_embeddings is already running"
+elif [ "$(docker ps -q --filter "status=exited" -f name=lmorbits-embedding-rag_embeddings)" ]; then
+  echo "Starting lmorbits-embedding-rag_embeddings"
+  docker start lmorbits-embedding-rag_embeddings
+else
+  echo "Building lmorbits-embedding-image image"
+  docker build -t lmorbits-embedding-image -f Dockerfile .
+  docker run -d -p 1111:1111 --name lmorbits-embedding-rag_embeddings lmorbits-embedding-image
+fi
+# health check on /health endpoint
+until curl -s http://localhost:1111/health | grep -q "ok"; do
+  echo "Waiting for lmorbits-embedding-rag_embeddings to be ready..."
+  sleep 1
+done
+
+  
+May 11, 2025 > 14:49:23 |  serve._cli.task : 33 |   ❌ ERROR  |  task: [stop] if [ "$(docker ps -q --filter "status=exited" -f name=lmorbits-embedding-rag_embeddings)" ]; then
+  docker stop lmorbits-embedding-rag_embeddings
+fi
+
+  
+May 11, 2025 > 14:50:24 |  serve._cli.task : 33 |   ❌ ERROR  |  task: [serve] if [ "$(docker ps -q --filter "status=running" -f name=lmorbits-embedding-rag_embeddings)" ]; then
+  echo "lmorbits-embedding-rag_embeddings is already running"
+elif [ "$(docker ps -q --filter "status=exited" -f name=lmorbits-embedding-rag_embeddings)" ]; then
+  echo "Starting lmorbits-embedding-rag_embeddings"
+  docker start lmorbits-embedding-rag_embeddings
+else
+  echo "Building lmorbits-embedding-image image"
+  docker build -t lmorbits-embedding-image -f Dockerfile .
+  docker run -d -p 1111:1111 --name lmorbits-embedding-rag_embeddings lmorbits-embedding-image
+fi
+# health check on /health endpoint
+until curl -s http://localhost:1111/health | grep -q "ok"; do
+  echo "Waiting for lmorbits-embedding-rag_embeddings to be ready..."
+  sleep 1
+done
+
+  
+May 11, 2025 > 14:50:24 |  serve._cli.task : 33 |   ❌ ERROR  |  task: [stop] if [ "$(docker ps -q --filter "status=exited" -f name=lmorbits-embedding-rag_embeddings)" ]; then
+  docker stop lmorbits-embedding-rag_embeddings
+fi
+
+  
+May 11, 2025 > 14:50:44 |  serve._cli.task : 33 |   ❌ ERROR  |  task: [serve] if [ "$(docker ps -q --filter "status=running" -f name=lmorbits-embedding-rag_embeddings)" ]; then
+  echo "lmorbits-embedding-rag_embeddings is already running"
+elif [ "$(docker ps -q --filter "status=exited" -f name=lmorbits-embedding-rag_embeddings)" ]; then
+  echo "Starting lmorbits-embedding-rag_embeddings"
+  docker start lmorbits-embedding-rag_embeddings
+else
+  echo "Building lmorbits-embedding-image image"
+  docker build -t lmorbits-embedding-image -f Dockerfile .
+  docker run -d -p 1111:1111 --name lmorbits-embedding-rag_embeddings lmorbits-embedding-image
+fi
+# health check on /health endpoint
+until curl -s http://localhost:1111/health | grep -q "ok"; do
+  echo "Waiting for lmorbits-embedding-rag_embeddings to be ready..."
+  sleep 1
+done
+
+  
+May 11, 2025 > 14:50:44 |  serve._cli.task : 33 |   ❌ ERROR  |  task: [stop] if [ "$(docker ps -q --filter "status=exited" -f name=lmorbits-embedding-rag_embeddings)" ]; then
+  docker stop lmorbits-embedding-rag_embeddings
+fi
+
+  
+May 11, 2025 > 14:51:34 |  serve._cli.task : 33 |   ❌ ERROR  |  task: [serve] if [ "$(docker ps -q --filter "status=running" -f name=lmorbits-embedding-rag_embeddings)" ]; then
+  echo "lmorbits-embedding-rag_embeddings is already running"
+elif [ "$(docker ps -q --filter "status=exited" -f name=lmorbits-embedding-rag_embeddings)" ]; then
+  echo "Starting lmorbits-embedding-rag_embeddings"
+  docker start lmorbits-embedding-rag_embeddings
+else
+  echo "Building lmorbits-embedding-image image"
+  docker build -t lmorbits-embedding-image -f Dockerfile .
+  docker run -d -p 1111:1111 --name lmorbits-embedding-rag_embeddings lmorbits-embedding-image
+fi
+# health check on /health endpoint
+until curl -s http://localhost:1111/health | grep -q "ok"; do
+  echo "Waiting for lmorbits-embedding-rag_embeddings to be ready..."
+  sleep 1
+done
+
+  
+May 11, 2025 > 14:51:34 |  serve._cli.task : 33 |   ❌ ERROR  |  task: [stop] if [ "$(docker ps -q --filter "status=exited" -f name=lmorbits-embedding-rag_embeddings)" ]; then
+  docker stop lmorbits-embedding-rag_embeddings
+fi
+
+  
+May 11, 2025 > 14:51:37 |  serve._cli.task : 33 |   ❌ ERROR  |  task: [serve] if [ "$(docker ps -q --filter "status=running" -f name=lmorbits-embedding-rag_embeddings)" ]; then
+  echo "lmorbits-embedding-rag_embeddings is already running"
+elif [ "$(docker ps -q --filter "status=exited" -f name=lmorbits-embedding-rag_embeddings)" ]; then
+  echo "Starting lmorbits-embedding-rag_embeddings"
+  docker start lmorbits-embedding-rag_embeddings
+else
+  echo "Building lmorbits-embedding-image image"
+  docker build -t lmorbits-embedding-image -f Dockerfile .
+  docker run -d -p 1111:1111 --name lmorbits-embedding-rag_embeddings lmorbits-embedding-image
+fi
+# health check on /health endpoint
+until curl -s http://localhost:1111/health | grep -q "ok"; do
+  echo "Waiting for lmorbits-embedding-rag_embeddings to be ready..."
+  sleep 1
+done
+
+  
+May 11, 2025 > 14:51:37 |  serve._cli.task : 33 |   ❌ ERROR  |  task: [stop] if [ "$(docker ps -q --filter "status=exited" -f name=lmorbits-embedding-rag_embeddings)" ]; then
+  docker stop lmorbits-embedding-rag_embeddings
+fi
+
+  
+May 11, 2025 > 14:52:25 |  serve._cli.task : 33 |   ❌ ERROR  |  task: [serve] if [ "$(docker ps -q --filter "status=running" -f name=lmorbits-embedding-rag_embeddings)" ]; then
+  echo "lmorbits-embedding-rag_embeddings is already running"
+elif [ "$(docker ps -q --filter "status=exited" -f name=lmorbits-embedding-rag_embeddings)" ]; then
+  echo "Starting lmorbits-embedding-rag_embeddings"
+  docker start lmorbits-embedding-rag_embeddings
+else
+  echo "Building lmorbits-embedding-image image"
+  docker build -t lmorbits-embedding-image -f Dockerfile .
+  docker run -d -p 1111:1111 --name lmorbits-embedding-rag_embeddings lmorbits-embedding-image
+fi
+# health check on /health endpoint
+until curl -s http://localhost:1111/health | grep -q "ok"; do
+  echo "Waiting for lmorbits-embedding-rag_embeddings to be ready..."
+  sleep 1
+done
+
+  
+May 11, 2025 > 14:52:25 |  serve._cli.task : 33 |   ❌ ERROR  |  task: [stop] if [ "$(docker ps -q --filter "status=exited" -f name=lmorbits-embedding-rag_embeddings)" ]; then
+  docker stop lmorbits-embedding-rag_embeddings
+fi
+
+  
+May 11, 2025 > 14:52:46 |  serve._cli.task : 33 |   ❌ ERROR  |  task: [serve] if [ "$(docker ps -q --filter "status=running" -f name=lmorbits-embedding-rag_embeddings)" ]; then
+  echo "lmorbits-embedding-rag_embeddings is already running"
+elif [ "$(docker ps -q --filter "status=exited" -f name=lmorbits-embedding-rag_embeddings)" ]; then
+  echo "Starting lmorbits-embedding-rag_embeddings"
+  docker start lmorbits-embedding-rag_embeddings
+else
+  echo "Building lmorbits-embedding-image image"
+  docker build -t lmorbits-embedding-image -f Dockerfile .
+  docker run -d -p 1111:1111 --name lmorbits-embedding-rag_embeddings lmorbits-embedding-image
+fi
+# health check on /health endpoint
+until curl -s http://localhost:1111/health | grep -q "ok"; do
+  echo "Waiting for lmorbits-embedding-rag_embeddings to be ready..."
+  sleep 1
+done
+
+  
+May 11, 2025 > 14:52:46 |  serve._cli.task : 33 |   ❌ ERROR  |  task: [stop] if [ "$(docker ps -q --filter "status=exited" -f name=lmorbits-embedding-rag_embeddings)" ]; then
+  docker stop lmorbits-embedding-rag_embeddings
+fi
+
+  
+May 11, 2025 > 15:33:12 |  serve._cli.task : 33 |   ❌ ERROR  |  task: [delete] if [ "$(docker ps -q -f name=lmorbits-embedding-rag_embeddings)" ]; then 
+  if [ "$(docker ps -q --filter "status=running" -f name=lmorbits-embedding-rag_embeddings)" ]; then
+    echo "Stopping lmorbits-embedding-rag_embeddings"
+    docker stop lmorbits-embedding-rag_embeddings
+  fi
+  echo "Removing lmorbits-embedding-rag_embeddings"
+  docker rm lmorbits-embedding-rag_embeddings
+else
+  echo "lmorbits-embedding-rag_embeddings is not running"
+fi
+
+  
+May 11, 2025 > 15:33:33 |  serve._cli.task : 33 |   ❌ ERROR  |  task: [serve] if [ "$(docker ps -q --filter "status=running" -f name=lmorbits-embedding-rag_embeddings)" ]; then
+  echo "lmorbits-embedding-rag_embeddings is already running"
+elif [ "$(docker ps -q --filter "status=exited" -f name=lmorbits-embedding-rag_embeddings)" ]; then
+  echo "Starting lmorbits-embedding-rag_embeddings"
+  docker start lmorbits-embedding-rag_embeddings
+else
+  echo "Building lmorbits-embedding-image image"
+  docker build -t lmorbits-embedding-image -f Dockerfile .
+  docker run -d -p 1111:1111 --name lmorbits-embedding-rag_embeddings lmorbits-embedding-image
+fi
+# health check on /health endpoint
+until curl -s http://localhost:1111/health | grep -q "ok"; do
+  echo "Waiting for lmorbits-embedding-rag_embeddings to be ready..."
+  sleep 1
+done
+
+#0 building with "orbstack" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile: 317B done
+#1 DONE 0.0s
+
+#2 [internal] load metadata for ghcr.io/astral-sh/uv:python3.13-bookworm-slim
+#2 DONE 0.6s
+
+#3 [internal] load .dockerignore
+#3 transferring context: 102B done
+#3 DONE 0.0s
+
+#4 [1/6] FROM ghcr.io/astral-sh/uv:python3.13-bookworm-slim@sha256:d0f50b72ce818caf18da58e8d41cb9f2cb6ef21cd42a12d46efa8e52c17ff87c
+#4 DONE 0.0s
+
+#5 [internal] load build context
+#5 transferring context: 190.20kB 0.0s done
+#5 DONE 0.0s
+
+#6 [5/6] RUN uv sync
+#6 CACHED
+
+#7 [4/6] COPY uv.lock .
+#7 CACHED
+
+#8 [2/6] WORKDIR /app
+#8 CACHED
+
+#9 [3/6] COPY pyproject.toml .
+#9 CACHED
+
+#10 [6/6] COPY . .
+#10 CACHED
+
+#11 exporting to image
+#11 exporting layers done
+#11 writing image sha256:13aa3e85d59daa24f510d7aad0d262b9e238456ad5b8a7a164025d21e66edec8 done
+#11 naming to docker.io/library/lmorbits-embedding-image done
+#11 DONE 0.0s
+
+View build details: docker-desktop://dashboard/build/orbstack/orbstack/wi8p1c4otvhsko06xx7p06t0j
+  
+May 11, 2025 > 15:35:21 |  serve._cli.task : 33 |   ❌ ERROR  |  task: [serve] if [ "$(docker ps -q --filter "status=running" -f name=lmorbits-embedding-rag_embeddings)" ]; then
+  echo "lmorbits-embedding-rag_embeddings is already running"
+elif [ "$(docker ps -q --filter "status=exited" -f name=lmorbits-embedding-rag_embeddings)" ]; then
+  echo "Starting lmorbits-embedding-rag_embeddings"
+  docker start lmorbits-embedding-rag_embeddings
+else
+  echo "Building lmorbits-embedding-image image"
+  docker build -t lmorbits-embedding-image -f Dockerfile .
+  docker run -d -p 1111:1111 --name lmorbits-embedding-rag_embeddings lmorbits-embedding-image
+fi
+# health check on /health endpoint
+until curl -s http://localhost:1111/health | grep -q "ok"; do
+  echo "Waiting for lmorbits-embedding-rag_embeddings to be ready..."
+  sleep 1
+done
+
+  
+May 11, 2025 > 15:35:51 |  serve._cli.task : 33 |   ❌ ERROR  |  task: [serve] if [ "$(docker ps -q --filter "status=running" -f name=lmorbits-embedding-rag_embeddings)" ]; then
+  echo "lmorbits-embedding-rag_embeddings is already running"
+elif [ "$(docker ps -q --filter "status=exited" -f name=lmorbits-embedding-rag_embeddings)" ]; then
+  echo "Starting lmorbits-embedding-rag_embeddings"
+  docker start lmorbits-embedding-rag_embeddings
+else
+  echo "Building lmorbits-embedding-image image"
+  docker build -t lmorbits-embedding-image -f Dockerfile .
+  docker run -d -p 1111:1111 --name lmorbits-embedding-rag_embeddings lmorbits-embedding-image
+fi
+# health check on /health endpoint
+until curl -s http://localhost:1111/health | grep -q "ok"; do
+  echo "Waiting for lmorbits-embedding-rag_embeddings to be ready..."
+  sleep 1
+done
+
+  
+May 11, 2025 > 15:41:04 |  serve._cli.task : 33 |   ❌ ERROR  |  task: [serve] if [ "$(docker ps -q --filter "status=running" -f name=lmorbits-embedding-rag_embeddings)" ]; then
+  echo "lmorbits-embedding-rag_embeddings is already running"
+elif [ "$(docker ps -q --filter "status=exited" -f name=lmorbits-embedding-rag_embeddings)" ]; then
+  echo "Starting lmorbits-embedding-rag_embeddings"
+  docker start lmorbits-embedding-rag_embeddings
+else
+  echo "Building lmorbits-embedding-image image"
+  docker build -t lmorbits-embedding-image -f Dockerfile .
+  docker run -d -p 1111:1111 --name lmorbits-embedding-rag_embeddings lmorbits-embedding-image
+fi
+# health check on /health endpoint
+until curl -s http://localhost:1111/health | grep -q "ok"; do
+  echo "Waiting for lmorbits-embedding-rag_embeddings to be ready..."
+  sleep 1
+done
+
+  
+May 11, 2025 > 15:48:19 |  serve._cli.task : 33 |   ❌ ERROR  |  task: [delete] if [ "$(docker ps -q -f name=lmorbits-embedding-rag_embeddings)" ]; then 
+  if [ "$(docker ps -q --filter "status=running" -f name=lmorbits-embedding-rag_embeddings)" ]; then
+    echo "Stopping lmorbits-embedding-rag_embeddings"
+    docker stop lmorbits-embedding-rag_embeddings
+  fi
+  echo "Removing lmorbits-embedding-rag_embeddings"
+  docker rm lmorbits-embedding-rag_embeddings
+else
+  echo "lmorbits-embedding-rag_embeddings is not running"
+fi
+
+  
+May 11, 2025 > 15:48:40 |  serve._cli.task : 33 |   ❌ ERROR  |  task: [serve] if [ "$(docker ps -q --filter "status=running" -f name=lmorbits-embedding-rag_embeddings)" ]; then
+  echo "lmorbits-embedding-rag_embeddings is already running"
+elif [ "$(docker ps -q --filter "status=exited" -f name=lmorbits-embedding-rag_embeddings)" ]; then
+  echo "Starting lmorbits-embedding-rag_embeddings"
+  docker start lmorbits-embedding-rag_embeddings
+else
+  echo "Building lmorbits-embedding-image image"
+  docker build -t lmorbits-embedding-image -f Dockerfile .
+  docker run -d -p 1111:1111 --name lmorbits-embedding-rag_embeddings lmorbits-embedding-image
+fi
+# health check on /health endpoint
+until curl -s http://localhost:1111/health | grep -q "ok"; do
+  echo "Waiting for lmorbits-embedding-rag_embeddings to be ready..."
+  sleep 1
+done
+
+#0 building with "orbstack" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile: 317B done
+#1 DONE 0.0s
+
+#2 [internal] load metadata for ghcr.io/astral-sh/uv:python3.13-bookworm-slim
+#2 DONE 0.7s
+
+#3 [internal] load .dockerignore
+#3 transferring context: 102B done
+#3 DONE 0.0s
+
+#4 [1/6] FROM ghcr.io/astral-sh/uv:python3.13-bookworm-slim@sha256:d0f50b72ce818caf18da58e8d41cb9f2cb6ef21cd42a12d46efa8e52c17ff87c
+#4 DONE 0.0s
+
+#5 [internal] load build context
+#5 transferring context: 190.13kB 0.0s done
+#5 DONE 0.0s
+
+#6 [4/6] COPY uv.lock .
+#6 CACHED
+
+#7 [2/6] WORKDIR /app
+#7 CACHED
+
+#8 [3/6] COPY pyproject.toml .
+#8 CACHED
+
+#9 [5/6] RUN uv sync
+#9 CACHED
+
+#10 [6/6] COPY . .
+#10 CACHED
+
+#11 exporting to image
+#11 exporting layers done
+#11 writing image sha256:7f41a5fff1e8b2b43a203f5f0a274c22eb53ff3e8713b4d7f1dea8f9def6aaac done
+#11 naming to docker.io/library/lmorbits-embedding-image done
+#11 DONE 0.0s
+
+View build details: docker-desktop://dashboard/build/orbstack/orbstack/mmzppuurtfidklrfbwebvb5ix
+  
+May 11, 2025 > 15:50:27 |  serve._cli.task : 33 |   ❌ ERROR  |  "docker rm" requires at least 1 argument.
+See 'docker rm --help'.
+
+Usage:  docker rm [OPTIONS] CONTAINER [CONTAINER...]
+
+Remove one or more containers
+task: Failed to run task "delete": exit status 1
+  
+May 11, 2025 > 15:50:59 |  serve._cli.task : 33 |   ❌ ERROR  |  task: [serve] echo "Starting LlamaCpp server and waiting for it to be ready..."
+task: [serve] if [ "$(docker ps -q --filter "status=exited" -f name=lmorbits-llamacpp-rag_model)" ]; then
+  docker start lmorbits-llamacpp-rag_model
+  container_id=$(docker ps -aqf "name=lmorbits-llamacpp-rag_model")
+else
+  container_id=$(docker run -d \
+    --name lmorbits-llamacpp-rag_model \
+    -p 8080:8080 \
+    -v /Users/parsa/Desk/projects/university/slmops-project/slmops-thesis/app_projects/app/pyapp/notebooks/embed/models/rag_model/model_path/artifacts:/models \
+    ghcr.io/ggerganov/llama.cpp:server \
+    -m /models/model.gguf)
+fi
+
+echo "🕐 Waiting for LlamaCpp server to become healthy..."
+while ! docker logs $container_id 2>&1 | grep -q "GET /health 127.0.0.1 200"; do
+  echo "⏳ Still starting..."
+  docker logs --tail 10 $container_id
+  sleep 1
+done
+
+echo "✅ LlamaCpp server is ready!"
+
+llama_model_loader: - kv  28:            tokenizer.ggml.unknown_token_id u32              = 0
+llama_model_loader: - kv  29:               general.quantization_version u32              = 2
+llama_model_loader: - type  f32:   61 tensors
+llama_model_loader: - type q5_0:  166 tensors
+llama_model_loader: - type q8_0:   15 tensors
+llama_model_loader: - type q4_K:   16 tensors
+llama_model_loader: - type q6_K:   14 tensors
+print_info: file format = GGUF V3 (latest)
+print_info: file type   = Q4_K - Medium
+print_info: file size   = 98.87 MiB (6.17 BPW) 
+<|im_start|>user
+Hello<|im_end|>
+<|im_start|>assistant
+Hi there<|im_end|>
+<|im_start|>user
+How are you?<|im_end|>
+<|im_start|>assistant
+'
+main: server is listening on http://0.0.0.0:8080 - starting the main loop
+srv  update_slots: all slots are idle
+<|im_start|>user
+Hello<|im_end|>
+<|im_start|>assistant
+Hi there<|im_end|>
+<|im_start|>user
+How are you?<|im_end|>
+<|im_start|>assistant
+'
+main: server is listening on http://0.0.0.0:8080 - starting the main loop
+srv  update_slots: all slots are idle
+<|im_start|>user
+Hello<|im_end|>
+<|im_start|>assistant
+Hi there<|im_end|>
+<|im_start|>user
+How are you?<|im_end|>
+<|im_start|>assistant
+'
+main: server is listening on http://0.0.0.0:8080 - starting the main loop
+srv  update_slots: all slots are idle
+<|im_start|>user
+Hello<|im_end|>
+<|im_start|>assistant
+Hi there<|im_end|>
+<|im_start|>user
+How are you?<|im_end|>
+<|im_start|>assistant
+'
+main: server is listening on http://0.0.0.0:8080 - starting the main loop
+srv  update_slots: all slots are idle
+<|im_start|>user
+Hello<|im_end|>
+<|im_start|>assistant
+Hi there<|im_end|>
+<|im_start|>user
+How are you?<|im_end|>
+<|im_start|>assistant
+'
+main: server is listening on http://0.0.0.0:8080 - starting the main loop
+srv  update_slots: all slots are idle
+<|im_start|>user
+Hello<|im_end|>
+<|im_start|>assistant
+Hi there<|im_end|>
+<|im_start|>user
+How are you?<|im_end|>
+<|im_start|>assistant
+'
+main: server is listening on http://0.0.0.0:8080 - starting the main loop
+srv  update_slots: all slots are idle
+<|im_start|>user
+Hello<|im_end|>
+<|im_start|>assistant
+Hi there<|im_end|>
+<|im_start|>user
+How are you?<|im_end|>
+<|im_start|>assistant
+'
+main: server is listening on http://0.0.0.0:8080 - starting the main loop
+srv  update_slots: all slots are idle
+<|im_start|>user
+Hello<|im_end|>
+<|im_start|>assistant
+Hi there<|im_end|>
+<|im_start|>user
+How are you?<|im_end|>
+<|im_start|>assistant
+'
+main: server is listening on http://0.0.0.0:8080 - starting the main loop
+srv  update_slots: all slots are idle
+<|im_start|>user
+Hello<|im_end|>
+<|im_start|>assistant
+Hi there<|im_end|>
+<|im_start|>user
+How are you?<|im_end|>
+<|im_start|>assistant
+'
+main: server is listening on http://0.0.0.0:8080 - starting the main loop
+srv  update_slots: all slots are idle
+<|im_start|>user
+Hello<|im_end|>
+<|im_start|>assistant
+Hi there<|im_end|>
+<|im_start|>user
+How are you?<|im_end|>
+<|im_start|>assistant
+'
+main: server is listening on http://0.0.0.0:8080 - starting the main loop
+srv  update_slots: all slots are idle
+<|im_start|>user
+Hello<|im_end|>
+<|im_start|>assistant
+Hi there<|im_end|>
+<|im_start|>user
+How are you?<|im_end|>
+<|im_start|>assistant
+'
+main: server is listening on http://0.0.0.0:8080 - starting the main loop
+srv  update_slots: all slots are idle
+<|im_start|>user
+Hello<|im_end|>
+<|im_start|>assistant
+Hi there<|im_end|>
+<|im_start|>user
+How are you?<|im_end|>
+<|im_start|>assistant
+'
+main: server is listening on http://0.0.0.0:8080 - starting the main loop
+srv  update_slots: all slots are idle
+<|im_start|>user
+Hello<|im_end|>
+<|im_start|>assistant
+Hi there<|im_end|>
+<|im_start|>user
+How are you?<|im_end|>
+<|im_start|>assistant
+'
+main: server is listening on http://0.0.0.0:8080 - starting the main loop
+srv  update_slots: all slots are idle
+<|im_start|>user
+Hello<|im_end|>
+<|im_start|>assistant
+Hi there<|im_end|>
+<|im_start|>user
+How are you?<|im_end|>
+<|im_start|>assistant
+'
+main: server is listening on http://0.0.0.0:8080 - starting the main loop
+srv  update_slots: all slots are idle
+<|im_start|>user
+Hello<|im_end|>
+<|im_start|>assistant
+Hi there<|im_end|>
+<|im_start|>user
+How are you?<|im_end|>
+<|im_start|>assistant
+'
+main: server is listening on http://0.0.0.0:8080 - starting the main loop
+srv  update_slots: all slots are idle
+<|im_start|>user
+Hello<|im_end|>
+<|im_start|>assistant
+Hi there<|im_end|>
+<|im_start|>user
+How are you?<|im_end|>
+<|im_start|>assistant
+'
+main: server is listening on http://0.0.0.0:8080 - starting the main loop
+srv  update_slots: all slots are idle
+<|im_start|>user
+Hello<|im_end|>
+<|im_start|>assistant
+Hi there<|im_end|>
+<|im_start|>user
+How are you?<|im_end|>
+<|im_start|>assistant
+'
+main: server is listening on http://0.0.0.0:8080 - starting the main loop
+srv  update_slots: all slots are idle
+<|im_start|>user
+Hello<|im_end|>
+<|im_start|>assistant
+Hi there<|im_end|>
+<|im_start|>user
+How are you?<|im_end|>
+<|im_start|>assistant
+'
+main: server is listening on http://0.0.0.0:8080 - starting the main loop
+srv  update_slots: all slots are idle
+<|im_start|>user
+Hello<|im_end|>
+<|im_start|>assistant
+Hi there<|im_end|>
+<|im_start|>user
+How are you?<|im_end|>
+<|im_start|>assistant
+'
+main: server is listening on http://0.0.0.0:8080 - starting the main loop
+srv  update_slots: all slots are idle
+<|im_start|>user
+Hello<|im_end|>
+<|im_start|>assistant
+Hi there<|im_end|>
+<|im_start|>user
+How are you?<|im_end|>
+<|im_start|>assistant
+'
+main: server is listening on http://0.0.0.0:8080 - starting the main loop
+srv  update_slots: all slots are idle
+<|im_start|>user
+Hello<|im_end|>
+<|im_start|>assistant
+Hi there<|im_end|>
+<|im_start|>user
+How are you?<|im_end|>
+<|im_start|>assistant
+'
+main: server is listening on http://0.0.0.0:8080 - starting the main loop
+srv  update_slots: all slots are idle
+<|im_start|>user
+Hello<|im_end|>
+<|im_start|>assistant
+Hi there<|im_end|>
+<|im_start|>user
+How are you?<|im_end|>
+<|im_start|>assistant
+'
+main: server is listening on http://0.0.0.0:8080 - starting the main loop
+srv  update_slots: all slots are idle
+<|im_start|>user
+Hello<|im_end|>
+<|im_start|>assistant
+Hi there<|im_end|>
+<|im_start|>user
+How are you?<|im_end|>
+<|im_start|>assistant
+'
+main: server is listening on http://0.0.0.0:8080 - starting the main loop
+srv  update_slots: all slots are idle
+<|im_start|>user
+Hello<|im_end|>
+<|im_start|>assistant
+Hi there<|im_end|>
+<|im_start|>user
+How are you?<|im_end|>
+<|im_start|>assistant
+'
+main: server is listening on http://0.0.0.0:8080 - starting the main loop
+srv  update_slots: all slots are idle
+<|im_start|>user
+Hello<|im_end|>
+<|im_start|>assistant
+Hi there<|im_end|>
+<|im_start|>user
+How are you?<|im_end|>
+<|im_start|>assistant
+'
+main: server is listening on http://0.0.0.0:8080 - starting the main loop
+srv  update_slots: all slots are idle
+<|im_start|>user
+Hello<|im_end|>
+<|im_start|>assistant
+Hi there<|im_end|>
+<|im_start|>user
+How are you?<|im_end|>
+<|im_start|>assistant
+'
+main: server is listening on http://0.0.0.0:8080 - starting the main loop
+srv  update_slots: all slots are idle
+<|im_start|>user
+Hello<|im_end|>
+<|im_start|>assistant
+Hi there<|im_end|>
+<|im_start|>user
+How are you?<|im_end|>
+<|im_start|>assistant
+'
+main: server is listening on http://0.0.0.0:8080 - starting the main loop
+srv  update_slots: all slots are idle
+<|im_start|>user
+Hello<|im_end|>
+<|im_start|>assistant
+Hi there<|im_end|>
+<|im_start|>user
+How are you?<|im_end|>
+<|im_start|>assistant
+'
+main: server is listening on http://0.0.0.0:8080 - starting the main loop
+srv  update_slots: all slots are idle
+  
+May 11, 2025 > 16:03:15 |  serve._cli.task : 33 |   ❌ ERROR  |  task: [serve] echo "Starting LlamaCpp server and waiting for it to be ready..."
+task: [serve] if [ "$(docker ps -q --filter "status=exited" -f name=lmorbits-llamacpp-rag_model)" ]; then
+  docker start lmorbits-llamacpp-rag_model
+  container_id=$(docker ps -aqf "name=lmorbits-llamacpp-rag_model")
+else
+  container_id=$(docker run -d \
+    --name lmorbits-llamacpp-rag_model \
+    -p 8080:8080 \
+    -v /Users/parsa/Desk/projects/university/slmops-project/slmops-thesis/app_projects/app/pyapp/notebooks/embed/models/rag_model/model_path/artifacts:/models \
+    ghcr.io/ggerganov/llama.cpp:server \
+    -m /models/model.gguf)
+fi
+
+echo "🕐 Waiting for LlamaCpp server to become healthy..."
+while ! docker logs $container_id 2>&1 | grep -q "GET /health 127.0.0.1 200"; do
+  echo "⏳ Still starting..."
+  docker logs --tail 10 $container_id
+  sleep 1
+done
+
+echo "✅ LlamaCpp server is ready!"
+
+llama_model_loader: - kv  28:            tokenizer.ggml.unknown_token_id u32              = 0
+llama_model_loader: - kv  29:               general.quantization_version u32              = 2
+llama_model_loader: - type  f32:   61 tensors
+llama_model_loader: - type q5_0:  166 tensors
+llama_model_loader: - type q8_0:   15 tensors
+llama_model_loader: - type q4_K:   16 tensors
+llama_model_loader: - type q6_K:   14 tensors
+print_info: file format = GGUF V3 (latest)
+print_info: file type   = Q4_K - Medium
+print_info: file size   = 98.87 MiB (6.17 BPW) 
+<|im_start|>user
+Hello<|im_end|>
+<|im_start|>assistant
+Hi there<|im_end|>
+<|im_start|>user
+How are you?<|im_end|>
+<|im_start|>assistant
+'
+main: server is listening on http://0.0.0.0:8080 - starting the main loop
+srv  update_slots: all slots are idle
+<|im_start|>user
+Hello<|im_end|>
+<|im_start|>assistant
+Hi there<|im_end|>
+<|im_start|>user
+How are you?<|im_end|>
+<|im_start|>assistant
+'
+main: server is listening on http://0.0.0.0:8080 - starting the main loop
+srv  update_slots: all slots are idle
+<|im_start|>user
+Hello<|im_end|>
+<|im_start|>assistant
+Hi there<|im_end|>
+<|im_start|>user
+How are you?<|im_end|>
+<|im_start|>assistant
+'
+main: server is listening on http://0.0.0.0:8080 - starting the main loop
+srv  update_slots: all slots are idle
+<|im_start|>user
+Hello<|im_end|>
+<|im_start|>assistant
+Hi there<|im_end|>
+<|im_start|>user
+How are you?<|im_end|>
+<|im_start|>assistant
+'
+main: server is listening on http://0.0.0.0:8080 - starting the main loop
+srv  update_slots: all slots are idle
+<|im_start|>user
+Hello<|im_end|>
+<|im_start|>assistant
+Hi there<|im_end|>
+<|im_start|>user
+How are you?<|im_end|>
+<|im_start|>assistant
+'
+main: server is listening on http://0.0.0.0:8080 - starting the main loop
+srv  update_slots: all slots are idle
+<|im_start|>user
+Hello<|im_end|>
+<|im_start|>assistant
+Hi there<|im_end|>
+<|im_start|>user
+How are you?<|im_end|>
+<|im_start|>assistant
+'
+main: server is listening on http://0.0.0.0:8080 - starting the main loop
+srv  update_slots: all slots are idle
+<|im_start|>user
+Hello<|im_end|>
+<|im_start|>assistant
+Hi there<|im_end|>
+<|im_start|>user
+How are you?<|im_end|>
+<|im_start|>assistant
+'
+main: server is listening on http://0.0.0.0:8080 - starting the main loop
+srv  update_slots: all slots are idle
+<|im_start|>user
+Hello<|im_end|>
+<|im_start|>assistant
+Hi there<|im_end|>
+<|im_start|>user
+How are you?<|im_end|>
+<|im_start|>assistant
+'
+main: server is listening on http://0.0.0.0:8080 - starting the main loop
+srv  update_slots: all slots are idle
+<|im_start|>user
+Hello<|im_end|>
+<|im_start|>assistant
+Hi there<|im_end|>
+<|im_start|>user
+How are you?<|im_end|>
+<|im_start|>assistant
+'
+main: server is listening on http://0.0.0.0:8080 - starting the main loop
+srv  update_slots: all slots are idle
+<|im_start|>user
+Hello<|im_end|>
+<|im_start|>assistant
+Hi there<|im_end|>
+<|im_start|>user
+How are you?<|im_end|>
+<|im_start|>assistant
+'
+main: server is listening on http://0.0.0.0:8080 - starting the main loop
+srv  update_slots: all slots are idle
+<|im_start|>user
+Hello<|im_end|>
+<|im_start|>assistant
+Hi there<|im_end|>
+<|im_start|>user
+How are you?<|im_end|>
+<|im_start|>assistant
+'
+main: server is listening on http://0.0.0.0:8080 - starting the main loop
+srv  update_slots: all slots are idle
+<|im_start|>user
+Hello<|im_end|>
+<|im_start|>assistant
+Hi there<|im_end|>
+<|im_start|>user
+How are you?<|im_end|>
+<|im_start|>assistant
+'
+main: server is listening on http://0.0.0.0:8080 - starting the main loop
+srv  update_slots: all slots are idle
+<|im_start|>user
+Hello<|im_end|>
+<|im_start|>assistant
+Hi there<|im_end|>
+<|im_start|>user
+How are you?<|im_end|>
+<|im_start|>assistant
+'
+main: server is listening on http://0.0.0.0:8080 - starting the main loop
+srv  update_slots: all slots are idle
+<|im_start|>user
+Hello<|im_end|>
+<|im_start|>assistant
+Hi there<|im_end|>
+<|im_start|>user
+How are you?<|im_end|>
+<|im_start|>assistant
+'
+main: server is listening on http://0.0.0.0:8080 - starting the main loop
+srv  update_slots: all slots are idle
+<|im_start|>user
+Hello<|im_end|>
+<|im_start|>assistant
+Hi there<|im_end|>
+<|im_start|>user
+How are you?<|im_end|>
+<|im_start|>assistant
+'
+main: server is listening on http://0.0.0.0:8080 - starting the main loop
+srv  update_slots: all slots are idle
+<|im_start|>user
+Hello<|im_end|>
+<|im_start|>assistant
+Hi there<|im_end|>
+<|im_start|>user
+How are you?<|im_end|>
+<|im_start|>assistant
+'
+main: server is listening on http://0.0.0.0:8080 - starting the main loop
+srv  update_slots: all slots are idle
+<|im_start|>user
+Hello<|im_end|>
+<|im_start|>assistant
+Hi there<|im_end|>
+<|im_start|>user
+How are you?<|im_end|>
+<|im_start|>assistant
+'
+main: server is listening on http://0.0.0.0:8080 - starting the main loop
+srv  update_slots: all slots are idle
+<|im_start|>user
+Hello<|im_end|>
+<|im_start|>assistant
+Hi there<|im_end|>
+<|im_start|>user
+How are you?<|im_end|>
+<|im_start|>assistant
+'
+main: server is listening on http://0.0.0.0:8080 - starting the main loop
+srv  update_slots: all slots are idle
+<|im_start|>user
+Hello<|im_end|>
+<|im_start|>assistant
+Hi there<|im_end|>
+<|im_start|>user
+How are you?<|im_end|>
+<|im_start|>assistant
+'
+main: server is listening on http://0.0.0.0:8080 - starting the main loop
+srv  update_slots: all slots are idle
+<|im_start|>user
+Hello<|im_end|>
+<|im_start|>assistant
+Hi there<|im_end|>
+<|im_start|>user
+How are you?<|im_end|>
+<|im_start|>assistant
+'
+main: server is listening on http://0.0.0.0:8080 - starting the main loop
+srv  update_slots: all slots are idle
+<|im_start|>user
+Hello<|im_end|>
+<|im_start|>assistant
+Hi there<|im_end|>
+<|im_start|>user
+How are you?<|im_end|>
+<|im_start|>assistant
+'
+main: server is listening on http://0.0.0.0:8080 - starting the main loop
+srv  update_slots: all slots are idle
+<|im_start|>user
+Hello<|im_end|>
+<|im_start|>assistant
+Hi there<|im_end|>
+<|im_start|>user
+How are you?<|im_end|>
+<|im_start|>assistant
+'
+main: server is listening on http://0.0.0.0:8080 - starting the main loop
+srv  update_slots: all slots are idle
+<|im_start|>user
+Hello<|im_end|>
+<|im_start|>assistant
+Hi there<|im_end|>
+<|im_start|>user
+How are you?<|im_end|>
+<|im_start|>assistant
+'
+main: server is listening on http://0.0.0.0:8080 - starting the main loop
+srv  update_slots: all slots are idle
+<|im_start|>user
+Hello<|im_end|>
+<|im_start|>assistant
+Hi there<|im_end|>
+<|im_start|>user
+How are you?<|im_end|>
+<|im_start|>assistant
+'
+main: server is listening on http://0.0.0.0:8080 - starting the main loop
+srv  update_slots: all slots are idle
+<|im_start|>user
+Hello<|im_end|>
+<|im_start|>assistant
+Hi there<|im_end|>
+<|im_start|>user
+How are you?<|im_end|>
+<|im_start|>assistant
+'
+main: server is listening on http://0.0.0.0:8080 - starting the main loop
+srv  update_slots: all slots are idle
+<|im_start|>user
+Hello<|im_end|>
+<|im_start|>assistant
+Hi there<|im_end|>
+<|im_start|>user
+How are you?<|im_end|>
+<|im_start|>assistant
+'
+main: server is listening on http://0.0.0.0:8080 - starting the main loop
+srv  update_slots: all slots are idle
+<|im_start|>user
+Hello<|im_end|>
+<|im_start|>assistant
+Hi there<|im_end|>
+<|im_start|>user
+How are you?<|im_end|>
+<|im_start|>assistant
+'
+main: server is listening on http://0.0.0.0:8080 - starting the main loop
+srv  update_slots: all slots are idle
+<|im_start|>user
+Hello<|im_end|>
+<|im_start|>assistant
+Hi there<|im_end|>
+<|im_start|>user
+How are you?<|im_end|>
+<|im_start|>assistant
+'
+main: server is listening on http://0.0.0.0:8080 - starting the main loop
+srv  update_slots: all slots are idle
+  

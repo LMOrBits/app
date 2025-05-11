@@ -10,13 +10,33 @@ class Project(BaseModel):
 
 class Serve(BaseModel):
     port: int
-    gguf_relative_path: Optional[str] = "model_path/artifacts/model.gguf"
+    # gguf_relative_path: Optional[str] = "model_path/artifacts/model.gguf"
     model_name: str
     alias: Optional[str] = "champion"
-    run_id: Optional[str] = None
-    model_dir: Optional[str] = "./"
     tracking: Optional[Literal["mlflow"]] = "mlflow"
     serving_tech: Optional[Literal["llamacpp"]] = "llamacpp"
+
+class Embeddings(BaseModel):
+    port: int
+    model_name: str
+    alias: Optional[str] = "champion"
+    tracking: Optional[Literal["mlflow"]] = "mlflow"
+    serving_tech: Optional[Literal["liteserve"]] = "liteserve"
+
+class EmbeddingsLitellm(BaseModel):
+    model:str
+    dimensions: Optional[int] = None
+    encoding_format: Optional[str] = None
+    timeout:Optional[int] = 600
+    api_base: Optional[str] = None
+    api_version: Optional[str] = None
+    api_key: Optional[str] = None
+    api_type: Optional[str] = None
+    caching: bool = False
+    user: Optional[str] = None
+    custom_llm_provider:Optional[str] = None
+    litellm_call_id:Optional[str] = None
+    logger_fn:Optional[str] = None
 
 class Litellm(BaseModel):
     model:Optional[str]="openai/custom" 
@@ -30,7 +50,9 @@ class Litellm(BaseModel):
 class ML(BaseModel):
     type: Optional[Literal["llm", "embeddings"]] = "llm"
     provider: Optional[Literal["local", "litellm"]] = "local"
+    model_dir: Optional[str] = None
     serve: Optional[Serve] = None
+    embeddings: Optional[Embeddings | EmbeddingsLitellm] = None
     litellm: Optional[Litellm] = None
 
 class Observability(BaseModel):

@@ -1,8 +1,9 @@
 from pathlib import Path
 import click
 from .groups import cli
-from .schemas import Project, ML, Observability, Config
+from .schemas import Project, ML, Observability, Config, Embeddings
 from dotenv import load_dotenv
+from pyapp.serve_integration import get_mlflow_embeddings_manager, get_mlflow_lm_manager
 
 from .add_ml import add_ml
 from .utils import read_config,write_config
@@ -24,34 +25,65 @@ def init(name: str, version: str, description: str, author: str):
     Path(config_dir.parent / "appdeps.env").touch(exist_ok=True)
 
 @cli.command()
-def install():
-    from dotenv import load_dotenv
-    import os
+def run():
     """Install the project dependencies."""
     click.echo("Installing project dependencies...")
     config,config_dir = read_config()
     env_path = config_dir.parent / "appdeps.env"
     load_dotenv(env_path, override=True)
     # project = Project(**config["project"])
-    if "ml" in config:
-        ml = ML(**config["ml"])
-        if ml.provider == "local" and ml.type == "llm":
-            from pyapp.model_connection.lm.langchain.litellm import get_model_mlflow_llamacpp, ModelConfig
-            model_config = ModelConfig(
-                model_name=ml.serve.model_name,
-                alias=ml.serve.alias,
-                port=ml.serve.port,
-                gguf_relative_path=ml.serve.gguf_relative_path
-            )
-            litellm_config = ml.litellm.model_dump()
-            model = get_model_mlflow_llamacpp(ml.serve.model_dir,model_config,stream=True,**litellm_config)
-    
     if "observability" in config:
         from pyapp.observation.phoneix import observation
         observation.start()
-    
-        
 
+    if "ml" in config:
+        ml = ML(**config["ml"])
+        manager = None
+        status = None
+        if ml.type == "llm":
+            manager = get_mlflow_lm_manager(ml.model_dir)
+            model = ml.serve
+            port = ml.serve.port
+        if ml.type == "embeddings":
+            print(ml.model_dir)
+            manager = get_mlflow_embeddings_manager(ml.model_dir)
+            model = ml.embeddings
+        status = manager.new_model_status(model.model_name,model.alias)
+        if status: 
+            click.echo(f"new version of the model `{model.model_name}` with alias `{model.alias}` is available. would you like to update to the latest version?")
+            cli(["run-latest"], standalone_mode=False)
+        elif manager is not None:
+            if ml.type == "llm":
+                manager.add_serve(model_name=model.model_name, alias=model.alias, port=port)
+            if ml.type == "embeddings":
+                manager.add_serve(model_name=model.model_name, alias=model.alias)
+    
+    
+
+@cli.command()
+@click.option('--latest', prompt='Latest Version update', help='Latest Version update', default=True)
+def run_latest(latest:bool):
+    """Install the project dependencies."""
+    click.echo("Installing project dependencies...")
+    config,config_dir = read_config()
+    env_path = config_dir.parent / "appdeps.env"
+    load_dotenv(env_path, override=True)
+    manager = None
+    if "ml" in config:
+        ml = ML(**config["ml"])
+        if ml.type == "llm":
+            manager = get_mlflow_lm_manager(ml.model_dir)
+            model = ml.serve
+            port = ml.serve.port
+        if ml.type == "embeddings":
+            manager = get_mlflow_embeddings_manager(ml.model_dir)
+            model = ml.embeddings
+        if manager is not None:
+            if ml.type == "llm":
+                manager.update_model(model_name=model.model_name, alias=model.alias, port=port)
+            if ml.type == "embeddings":
+                manager.update_model(model_name=model.model_name, alias=model.alias)
+        
 @cli.command()
 def add_observe():
     """Add a new observability to the project."""
@@ -69,7 +101,7 @@ def stop():
     """Stop the project."""
     observation.stop()
     
-    from pyapp.model_connection.lm.langchain.litellm import get_model_manager_from_config
+    from pyapp.model_connection.lm.langchain.litellm import get_lm_model_manager
     config,config_dir = read_config()
     env_path = config_dir.parent / "appdeps.env"
     load_dotenv(env_path, override=True)
@@ -77,9 +109,11 @@ def stop():
     if "ml" in config:
         ml = ML(**config["ml"])
         if ml.provider == "local" and ml.type == "llm":
-            model_manager = get_model_manager_from_config(conf.ml.serve.model_dir)
-            print(model_manager.model_config_manager.list_models())
-            model_manager.stop_serve_model(ml.serve.model_name)
+            manager = get_mlflow_lm_manager(ml.model_dir)
+            manager.stop_all_serve()
+        if ml.provider == "local" and ml.type == "embeddings":
+            manager = get_mlflow_embeddings_manager(ml.model_dir)
+            manager.stop_all_serve()
 
 
 @cli.command()
@@ -89,7 +123,7 @@ def remove():
     """Stop the project."""
     observation.remove()
     
-    from pyapp.model_connection.lm.langchain.litellm import get_model_manager_from_config
+    
     config,config_dir = read_config()
     env_path = config_dir.parent / "appdeps.env"
     load_dotenv(env_path, override=True)
@@ -97,10 +131,24 @@ def remove():
     if "ml" in config:
         ml = ML(**config["ml"])
         if ml.provider == "local" and ml.type == "llm":
-            model_manager = get_model_manager_from_config(conf.ml.serve.model_dir)
-            model_manager.delete_all_serve_models()
+            manager = get_mlflow_lm_manager(ml.model_dir)
+            manager.delete_all_serve()
+        if ml.provider == "local" and ml.type == "embeddings":
+            manager = get_mlflow_embeddings_manager(ml.model_dir)
+            manager.delete_all_serve()
 
+# @cli.command()
+# @click.option('--name', prompt='Dependency name', help='Name of the dependency')
+# @click.option("--directory", prompt="Dependency directory", help="Directory of the dependency")
+# def add_dep(name:str, directory:str):
+#     directory = Path(directory)
+#     if Path(directory).is_dir():
+#         click.echo(f"Dependency {name} already exists")
+#         if (directory / "appdeps.toml").exists():
+#             click.echo(f"Dependency {name} already exists")
+#             return
 
+       
 
 
 
