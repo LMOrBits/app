@@ -29,7 +29,8 @@ class LitellmEmbeddings(Embeddings):
         self.args = embeddings.model_dump()
 
     def embed_documents(self, texts: List[str]) -> List[List[float]]:
-        return embedding(**self.args, input=texts)
+        data = embedding(**self.args, input=texts)["data"]
+        return [d["embedding"] for d in data]
     
     def embed_query(self, text: str) -> List[float]:
-        return embedding(**self.args, input=[text])[0]
+        return embedding(**self.args, input=[text])["data"][0]["embedding"]

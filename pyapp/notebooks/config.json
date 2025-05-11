@@ -1,8 +1,0 @@
-{
-    "rag_model": {
-        "run_id": "ddce9533e62948278bf6c9ea0a65fcc9",
-        "model_name": "rag_model",
-        "model_dir": "/Users/parsa/Desk/projects/university/slmops-project/slmops-thesis/app_projects/app/pyapp/notebooks/models/rag_model",
-        "alias": "champion"
-    }
-}

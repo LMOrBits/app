@@ -1,3 +1,4 @@
+from typing import Optional
 from .groups import cli
 import click
 from .schemas import ML, Serve, Litellm, Embeddings, EmbeddingsLitellm
@@ -87,7 +88,7 @@ def add_embeddings_local(port:int,model_name:str,alias:str,serving_tech:str):
 @ml.command()
 @click.option(
     '--model',
-    prompt="Name of the model",
+    prompt="Name of the model from https://docs.litellm.ai/docs/embedding/supported_embedding",
     help="Name of the model to be used ",
     type=str
 )
@@ -188,28 +189,32 @@ def add_litellm_serve(temperature:float,max_tokens:int,top_p:float,top_k:int):
 @ml.command()
 @click.option(
     '--model',
-    prompt="Model of the litellm",
+    prompt="Model of the litellm , from https://docs.litellm.ai/docs/",
     help="Model of the litellm",
     type=str
 )
 @click.option(
     '--api-key',
-    prompt="API key of the litellm",
+    prompt="API key of the litellm , if not mentioned press enter",
     help="API key of the litellm",
-    type=str
+    type=str,
+    required=False,
+    default=""
 )
 @click.option(
     '--api-base',
-    prompt="API base of the litellm",
+    prompt="API base of the litellm , if not mentioned press enter",
     help="API base of the litellm",
-    type=str
+    type=str,
+    required=False,
+    default=""
 )
 @click.option(
     '--temperature' ,
     prompt="Temperature of the litellm",
     help="Temperature of the litellm",
     type=float,
-    default=0.5
+    default=0
 )
 @click.option(
     '--max-tokens',
@@ -234,7 +239,21 @@ def add_litellm_serve(temperature:float,max_tokens:int,top_p:float,top_k:int):
 )
 def add_litellm(model:str,api_key:str,api_base:str,temperature:float,max_tokens:int,top_p:float,top_k:int):
     """Config the litellm to the project."""
-    litellm = Litellm(model=model,api_key=api_key,api_base=api_base,temperature=temperature,max_tokens=max_tokens,top_p=top_p,top_k=top_k)
+    args = {
+        "model":model,
+        "temperature":temperature,
+        "max_tokens":max_tokens,
+        "top_p":top_p,
+        "top_k":top_k
+    }
+    if api_key :
+        args["api_key"] = api_key
+    if api_base :
+        args["api_base"] = api_base
+
+    litellm = Litellm(**args)
     config,config_dir = read_config()
     config["ml"]["litellm"] = litellm.model_dump()
     write_config(config,config_dir)
+    click.echo("✅ Created litellm model")
+    click.echo(f"please do not forget to update the appedeps.env based on the keys needed")

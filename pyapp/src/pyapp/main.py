@@ -1,0 +1,162 @@
+from functools import partial
+from pathlib import Path
+import click
+
+from pyapp.cli.groups import cli
+from pyapp.cli.schemas import Project, ML, Observability, Config, Embeddings
+from dotenv import load_dotenv
+from pyapp.serve_integration import get_mlflow_embeddings_manager, get_mlflow_lm_manager
+from typing import  Optional
+from pyapp.cli.utils import read_config,write_config
+from pydantic import BaseModel
+from pyapp.cli.schemas import PyappDependency
+
+
+def trim_path(path:str):
+    if path.startswith("./"):
+        return path[2:]
+    return path
+
+
+class Pyapp:
+    def __init__(self , config_path:Optional[str]=None):
+        self.config_path = config_path if config_path else Path.cwd()
+        self.read_config = partial(read_config, config_path=config_path)
+        config,config_dir = self.read_config(give_error=False)
+        load_dotenv(config_dir.parent / "appdeps.env", override=True)
+        self.dependencies = []
+        self.name = config["project"]["name"]
+        if config:
+            if config.get("project",{}).get("dependencies",None):
+                self.dependencies = [Pyapp(config_path=Path(self.config_path / dependency["directory"]).resolve().absolute()) for dependency in config["project"]["dependencies"].values()]
+            
+        
+    def init(self,name: str, version: str, description: str, author: str):
+        """Initialize a new SLMOPS project."""
+        config,config_dir = self.read_config(give_error=False)
+        if config:
+            click.echo("Appdeps.toml already exists")
+            return
+        project = Project(name=name, version=version, description=description, author=author)
+        config["project"] = project.model_dump()
+        write_config(config,config_dir)
+        Path(config_dir.parent / "appdeps.env").touch(exist_ok=True)
+    
+    def run(self):
+      if self.dependencies:
+        for dependency in self.dependencies:
+          dependency.run()
+      """Install the project dependencies."""
+      click.echo(f"Installing project dependencies {self.name} in {self.config_path}...")
+      config,config_dir = self.read_config()
+      env_path = config_dir.parent / "appdeps.env"
+      load_dotenv(env_path, override=True)
+      # project = Project(**config["project"])
+      if "observability" in config:
+          from pyapp.observation.phoneix import observation
+          observation.start()
+
+      if "ml" in config:
+          ml = ML(**config["ml"])
+          manager = None
+          status = None
+          if ml.provider == "local":
+            if ml.type == "llm":
+                manager = get_mlflow_lm_manager(self.config_path / trim_path(ml.model_dir))
+                model = ml.serve
+                port = ml.serve.port
+            if ml.type == "embeddings":
+                print(ml.model_dir)
+                manager = get_mlflow_embeddings_manager(self.config_path / trim_path(ml.model_dir))
+                model = ml.embeddings
+            status = manager.new_model_status(model.model_name,model.alias)
+            if status: 
+                click.echo(f"new version of the model `{model.model_name}` with alias `{model.alias}` is available. would you like to update to the latest version?")
+                #   cli(["run-latest"], standalone_mode=False)
+                self.run_latest(True)
+            elif manager is not None:
+                if ml.type == "llm":
+                    manager.add_serve(model_name=model.model_name, alias=model.alias, port=port)
+                if ml.type == "embeddings":
+                    manager.add_serve(model_name=model.model_name, alias=model.alias)
+
+    def run_latest(self,latest:bool):
+      """Install the project dependencies."""
+    
+      click.echo(f"Installing project dependencies {self.name} in {self.config_path}...")
+      config,config_dir = self.read_config()
+      manager = None
+      if "ml" in config:
+          ml = ML(**config["ml"])
+          if ml.provider == "local":
+            if ml.type == "llm":
+                manager = get_mlflow_lm_manager(self.config_path / trim_path(ml.model_dir))
+                model = ml.serve
+                port = ml.serve.port
+            if ml.type == "embeddings":
+                manager = get_mlflow_embeddings_manager(self.config_path / trim_path(ml.model_dir))
+                model = ml.embeddings
+            if manager is not None:
+                if ml.type == "llm":
+                    manager.update_model(model_name=model.model_name, alias=model.alias, port=port)
+                if ml.type == "embeddings":
+                    manager.update_model(model_name=model.model_name, alias=model.alias)
+      
+    def stop(self):
+        """Stop the project."""
+        from pyapp.observation.instance import PhoenixObservation
+        observation = PhoenixObservation()
+        """Stop the project."""
+        observation.stop()
+        
+        if self.dependencies:
+          for dependency in self.dependencies:
+            dependency.stop()
+
+        from pyapp.model_connection.lm.langchain.litellm import get_lm_model_manager
+        click.echo(f"Stopping project dependencies {self.name} in {self.config_path}...")
+        config,config_dir = self.read_config()
+        env_path = config_dir.parent / "appdeps.env"
+        load_dotenv(env_path, override=True)
+        conf = Config(**config)
+        if "ml" in config:
+            ml = ML(**config["ml"])
+            if ml.provider == "local":
+                if ml.provider == "local" and ml.type == "llm":
+                    manager = get_mlflow_lm_manager(self.config_path / trim_path(ml.model_dir))
+                    manager.stop_all_serve()
+                if ml.provider == "local" and ml.type == "embeddings":
+                    manager = get_mlflow_embeddings_manager(self.config_path / trim_path(ml.model_dir))
+                    manager.stop_all_serve()
+      
+    def remove(self):
+        from pyapp.observation.instance import PhoenixObservation
+        observation = PhoenixObservation()
+        """Stop the project."""
+        observation.remove()
+        
+        click.echo(f"Removing project dependencies {self.name} in {self.config_path}...")
+        if self.dependencies:
+          for dependency in self.dependencies:
+            dependency.remove()
+        config,config_dir = self.read_config()
+        env_path = config_dir.parent / "appdeps.env"
+        load_dotenv(env_path, override=True)
+        conf = Config(**config)
+        if "ml" in config:
+            ml = ML(**config["ml"])
+            if ml.provider == "local" and ml.type == "llm":
+                manager = get_mlflow_lm_manager(self.config_path / trim_path(ml.model_dir))
+                manager.delete_all_serve()
+            if ml.provider == "local" and ml.type == "embeddings":
+                manager = get_mlflow_embeddings_manager(self.config_path / trim_path(ml.model_dir))
+                manager.delete_all_serve()
+ 
+    
+
+
+        
+
+
+
+

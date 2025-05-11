@@ -1,12 +1,15 @@
 from pydantic import BaseModel
 from typing import Literal, List, Optional
-
+class PyappDependency(BaseModel):
+    name: str
+    directory: str
+    local: bool = True
 class Project(BaseModel):
     name: str = "default"
     version: str = "0.0.1"
     description: str = "Default project"
     author: str = ""
-    dependencies: list[str] = []
+    dependencies: dict[str, PyappDependency] = {}
 
 class Serve(BaseModel):
     port: int
@@ -40,8 +43,8 @@ class EmbeddingsLitellm(BaseModel):
 
 class Litellm(BaseModel):
     model:Optional[str]="openai/custom" 
-    api_key:Optional[str]="none"
-    api_base:Optional[str]="http://localhost:8080/v1"
+    api_key:Optional[str]= None
+    api_base:Optional[str]= None
     temperature:Optional[float]=0.5
     max_tokens:Optional[int]=1000
     top_p:Optional[float]=1.0

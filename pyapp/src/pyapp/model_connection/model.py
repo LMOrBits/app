@@ -48,6 +48,7 @@ def get_model_lm( ml:ML):
     if ml.provider == "litellm" and ml.type == "llm":
        from langchain_community.chat_models import ChatLiteLLM 
        args = ml.litellm.model_dump()
+       logger.debug(f"args: {args}")
        model = ChatLiteLLM(**args)
        return model
     if ml.provider == "local" and ml.type == "llm":

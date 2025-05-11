@@ -4,8 +4,9 @@ import click
 from pyapp.log.log_config import get_logger
 logger = get_logger()
 
-def read_config(give_error:bool=True)->tuple[dict,Path]:
-    directory = Path.cwd()
+def read_config(give_error:bool=True, config_path:str=None)->tuple[dict,Path]:
+    directory = config_path if config_path else Path.cwd()
+    directory = Path(directory)
     config_dir = directory / "appdeps.toml"
     if not config_dir.exists():
         if not give_error:
@@ -16,6 +17,11 @@ def read_config(give_error:bool=True)->tuple[dict,Path]:
     with open(config_dir, "r") as f:
         config = toml.load(f)
     return config,config_dir
+
+def read_config_from_path(config_path:str)->dict:
+    with open(config_path, "r") as f:
+        config = toml.load(f)
+    return config
 
 def write_config(config:dict,config_dir:str|Path):
     with open(str(config_dir) , "w") as f:
