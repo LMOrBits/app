@@ -75,5 +75,10 @@ class Config(BaseModel):
     observability: Optional[Observability] = None
 
 
-    
+class VectorDB(BaseModel):
+    name: str
+    inRepoPath: str
+    branchName: str
+    sourceBranch: str
+
     

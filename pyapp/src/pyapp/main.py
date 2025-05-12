@@ -25,10 +25,10 @@ class Pyapp:
         config,config_dir = self.read_config(give_error=False)
         load_dotenv(config_dir.parent / "appdeps.env", override=True)
         self.dependencies = []
-        self.name = config["project"]["name"]
         if config:
             if config.get("project",{}).get("dependencies",None):
                 self.dependencies = [Pyapp(config_path=Path(self.config_path / dependency["directory"]).resolve().absolute()) for dependency in config["project"]["dependencies"].values()]
+            self.name = config.get("project",{}).get("name",None)
             
         
     def init(self,name: str, version: str, description: str, author: str):
@@ -151,6 +151,12 @@ class Pyapp:
             if ml.provider == "local" and ml.type == "embeddings":
                 manager = get_mlflow_embeddings_manager(self.config_path / trim_path(ml.model_dir))
                 manager.delete_all_serve()
+    
+    def ingest_to_vectordb(self):
+        """Ingest the data to the vector store."""
+        from data.vectordb import ingest_data,LakeFsEmbeding,Credentials, get_vectordb_data
+        
+
  
     
 

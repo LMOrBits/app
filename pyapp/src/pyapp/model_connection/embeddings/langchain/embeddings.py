@@ -12,6 +12,8 @@ class LiteserveEmbeddings(Embeddings):
         self.model = embeddings
         self.server = f"http://localhost:{embeddings.port}"
 
+    def __iter__(self):
+        return iter([self.model])
 
     def embed_documents(self, texts: List[str]) -> List[List[float]]:
         """Embed search docs."""
@@ -27,6 +29,9 @@ class LitellmEmbeddings(Embeddings):
     
     def __init__(self, embeddings: EmbeddingsLitellm):
         self.args = embeddings.model_dump()
+
+    def __iter__(self):
+        return iter([self.args])
 
     def embed_documents(self, texts: List[str]) -> List[List[float]]:
         data = embedding(**self.args, input=texts)["data"]

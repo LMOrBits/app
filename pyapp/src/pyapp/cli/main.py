@@ -5,7 +5,8 @@ from .groups import cli
 from pyapp.cli.schemas import PyappDependency, ML
 import toml
 
-from .add_ml import add_ml
+
+
 
 pyapp_instance = Pyapp()
 

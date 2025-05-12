@@ -1,4 +1,5 @@
 version = 1
+revision = 1
 requires-python = ">=3.12"
 resolution-markers = [
     "python_full_version >= '3.13' and sys_platform != 'win32'",
@@ -7,6 +8,14 @@ resolution-markers = [
     "python_full_version >= '3.12.4' and python_full_version < '3.13' and sys_platform == 'win32'",
     "python_full_version < '3.12.4' and sys_platform != 'win32'",
     "python_full_version < '3.12.4' and sys_platform == 'win32'",
+]
+
+[[package]]
+name = "aenum"
+version = "3.1.16"
+source = { registry = "https://pypi.org/simple" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/e3/52/6ad8f63ec8da1bf40f96996d25d5b650fdd38f5975f8c813732c47388f18/aenum-3.1.16-py3-none-any.whl", hash = "sha256:9035092855a98e41b66e3d0998bd7b96280e85ceb3a04cc035636138a1943eaf", size = 165627 },
 ]
 
 [[package]]
@@ -358,6 +367,21 @@ source = { registry = "https://pypi.org/simple" }
 sdist = { url = "https://files.pythonhosted.org/packages/a9/95/a3dbbb5028f35eafb79008e7522a75244477d2838f38cbb722248dabc2a8/cycler-0.12.1.tar.gz", hash = "sha256:88bb128f02ba341da8ef447245a9e138fae777f6a23943da4540077d3601eb1c", size = 7615 }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/e7/05/c19819d5e3d95294a6f5947fb9b9629efb316b96de511b418c53d245aae6/cycler-0.12.1-py3-none-any.whl", hash = "sha256:85cef7cff222d8644161529808465972e51340599459b8ac3ccbac5a854e0d30", size = 8321 },
+]
+
+[[package]]
+name = "data"
+version = "0.1.0"
+source = { git = "https://github.com/Parsa-Mir/data.git#6d4d75d48291a9ca732ffff0c271ddecaf951326" }
+dependencies = [
+    { name = "loguru" },
+    { name = "python-dotenv" },
+]
+
+[package.optional-dependencies]
+simple = [
+    { name = "lakefs" },
+    { name = "lakefs-spec" },
 ]
 
 [[package]]
@@ -1256,6 +1280,47 @@ wheels = [
     { url = "https://files.pythonhosted.org/packages/05/f9/27e94c1b3eb29e6933b6986ffc5fa1177d2cd1f0c8efc5f02c91c9ac61de/kiwisolver-1.4.8-cp313-cp313t-musllinux_1_2_ppc64le.whl", hash = "sha256:151dffc4865e5fe6dafce5480fab84f950d14566c480c08a53c663a0020504b6", size = 2390661 },
     { url = "https://files.pythonhosted.org/packages/d9/d4/3c9735faa36ac591a4afcc2980d2691000506050b7a7e80bcfe44048daa7/kiwisolver-1.4.8-cp313-cp313t-musllinux_1_2_s390x.whl", hash = "sha256:577facaa411c10421314598b50413aa1ebcf5126f704f1e5d72d7e4e9f020d90", size = 2546710 },
     { url = "https://files.pythonhosted.org/packages/4c/fa/be89a49c640930180657482a74970cdcf6f7072c8d2471e1babe17a222dc/kiwisolver-1.4.8-cp313-cp313t-musllinux_1_2_x86_64.whl", hash = "sha256:be4816dc51c8a471749d664161b434912eee82f2ea66bd7628bd14583a833e85", size = 2349213 },
+]
+
+[[package]]
+name = "lakefs"
+version = "0.10.0"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "lakefs-sdk" },
+    { name = "pyyaml" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/98/3f/0269244521398286c585c0c834bece44568d6a4469f2c4c4eabd601a051d/lakefs-0.10.0.tar.gz", hash = "sha256:e4d0f5b8bf3a8aa0ca8635d98a55b75a84a0bc64260e279396335a9641224e9c", size = 44616 }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/dd/cf/9db1657ae4f18d835a9f8559c69638bcbb71a57654ffd44463d72b255835/lakefs-0.10.0-py3-none-any.whl", hash = "sha256:f17019e567dac880d027f54db8e9bc7c8967ecda549cf74aaace130617c53d42", size = 55142 },
+]
+
+[[package]]
+name = "lakefs-sdk"
+version = "1.54.0"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "aenum" },
+    { name = "pydantic" },
+    { name = "python-dateutil" },
+    { name = "urllib3" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/5c/19/06cf10d8cb929eb4ce2c08ef0ebf862493362cf137c330edae4d9e24a460/lakefs_sdk-1.54.0.tar.gz", hash = "sha256:f171fb631d1a3a786076a2ffb206427131ab1319d695a80360aa3afe50235ddb", size = 121264 }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/aa/2a/6775ddcdb81ff7add7e5256acd0ac094bb185aab4133a2e3c6e4bf4bfd08/lakefs_sdk-1.54.0-py3-none-any.whl", hash = "sha256:48c0ae465d0191770216b6acb235922298e7f24a3ade4d8490804714aab66327", size = 212706 },
+]
+
+[[package]]
+name = "lakefs-spec"
+version = "0.11.3"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "fsspec" },
+    { name = "lakefs" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/f8/65/ec42fdb236f52f6e3e7dd3fc5f870649c3036bc6c5e035ef1e2b160ea594/lakefs_spec-0.11.3.tar.gz", hash = "sha256:82f9c20effefa6413c002b6f92a5bd76f7a3faf7b46e7d152194b90d16be91d1", size = 478932 }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/b6/8b/8c946984f9b40ec783b8bec26759eb9215d756a0864e3d981a84713a4928/lakefs_spec-0.11.3-py3-none-any.whl", hash = "sha256:eb9241ffb00b786c5b34235f5cf37e8a74cc64f1b3558dc75cecec9d402fc759", size = 22959 },
 ]
 
 [[package]]
@@ -2257,6 +2322,7 @@ version = "0.1.0"
 source = { editable = "." }
 dependencies = [
     { name = "click" },
+    { name = "data", extra = ["simple"] },
     { name = "go-task-bin" },
     { name = "litellm" },
     { name = "loguru" },
@@ -2270,13 +2336,6 @@ dependencies = [
 [package.optional-dependencies]
 local-langchain = [
     { name = "arize-phoenix-otel" },
-    { name = "langchain-community" },
-    { name = "langchain-core" },
-    { name = "openinference-instrumentation-langchain" },
-]
-local-langchain-embeddings = [
-    { name = "arize-phoenix-otel" },
-    { name = "fastembed" },
     { name = "langchain-community" },
     { name = "langchain-core" },
     { name = "openinference-instrumentation-langchain" },
@@ -2325,25 +2384,22 @@ local-langchain-embeddings = [
 [package.metadata]
 requires-dist = [
     { name = "arize-phoenix-otel", marker = "extra == 'local-langchain'", specifier = ">=0.9.2" },
-    { name = "arize-phoenix-otel", marker = "extra == 'local-langchain-embeddings'", specifier = ">=0.9.2" },
     { name = "click", specifier = ">=8.1.8" },
-    { name = "fastembed", marker = "extra == 'local-langchain-embeddings'", specifier = ">=0.6.1" },
+    { name = "data", extras = ["simple"], git = "https://github.com/Parsa-Mir/data.git" },
     { name = "go-task-bin", specifier = ">=3.43.3" },
     { name = "langchain-community", marker = "extra == 'local-langchain'", specifier = ">=0.2.1" },
-    { name = "langchain-community", marker = "extra == 'local-langchain-embeddings'", specifier = ">=0.2.1" },
     { name = "langchain-core", marker = "extra == 'local-langchain'", specifier = ">=0.3.58" },
-    { name = "langchain-core", marker = "extra == 'local-langchain-embeddings'", specifier = ">=0.3.58" },
     { name = "langchain-core", marker = "extra == 'simple'", specifier = ">=0.3.58" },
     { name = "litellm", specifier = ">=1.68.0" },
     { name = "loguru", specifier = ">=0.7.3" },
     { name = "openinference-instrumentation-langchain", marker = "extra == 'local-langchain'", specifier = ">=0.1.42" },
-    { name = "openinference-instrumentation-langchain", marker = "extra == 'local-langchain-embeddings'", specifier = ">=0.1.42" },
     { name = "pydantic", specifier = ">=2.11.4" },
     { name = "python-dotenv", specifier = ">=1.1.0" },
     { name = "serve", extras = ["mlflow"], editable = "../serve" },
     { name = "taskpy", git = "https://github.com/Parsa-Mir/taskpy.git" },
     { name = "toml", specifier = ">=0.10.2" },
 ]
+provides-extras = ["simple", "local-langchain"]
 
 [package.metadata.requires-dev]
 dev = [
@@ -2899,6 +2955,7 @@ requires-dist = [
     { name = "serve", extras = ["llamacpp"], marker = "extra == 'mlflow-llamacpp-gcs'" },
     { name = "tqdm", specifier = ">=4.67.1" },
 ]
+provides-extras = ["mlflow", "llamacpp", "mlflow-llamacpp", "mlflow-llamacpp-gcs"]
 
 [package.metadata.requires-dev]
 llamacpp-dev = [{ name = "serve", extras = ["llamacpp"] }]
@@ -3187,11 +3244,11 @@ wheels = [
 
 [[package]]
 name = "urllib3"
-version = "2.4.0"
+version = "2.0.7"
 source = { registry = "https://pypi.org/simple" }
-sdist = { url = "https://files.pythonhosted.org/packages/8a/78/16493d9c386d8e60e442a35feac5e00f0913c0f4b7c217c11e8ec2ff53e0/urllib3-2.4.0.tar.gz", hash = "sha256:414bc6535b787febd7567804cc015fee39daab8ad86268f1310a9250697de466", size = 390672 }
+sdist = { url = "https://files.pythonhosted.org/packages/af/47/b215df9f71b4fdba1025fc05a77db2ad243fa0926755a52c5e71659f4e3c/urllib3-2.0.7.tar.gz", hash = "sha256:c97dfde1f7bd43a71c8d2a58e369e9b2bf692d1334ea9f9cae55add7d0dd0f84", size = 282546 }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/6b/11/cc635220681e93a0183390e26485430ca2c7b5f9d33b15c74c2861cb8091/urllib3-2.4.0-py3-none-any.whl", hash = "sha256:4e16665048960a0900c702d4a66415956a584919c03361cac9f1df5c5dd7e813", size = 128680 },
+    { url = "https://files.pythonhosted.org/packages/d2/b2/b157855192a68541a91ba7b2bbcb91f1b4faa51f8bae38d8005c034be524/urllib3-2.0.7-py3-none-any.whl", hash = "sha256:fdb6d215c776278489906c2f8916e6e7d4f5a9b602ccbcfdf7f016fc8da0596e", size = 124213 },
 ]
 
 [[package]]

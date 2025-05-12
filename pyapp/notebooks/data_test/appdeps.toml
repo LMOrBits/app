@@ -1,0 +1,13 @@
+[project]
+name = "test"
+version = "0.0.1"
+description = ""
+author = ""
+
+[vectordb]
+name = "test"
+inRepoPath = "./data/vectordb"
+branchName = "main"
+sourceBranch = "main"
+
+[project.dependencies]
