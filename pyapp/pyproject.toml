@@ -8,6 +8,7 @@ requires-python = ">=3.12"
 dependencies = [
   "click>=8.1.8",
   "data[simple]",
+  "duckdb>=1.2.2",
   "go-task-bin>=3.43.3",
   "litellm>=1.68.0",
   "loguru>=0.7.3",

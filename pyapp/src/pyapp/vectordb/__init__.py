@@ -1,3 +1,2 @@
-from langchain_community.vectorstores import LanceDB as VectorStore
-
-__all__ = ["VectorStore"]
+from .vectordb import get_vector_store
+__all__ = ["get_vector_store"]
