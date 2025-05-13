@@ -2,15 +2,13 @@ from functools import partial
 from pathlib import Path
 import click
 
-from pyapp.cli.groups import cli
-from pyapp.cli.schemas import Project, ML, Observability, Config, Embeddings
+from pyapp.cli.schemas import Project, ML, Observability, Config, Embeddings , VectorDB
 from dotenv import load_dotenv
 from pyapp.serve_integration import get_mlflow_embeddings_manager, get_mlflow_lm_manager
 from typing import  Optional
 from pyapp.cli.utils import read_config,write_config
-from pydantic import BaseModel
 from pyapp.cli.schemas import PyappDependency
-
+from pyapp.vectordb.data import ingest_data , get_vectordb_data
 
 def trim_path(path:str):
     if path.startswith("./"):
@@ -154,7 +152,28 @@ class Pyapp:
     
     def ingest_to_vectordb(self):
         """Ingest the data to the vector store."""
-        from data.vectordb import ingest_data,LakeFsEmbeding,Credentials, get_vectordb_data
+        config,config_dir = self.read_config() 
+        if "vectordb" in config:
+            vectordb = VectorDB(**config["vectordb"])
+            commit_id = ingest_data(vectordb,config_dir.parent)
+            vectordb.commitHash = commit_id
+            config["vectordb"] = vectordb.model_dump()
+            write_config(config,config_dir)
+        else: 
+            raise ValueError("No vector store found")
+    
+    def download_from_vetordb(self,use_commit_hash:bool=False , force:bool=False):
+        config,config_dir = self.read_config() 
+        if "vectordb" in config:
+            vectordb = VectorDB(**config["vectordb"])
+            if use_commit_hash:
+                get_vectordb_data(vectordb,main_dir=config_dir.parent,use_commit_hash=use_commit_hash,force=force)
+            else:
+                get_vectordb_data(vectordb,main_dir=config_dir.parent,force=force)
+        else:
+            raise ValueError("No vector store found")
+
+
         
 
  

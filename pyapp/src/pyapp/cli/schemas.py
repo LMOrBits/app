@@ -80,5 +80,6 @@ class VectorDB(BaseModel):
     inRepoPath: str
     branchName: str
     sourceBranch: str
+    commitHash: Optional[str] = None
 
     
