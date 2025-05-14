@@ -4,7 +4,7 @@ import click
 
 from pyapp.cli.schemas import Project, ML, Observability, Config, Embeddings , VectorDB
 from dotenv import load_dotenv
-from pyapp.serve_integration import get_mlflow_embeddings_manager, get_mlflow_lm_manager
+
 from typing import  Optional
 from pyapp.cli.utils import read_config,write_config
 from pyapp.cli.schemas import PyappDependency
@@ -40,43 +40,47 @@ class Pyapp:
         write_config(config,config_dir)
         Path(config_dir.parent / "appdeps.env").touch(exist_ok=True)
     
-    def run(self):
-      if self.dependencies:
-        for dependency in self.dependencies:
-          dependency.run()
-      """Install the project dependencies."""
-      click.echo(f"Installing project dependencies {self.name} in {self.config_path}...")
-      config,config_dir = self.read_config()
-      env_path = config_dir.parent / "appdeps.env"
-      load_dotenv(env_path, override=True)
-      # project = Project(**config["project"])
-      if "observability" in config:
-          from pyapp.observation.phoneix import observation
-          observation.start()
+    def run(self, force:bool=False):
+        if self.dependencies:
+            for dependency in self.dependencies:
+                dependency.run(force=True)
+        """Install the project dependencies."""
+        click.echo(f"Installing project dependencies {self.name} in {self.config_path}...")
+        config,config_dir = self.read_config()
+        env_path = config_dir.parent / "appdeps.env"
+        load_dotenv(env_path, override=True)
+        # project = Project(**config["project"])
+        if "observability" in config:
+            from pyapp.observation.phoneix import observation
+            observation.start()
 
-      if "ml" in config:
-          ml = ML(**config["ml"])
-          manager = None
-          status = None
-          if ml.provider == "local":
-            if ml.type == "llm":
-                manager = get_mlflow_lm_manager(self.config_path / trim_path(ml.model_dir))
-                model = ml.serve
-                port = ml.serve.port
-            if ml.type == "embeddings":
-                print(ml.model_dir)
-                manager = get_mlflow_embeddings_manager(self.config_path / trim_path(ml.model_dir))
-                model = ml.embeddings
-            status = manager.new_model_status(model.model_name,model.alias)
-            if status: 
-                click.echo(f"new version of the model `{model.model_name}` with alias `{model.alias}` is available. would you like to update to the latest version?")
-                #   cli(["run-latest"], standalone_mode=False)
-                self.run_latest(True)
-            elif manager is not None:
+        if "ml" in config:
+            from pyapp.serve_integration import get_mlflow_embeddings_manager, get_mlflow_lm_manager
+            ml = ML(**config["ml"])
+            manager = None
+            status = None
+            if ml.provider == "local":
                 if ml.type == "llm":
-                    manager.add_serve(model_name=model.model_name, alias=model.alias, port=port)
+                    manager = get_mlflow_lm_manager(self.config_path / trim_path(ml.model_dir))
+                    model = ml.serve
+                    port = ml.serve.port
                 if ml.type == "embeddings":
-                    manager.add_serve(model_name=model.model_name, alias=model.alias)
+                    print(ml.model_dir)
+                    manager = get_mlflow_embeddings_manager(self.config_path / trim_path(ml.model_dir))
+                    model = ml.embeddings
+                status = manager.new_model_status(model.model_name,model.alias)
+                if status: 
+                    click.echo(f"new version of the model `{model.model_name}` with alias `{model.alias}` is available. would you like to update to the latest version?")
+                    #   cli(["run-latest"], standalone_mode=False)
+                    self.run_latest(True)
+                elif manager is not None:
+                    if ml.type == "llm":
+                        manager.add_serve(model_name=model.model_name, alias=model.alias, port=port)
+                    if ml.type == "embeddings":
+                        manager.add_serve(model_name=model.model_name, alias=model.alias)
+        if force:
+            if "vectordb" in config:
+                self.download_from_vetordb(raw_data=False, force=True,use_commit_hash=False)
 
     def run_latest(self,latest:bool):
       """Install the project dependencies."""
@@ -85,6 +89,7 @@ class Pyapp:
       config,config_dir = self.read_config()
       manager = None
       if "ml" in config:
+          from pyapp.serve_integration import get_mlflow_embeddings_manager, get_mlflow_lm_manager
           ml = ML(**config["ml"])
           if ml.provider == "local":
             if ml.type == "llm":
@@ -118,6 +123,7 @@ class Pyapp:
         load_dotenv(env_path, override=True)
         conf = Config(**config)
         if "ml" in config:
+            from pyapp.serve_integration import get_mlflow_embeddings_manager, get_mlflow_lm_manager
             ml = ML(**config["ml"])
             if ml.provider == "local":
                 if ml.provider == "local" and ml.type == "llm":
@@ -142,6 +148,7 @@ class Pyapp:
         load_dotenv(env_path, override=True)
         conf = Config(**config)
         if "ml" in config:
+            from pyapp.serve_integration import get_mlflow_embeddings_manager, get_mlflow_lm_manager
             ml = ML(**config["ml"])
             if ml.provider == "local" and ml.type == "llm":
                 manager = get_mlflow_lm_manager(self.config_path / trim_path(ml.model_dir))
