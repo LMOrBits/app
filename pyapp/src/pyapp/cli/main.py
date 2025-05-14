@@ -17,12 +17,12 @@ pyapp_instance = Pyapp()
 @click.option('--description', prompt='Project description', help='Description of the project', default='')
 @click.option('--author', prompt='Project author', help='Author of the project', default='')
 def init(name: str, version: str, description: str, author: str):
-    """Initialize a new SLMOPS project."""
+    """🚀 Initialize a new SLMOPS project with the specified configuration."""
     pyapp_instance.init(name, version, description, author)
 
 @cli.command()
 def run():
-    """Install the project dependencies."""
+    """▶️ Run all project dependencies including observability, models, data, serve, and subprojects."""
     pyapp_instance.run()
     
     
@@ -30,12 +30,12 @@ def run():
 @cli.command()
 @click.option('--latest', prompt='Latest Version update', help='Latest Version update', default=True)
 def run_latest(latest:bool):
-    """Install the project dependencies."""
+    """🔄 Run the project with the latest available model version."""
     pyapp_instance.run_latest(latest)
         
 @cli.command()
 def add_observe():
-    """Add a new observability to the project."""
+    """🔄 Run the project with the latest available model version."""
     click.echo("Adding a new observability to the project...")
     config,config_dir = read_config()
     observability = Observability()
@@ -45,19 +45,19 @@ def add_observe():
 
 @cli.command()
 def stop():
-    """Stop the project."""
+    """⏹️ Stop all running components including observability and serve services."""
     pyapp_instance.stop()
 
 
 @cli.command()
 def remove():
-    """Remove the project."""
+    """🗑️ Remove all running or previously running components including observability and serve services."""
     pyapp_instance.remove()
 
 @cli.command()
 @click.option('--raw-data', prompt='Raw data (y/n)', help='Raw data', default="n", type=str)
 def push_data(raw_data:str):
-    """Ingest the data to the vector store."""
+    """🔺 Ingest data (raw data or vector database) into the vector store."""
     raw_data = raw_data.lower() == "y"
     pyapp_instance.ingest_to_vectordb(raw_data=raw_data)
 
@@ -65,14 +65,14 @@ def push_data(raw_data:str):
 @click.option('--use-commit-hash', prompt='Use commit hash if any (y/n)', help='Use commit hash', default="n", type=str)
 @click.option('--force', prompt='Force to override if exists (y/n)', help='Force', default="n", type=str)
 def pull_test_data(use_commit_hash:str, force:str):
-    """Download the test data from the vector store."""
+    """🔻 Download test data from the data repository with optional commit hash and force override."""
     use_commit_hash = use_commit_hash.lower() == "y"
     force = force.lower() == "y"
     pyapp_instance.get_test_data(use_commit_hash=use_commit_hash,force=force)
 
 @cli.command()
 def push_test_data():
-    """Ingest the test data to the vector store."""
+    """🔺 Ingest test data into the data repository."""
     pyapp_instance.ingest_test_data()
 
 @cli.command()
@@ -80,17 +80,18 @@ def push_test_data():
 @click.option('--force', prompt='Force to override if exists (y/n)', help='Force', default="n", type=str)
 @click.option('--raw-data', prompt='Raw data (y/n)', help='Raw data', default="n", type=str)
 def pull_data(use_commit_hash:str, force:str, raw_data:str):
-    """Download the data from the vector store."""
+    """🔻 Download data (raw data or vector database) from the data repository with optional commit hash and force override."""
     use_commit_hash = use_commit_hash.lower() == "y"
     force = force.lower() == "y"
     raw_data = raw_data.lower() == "y"
-    pyapp_instance.download_from_vetordb(use_commit_hash=use_commit_hash,force=force)
+    pyapp_instance.download_from_vetordb(use_commit_hash=use_commit_hash,force=force,raw_data=raw_data)
 
 
 @cli.command()
 @click.option('--name', prompt='Dependency name', help='Name of the dependency', default="simple")
 @click.option("--directory", prompt="Dependency directory", help="Directory of the dependency", default="./test")
 def add_dep(name:str, directory:str):
+    """🎸 Add another project as a dependency with specified name and directory."""
     path_directory = Path(directory).resolve()
     if Path(directory).is_dir():
         if (path_directory / "appdeps.toml").exists():

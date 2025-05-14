@@ -14,7 +14,7 @@ def data():
 @click.option("--branch-name", type=str, prompt="Name of the branch", default="main")
 @click.option("--source-branch", type=str, prompt="Source branch", default="main")
 def add_vectordb(name, in_repo_path, branch_name, source_branch):
-    """Add a vector store to the project"""
+    """📦 Add a vector store to the project"""
     vector_db = VectorDB(name=name, inRepoPath=in_repo_path, branchName=branch_name, sourceBranch=source_branch)
     config,config_dir = read_config()
     config_dir_path = Path(config_dir.parent)
@@ -34,7 +34,7 @@ def add_vectordb(name, in_repo_path, branch_name, source_branch):
 @click.option("--branch-name", type=str, prompt="Name of the branch", default="main")
 @click.option("--source-branch", type=str, prompt="Source branch", default="main")
 def add_test_data(name, in_repo_path, branch_name, source_branch):
-    """Add a test data to the project"""
+    """🧪 Add a test data to the project"""
     test_data = TestData(name=name, inRepoPath=in_repo_path, branchName=branch_name, sourceBranch=source_branch)
     config,config_dir = read_config()
     config_dir_path = Path(config_dir.parent)
@@ -51,7 +51,7 @@ def add_test_data(name, in_repo_path, branch_name, source_branch):
 @click.option("--branch-name", type=str, help="Name of the branch", default="main")
 @click.option("--source-branch", type=str, help="Source branch", default="main")
 def change_branch(branch_name, source_branch):
-    """Change the branch of the vector store"""
+    """🔄 Change the branch of the vector store"""
     config,config_dir = read_config()
     config["vectordb"]["branchName"] = branch_name
     config["vectordb"]["sourceBranch"] = source_branch
@@ -60,7 +60,7 @@ def change_branch(branch_name, source_branch):
 @data.command()
 @click.option("--commit-hash", type=str, help="Commit hash" )
 def add_commit_hash(commit_hash):
-    """Change the commit hash of the vector store"""
+    """🔄 Change the commit hash of the vector store"""
     config,config_dir = read_config()
     config["vectordb"]["commitHash"] = commit_hash
     write_config(config,config_dir)

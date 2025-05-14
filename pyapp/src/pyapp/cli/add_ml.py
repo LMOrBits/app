@@ -6,14 +6,14 @@ from .utils import read_config,write_config
 
 @cli.group()
 def ml():
-    """Config the model to the project."""
+    """🔧 Configure the model to the project."""
     pass
 
 @cli.command()
 @click.option('--type', prompt="Type of the model", help="Type of the model", default="llm", type=click.Choice(["llm", "embeddings"]))
 @click.option('--provider', prompt="Provider of the model", help="Provider of the model", default="local", type=click.Choice(["local", "litellm"]))
 def add_ml( type:str, provider:str):
-    """Add a the model to the project."""
+    """🦄 Add the model to the project."""
     config,config_dir = read_config()
     ml_config = ML(type=type,provider=provider)
     config["ml"] = ml_config.model_dump()
