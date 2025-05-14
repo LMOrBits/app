@@ -8,7 +8,7 @@ from pyapp.serve_integration import get_mlflow_embeddings_manager, get_mlflow_lm
 from typing import  Optional
 from pyapp.cli.utils import read_config,write_config
 from pyapp.cli.schemas import PyappDependency
-from pyapp.vectordb.data import ingest_data , get_vectordb_data
+from pyapp.vectordb.data import ingest_data , get_data
 
 def trim_path(path:str):
     if path.startswith("./"):
@@ -150,26 +150,27 @@ class Pyapp:
                 manager = get_mlflow_embeddings_manager(self.config_path / trim_path(ml.model_dir))
                 manager.delete_all_serve()
     
-    def ingest_to_vectordb(self):
+    def ingest_to_vectordb(self , raw_data:bool=False):
         """Ingest the data to the vector store."""
         config,config_dir = self.read_config() 
         if "vectordb" in config:
             vectordb = VectorDB(**config["vectordb"])
-            commit_id = ingest_data(vectordb,config_dir.parent)
-            vectordb.commitHash = commit_id
-            config["vectordb"] = vectordb.model_dump()
-            write_config(config,config_dir)
+            commit_id = ingest_data(vectordb,config_dir.parent,raw_data=raw_data)
+            if commit_id:
+                vectordb.commitHash = commit_id
+                config["vectordb"] = vectordb.model_dump()
+                write_config(config,config_dir)
         else: 
             raise ValueError("No vector store found")
     
-    def download_from_vetordb(self,use_commit_hash:bool=False , force:bool=False):
+    def download_from_vetordb(self,use_commit_hash:bool=False , force:bool=False , raw_data:bool=False):
         config,config_dir = self.read_config() 
         if "vectordb" in config:
             vectordb = VectorDB(**config["vectordb"])
             if use_commit_hash:
-                get_vectordb_data(vectordb,main_dir=config_dir.parent,use_commit_hash=use_commit_hash,force=force)
+                get_data(vectordb,main_dir=config_dir.parent,use_commit_hash=use_commit_hash,force=force,raw_data=raw_data)
             else:
-                get_vectordb_data(vectordb,main_dir=config_dir.parent,force=force)
+                get_data(vectordb,main_dir=config_dir.parent,force=force,raw_data=raw_data)
         else:
             raise ValueError("No vector store found")
 

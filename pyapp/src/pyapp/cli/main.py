@@ -50,18 +50,23 @@ def remove():
     pyapp_instance.remove()
 
 @cli.command()
-def commit_data():
+@click.option('--raw-data', prompt='Raw data (y/n)', help='Raw data', default="n", type=str)
+def push_data(raw_data:str):
     """Ingest the data to the vector store."""
-    pyapp_instance.ingest_to_vectordb()
+    raw_data = raw_data.lower() == "y"
+    pyapp_instance.ingest_to_vectordb(raw_data=raw_data)
 
 @cli.command()
 @click.option('--use-commit-hash', prompt='Use commit hash if any (y/n)', help='Use commit hash', default="n", type=str)
 @click.option('--force', prompt='Force to override if exists (y/n)', help='Force', default="n", type=str)
-def pull_data(use_commit_hash:str, force:str):
+@click.option('--raw-data', prompt='Raw data (y/n)', help='Raw data', default="n", type=str)
+def pull_data(use_commit_hash:str, force:str, raw_data:str):
     """Download the data from the vector store."""
     use_commit_hash = use_commit_hash.lower() == "y"
     force = force.lower() == "y"
-    pyapp_instance.download_from_vetordb(use_commit_hash=use_commit_hash,force=force)
+    raw_data = raw_data.lower() == "y"
+    pyapp_instance.download_from_vetordb(use_commit_hash=use_commit_hash,force=force,raw_data=raw_data)
+
 
 @cli.command()
 @click.option('--name', prompt='Dependency name', help='Name of the dependency', default="simple")

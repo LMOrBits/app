@@ -5,9 +5,10 @@ description = ""
 author = ""
 
 [vectordb]
-name = "test"
-inRepoPath = "./data/vectordb"
-branchName = "main"
+name = "embeddings"
+inRepoPath = "./data"
+branchName = "dev"
 sourceBranch = "main"
+commitHash = "b6ba014d87cd8a382560c7d37964496726663e79d085a4740593457027684022"
 
 [project.dependencies]

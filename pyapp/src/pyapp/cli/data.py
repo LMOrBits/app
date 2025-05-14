@@ -10,7 +10,7 @@ def data():
 
 @cli.command()
 @click.option("--name", type=str,prompt="Name of the vector store", help="Name of the vector store")
-@click.option("--in-repo-path", type=str, prompt="Path to the vector store in the repository this will create a vectordb in that dir if there is not" , default="./data")
+@click.option("--in-repo-path", type=str, prompt="Path to the vector store in the repository this will create a vectordb and raw_data in that dir if there is not" , default="./data")
 @click.option("--branch-name", type=str, prompt="Name of the branch", default="main")
 @click.option("--source-branch", type=str, prompt="Source branch", default="main")
 def add_vectordb(name, in_repo_path, branch_name, source_branch):
@@ -20,6 +20,8 @@ def add_vectordb(name, in_repo_path, branch_name, source_branch):
     config_dir_path = Path(config_dir.parent)
     in_repo_path = Path(in_repo_path)
     (config_dir_path/in_repo_path).mkdir(parents=True, exist_ok=True)
+    (config_dir_path/in_repo_path/"vectordb").mkdir(parents=True, exist_ok=True)
+    (config_dir_path/in_repo_path/"raw_data").mkdir(parents=True, exist_ok=True)
     config["vectordb"] = vector_db.model_dump()
     write_config(config,config_dir)
     if not (config_dir_path / ".gitignore").exists():

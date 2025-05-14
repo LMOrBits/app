@@ -23,38 +23,57 @@ def get_vectordb_data_from_config_dir(config_dir:Path, config_file_name:Optional
     data = get_vectordb_data(vectordb, config_dir, force)
     return data
   
-def ingest_data(vectordb:VectorDB, main_dir:Path, commit_message:str="ingested data via pyapp"):
+
+
+def ingest_data(vectordb:VectorDB, main_dir:Path, commit_message:str="ingested data via pyapp", raw_data:bool=False):
+    if raw_data:
+        ingest_data_general(vectordb, main_dir, commit_message, "raw_data")
+    return ingest_data_general(vectordb, main_dir, commit_message, "vectordb")
+
+def ingest_data_general(vectordb:VectorDB, main_dir:Path, commit_message:str="ingested data via pyapp", prefix:str="vectordb"):
     credentials = Credentials.from_env()
     lakefs_dataset = LakeFsEmbeding( credentials=credentials,
                                 project_name=vectordb.name, 
                                 branch_name=vectordb.branchName,
                                 source_branch=vectordb.sourceBranch,
+                                prefix=prefix,
                               )
+
     # does it end with /vectordb?
     data_path = Path(main_dir / vectordb.inRepoPath)
-    if not str(data_path).endswith("/vectordb"):
-        raise ValueError("data_path must end with /vectordb")
-    else:
-        data_path = data_path.parent
+    data_path_raw_data = data_path / prefix
+
+    if not (data_path_raw_data).is_dir():
+        raise ValueError(f"{data_path_raw_data} must be a directory")
 
     commit = data_ingest_data(
     lakefs_dataset=lakefs_dataset,
     data_path=data_path,
     commit_message=commit_message,
 )
-    logger.success(f"Ingested data to {vectordb.name} from {vectordb.inRepoPath} with commit hash {commit.id} into branch {vectordb.branchName}")
+    logger.success(f"Ingested data to {vectordb.name} from {vectordb.inRepoPath}/{prefix} with commit hash {commit.id} into branch {vectordb.branchName}")
     return commit.id
+
+def get_data(vectordb:VectorDB, main_dir:Path , force:bool=False , use_commit_hash:bool=False , raw_data:bool=False):
+    if raw_data:
+        get_data_general(vectordb, main_dir, force, use_commit_hash, "raw_data")
     
-def get_vectordb_data(vectordb:VectorDB, main_dir:Path , force:bool=False , use_commit_hash:bool=False):
+    get_data_general(vectordb, main_dir, force, use_commit_hash, "vectordb")
+    
+def get_data_general(vectordb:VectorDB, main_dir:Path , force:bool=False , use_commit_hash:bool=False , prefix:str="vectordb"):
     credentials = Credentials.from_env()
     lakefs_dataset = LakeFsEmbeding( credentials=credentials,
                                 project_name=vectordb.name, 
                                 branch_name=vectordb.branchName,
                                 source_branch=vectordb.sourceBranch,
+                                prefix=prefix,
                               )
+    data_path = main_dir/vectordb.inRepoPath/prefix
+    if not data_path.is_dir():
+        data_path.mkdir(parents=True, exist_ok=True)
     args = {
         "lakefs_dataset":lakefs_dataset,
-        "data_path":Path(main_dir/vectordb.inRepoPath),
+        "data_path":data_path,
         "force":force,
     }
     if use_commit_hash:
