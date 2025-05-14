@@ -73,7 +73,7 @@ def get_data_general(vectordb:VectorDB, main_dir:Path , force:bool=False , use_c
         data_path.mkdir(parents=True, exist_ok=True)
     args = {
         "lakefs_dataset":lakefs_dataset,
-        "data_path":data_path,
+        "data_path":data_path.parent,
         "force":force,
     }
     if use_commit_hash:

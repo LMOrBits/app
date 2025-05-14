@@ -16,4 +16,4 @@ def get_vector_store(database_path: Path|str , table_name: str , embedding_model
                                   "autoload_known_extensions": "false"
                               }
 )
-    return DuckDB(connection=conn ,table_name=table_name, embedding=embedding_model)
+    return DuckDB(connection=conn ,table_name=table_name, embedding=embedding_model), conn

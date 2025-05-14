@@ -67,12 +67,7 @@ class Observability(BaseModel):
     username: Optional[str] = None
     password: Optional[str] = None
 
-class Config(BaseModel):
-    project: Project
-    ml: Optional[ML] = None
-    serve: Optional[Serve] = None
-    litellm: Optional[Litellm] = None
-    observability: Optional[Observability] = None
+
 
 
 class VectorDB(BaseModel):
@@ -82,4 +77,11 @@ class VectorDB(BaseModel):
     sourceBranch: str
     commitHash: Optional[str] = None
 
-    
+
+class Config(BaseModel):
+    project: Project
+    ml: Optional[ML] = None
+    serve: Optional[Serve] = None
+    litellm: Optional[Litellm] = None
+    observability: Optional[Observability] = None
+    vectordb: Optional[VectorDB] = None
