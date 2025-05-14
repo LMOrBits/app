@@ -35,7 +35,7 @@ def run_latest(latest:bool):
         
 @cli.command()
 def add_observe():
-    """🔍 Run the observability instance for the project."""
+    """🔍 add the observability instance for the project."""
     click.echo("Adding a new observability to the project...")
     config,config_dir = read_config()
     observability = Observability()
