@@ -68,5 +68,5 @@ python_functions = "test_*"
 [tool.uv.sources]
 taskpy = { git = "https://github.com/Parsa-Mir/taskpy.git" }
 pyapp = { path = "src/pyapp" }
-serve = { path = "../serve", editable = true }
 data = { git = "https://github.com/Parsa-Mir/data.git" }
+serve = { git = "https://github.com/Parsa-Mir/serve.git" }
