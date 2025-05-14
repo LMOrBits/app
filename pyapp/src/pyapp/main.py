@@ -2,13 +2,13 @@ from functools import partial
 from pathlib import Path
 import click
 
-from pyapp.cli.schemas import Project, ML, Observability, Config, Embeddings , VectorDB
+from pyapp.cli.schemas import Project, ML, Observability, Config, Embeddings , VectorDB, TestData
 from dotenv import load_dotenv
 
 from typing import  Optional
 from pyapp.cli.utils import read_config,write_config
-from pyapp.cli.schemas import PyappDependency
-from pyapp.vectordb.data import ingest_data , get_data
+
+from pyapp.vectordb.data import ingest_data , get_data , get_data_general, ingest_data_general
 
 def trim_path(path:str):
     if path.startswith("./"):
@@ -180,6 +180,25 @@ class Pyapp:
                 get_data(vectordb,main_dir=config_dir.parent,force=force,raw_data=raw_data)
         else:
             raise ValueError("No vector store found")
+    
+    def get_test_data(self, use_commit_hash:bool=False , force:bool=False ):
+        config,config_dir = self.read_config() 
+        if "test_data" in config:
+            test_data = TestData(**config["test_data"])
+            if use_commit_hash:
+                get_data_general(test_data,main_dir=config_dir.parent,use_commit_hash=use_commit_hash,force=force,prefix="test_data")
+            else:
+                get_data_general(test_data,main_dir=config_dir.parent,force=force,prefix="test_data")
+        else:
+            raise ValueError("No test data found")
+    
+    def ingest_test_data(self):
+        config,config_dir = self.read_config() 
+        if "test_data" in config:
+            test_data = TestData(**config["test_data"])
+            ingest_data_general(test_data,config_dir.parent , prefix="test_data")
+        else:
+            raise ValueError("No test data found")
 
 
         

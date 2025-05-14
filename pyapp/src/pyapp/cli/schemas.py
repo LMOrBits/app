@@ -77,6 +77,12 @@ class VectorDB(BaseModel):
     sourceBranch: str
     commitHash: Optional[str] = None
 
+class TestData(BaseModel):
+    name: str
+    inRepoPath: str
+    branchName: str
+    sourceBranch: str
+    commitHash: Optional[str] = None
 
 class Config(BaseModel):
     project: Project
@@ -85,3 +91,4 @@ class Config(BaseModel):
     litellm: Optional[Litellm] = None
     observability: Optional[Observability] = None
     vectordb: Optional[VectorDB] = None
+    test_data: Optional[TestData] = None

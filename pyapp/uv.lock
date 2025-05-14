@@ -1,5 +1,4 @@
 version = 1
-revision = 1
 requires-python = ">=3.12"
 resolution-markers = [
     "python_full_version >= '3.13' and sys_platform != 'win32'",
@@ -372,7 +371,7 @@ wheels = [
 [[package]]
 name = "data"
 version = "0.1.0"
-source = { git = "https://github.com/Parsa-Mir/data.git#55135dec01abdddccaa16f185fe004901801ec9b" }
+source = { git = "https://github.com/Parsa-Mir/data.git#87cb4d65b07b63e5dc1c7064c441b574bcd6e93a" }
 dependencies = [
     { name = "loguru" },
     { name = "python-dotenv" },
@@ -2410,7 +2409,6 @@ requires-dist = [
     { name = "taskpy", git = "https://github.com/Parsa-Mir/taskpy.git" },
     { name = "toml", specifier = ">=0.10.2" },
 ]
-provides-extras = ["simple", "local-langchain"]
 
 [package.metadata.requires-dev]
 dev = [
