@@ -2,7 +2,8 @@ from pathlib import Path
 import click
 from pyapp.main import Pyapp
 from .groups import cli
-from pyapp.cli.schemas import PyappDependency, ML
+from pyapp.cli.schemas import PyappDependency, ML, Observability
+from pyapp.cli.utils import read_config,write_config
 import toml
 
 
@@ -35,7 +36,11 @@ def run_latest(latest:bool):
 @cli.command()
 def add_observe():
     """Add a new observability to the project."""
-    pyapp_instance.add_observe()
+    click.echo("Adding a new observability to the project...")
+    config,config_dir = read_config()
+    observability = Observability()
+    config["observability"] = observability.model_dump()
+    write_config(config,config_dir)
     
 
 @cli.command()
@@ -65,7 +70,7 @@ def pull_data(use_commit_hash:str, force:str, raw_data:str):
     use_commit_hash = use_commit_hash.lower() == "y"
     force = force.lower() == "y"
     raw_data = raw_data.lower() == "y"
-    pyapp_instance.download_from_vetordb(use_commit_hash=use_commit_hash,force=force,raw_data=raw_data)
+    pyapp_instance.download_from_vetordb(use_commit_hash=use_commit_hash,force=force)
 
 
 @cli.command()
