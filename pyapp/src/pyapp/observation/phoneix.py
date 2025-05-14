@@ -131,7 +131,7 @@ def async_generator_traced_agent(
                 ctx = span.get_span_context()
                 trace_id_hex = format(ctx.trace_id, "032x")
                 st_big = base64.b64encode(f"Span:{ctx.index(0)}".encode("utf-8")).decode("utf-8")
-                trace_url = f"{ph_instrumentor.project_url}/traces/{trace_id_hex}?selectedSpanNodeId={st_big}"
+                trace_url = f"{PhoenixLangChainInstrumentor.get_project_url()}/traces/{trace_id_hex}?selectedSpanNodeId={st_big}"
 
                 span.set_attribute(SpanAttributes.SESSION_ID, session_id)
                 last_msg = messages[-1].get("content")
