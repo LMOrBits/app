@@ -39,6 +39,7 @@ class Pyapp:
         config["project"] = project.model_dump()
         write_config(config,config_dir)
         Path(config_dir.parent / "appdeps.env").touch(exist_ok=True)
+        Path(config_dir.parent / "pyapp.yaml").touch(exist_ok=True)
     
     def run(self, force:bool=False):
         if self.dependencies:
