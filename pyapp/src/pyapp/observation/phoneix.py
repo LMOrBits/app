@@ -5,8 +5,7 @@ from opentelemetry import trace # wherever your context manager lives
 from functools import wraps
 from pyapp.log.log_config import get_logger
 import base64
-from langchain_core.messages import AnyMessage
-
+from typing import Sequence , Any , TypedDict
 logger = get_logger()
 
 import base64
@@ -19,13 +18,20 @@ observation = PhoenixObservation()
 logger.info("Starting Phoenix observation")
 observation.start()
 
-def get_message_content(messages:list[dict]|list[AnyMessage]):
-    if isinstance(messages[0], dict):
-        return messages[-1].get("content")
-    elif isinstance(messages[0], AnyMessage):
-        return messages[-1].content
+from typing import TypedDict
+
+class AnyMessage(TypedDict):
+    content: str
+
+def get_message_content(messages: Any):
+    last_message = messages[-1]
+    if isinstance(last_message, dict):
+        return last_message.get("content","")
+    elif isinstance(last_message, str):
+        return last_message
     else:
-        raise ValueError("Invalid messages type")
+        last_message = last_message.content
+        return last_message
 
 def traced_agent(
     name: str,
