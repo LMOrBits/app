@@ -5,6 +5,8 @@ from opentelemetry import trace # wherever your context manager lives
 from functools import wraps
 from pyapp.log.log_config import get_logger
 import base64
+from langchain_core.messages import AnyMessage
+
 logger = get_logger()
 
 import base64
@@ -16,6 +18,14 @@ ph_instrumentor = PhoenixLangChainInstrumentor()
 observation = PhoenixObservation()
 logger.info("Starting Phoenix observation")
 observation.start()
+
+def get_message_content(messages:list[dict]|list[AnyMessage]):
+    if isinstance(messages[0], dict):
+        return messages[-1].get("content")
+    elif isinstance(messages[0], AnyMessage):
+        return messages[-1].content
+    else:
+        raise ValueError("Invalid messages type")
 
 def traced_agent(
     name: str,
@@ -29,6 +39,8 @@ def traced_agent(
     """
 
     tracer = trace.get_tracer(tracer_name)
+    
+    
 
     def decorator(fn):
         is_async = inspect.iscoroutinefunction(fn)
@@ -54,7 +66,7 @@ def traced_agent(
                     trace_url = f"{PhoenixLangChainInstrumentor.get_project_url()}/traces/{trace_id_hex}?selectedSpanNodeId={st_big}"
 
                     span.set_attribute(SpanAttributes.SESSION_ID, session_id)
-                    last_msg = messages[-1].get("content")
+                    last_msg = get_message_content(messages)
                     span.set_attribute(SpanAttributes.INPUT_VALUE, last_msg)
 
                     # invoke under session if desired
@@ -81,7 +93,7 @@ def traced_agent(
                     trace_url = f"{PhoenixLangChainInstrumentor.get_project_url()}/traces/{trace_id_hex}?selectedSpanNodeId={st_big}"
 
                     span.set_attribute(SpanAttributes.SESSION_ID, session_id)
-                    last_msg = messages[-1].get("content")
+                    last_msg = get_message_content(messages)
                     span.set_attribute(SpanAttributes.INPUT_VALUE, last_msg)
 
                     # invoke under session if desired
@@ -134,7 +146,7 @@ def async_generator_traced_agent(
                 trace_url = f"{PhoenixLangChainInstrumentor.get_project_url()}/traces/{trace_id_hex}?selectedSpanNodeId={st_big}"
 
                 span.set_attribute(SpanAttributes.SESSION_ID, session_id)
-                last_msg = messages[-1].get("content")
+                last_msg = get_message_content(messages)
                 span.set_attribute(SpanAttributes.INPUT_VALUE, last_msg)
 
                 # invoke under session if desired
