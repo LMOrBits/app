@@ -9,7 +9,8 @@ from typing import  Optional
 from pyapp.cli.utils import read_config,write_config
 
 from pyapp.vectordb.data import ingest_data , get_data , get_data_general, ingest_data_general
-
+from pyapp.log.log_config import get_logger
+logger = get_logger()
 def trim_path(path:str):
     if path.startswith("./"):
         return path[2:]
@@ -159,6 +160,8 @@ class Pyapp:
                 manager.delete_all_serve()
     
     def ingest_to_vectordb(self , raw_data:bool=False):
+        for dependency in self.dependencies:
+            dependency.ingest_to_vectordb(raw_data=raw_data)
         """Ingest the data to the vector store."""
         config,config_dir = self.read_config() 
         if "vectordb" in config:
@@ -169,9 +172,11 @@ class Pyapp:
                 config["vectordb"] = vectordb.model_dump()
                 write_config(config,config_dir)
         else: 
-            raise ValueError("No vector store found")
+            logger.warning(f"No vector store found in {config_dir}")
     
     def download_from_vetordb(self,use_commit_hash:bool=False , force:bool=False , raw_data:bool=False):
+        for dependency in self.dependencies:
+            dependency.download_from_vetordb(use_commit_hash=use_commit_hash,force=force,raw_data=raw_data)
         config,config_dir = self.read_config() 
         if "vectordb" in config:
             vectordb = VectorDB(**config["vectordb"])
@@ -180,9 +185,11 @@ class Pyapp:
             else:
                 get_data(vectordb,main_dir=config_dir.parent,force=force,raw_data=raw_data)
         else:
-            raise ValueError("No vector store found")
+            logger.warning(f"No vector store found in {config_dir}")
     
     def get_test_data(self, use_commit_hash:bool=False , force:bool=False ):
+        for dependency in self.dependencies:
+            dependency.get_test_data(use_commit_hash=use_commit_hash,force=force)
         config,config_dir = self.read_config() 
         if "test_data" in config:
             test_data = TestData(**config["test_data"])
@@ -191,15 +198,17 @@ class Pyapp:
             else:
                 get_data_general(test_data,main_dir=config_dir.parent,force=force,prefix="test_data")
         else:
-            raise ValueError("No test data found")
+            logger.warning(f"No test data found in {config_dir}")
     
     def ingest_test_data(self):
+        for dependency in self.dependencies:
+            dependency.ingest_test_data()
         config,config_dir = self.read_config() 
         if "test_data" in config:
             test_data = TestData(**config["test_data"])
             ingest_data_general(test_data,config_dir.parent , prefix="test_data")
         else:
-            raise ValueError("No test data found")
+            logger.warning(f"No test data found in {config_dir}")
 
 
         
