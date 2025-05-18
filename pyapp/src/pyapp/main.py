@@ -23,20 +23,23 @@ class Pyapp:
         self.config_path = config_path if config_path else Path.cwd()
         self.read_config = partial(read_config, config_path=config_path)
         config,config_dir = self.read_config(give_error=False)
-        load_dotenv(config_dir.parent / "appdeps.env", override=True)
+        self.load_env(config_path)
         self.dependencies = []
         if config:
             if config.get("project",{}).get("dependencies",None):
                 self.dependencies = [Pyapp(config_path=Path(self.config_path / dependency["directory"]).resolve().absolute()) for dependency in config["project"]["dependencies"].values()]
             self.name = config.get("project",{}).get("name",None)
-            
-        self.load_env()
+        self.load_env(config_dir)
 
-    def load_env(self):
-        config,config_dir = self.read_config()
-        appdeps_env = find_config(config_dir.parent, "appdeps.env")
-        if appdeps_env:
-            load_dotenv(appdeps_env, override=True)
+    def load_env(self,config_dir:Path):
+        try:
+            appdeps_env = find_config(config_dir.parent, "appdeps.env")
+            if appdeps_env:
+                logger.info(f"Loading env file: {appdeps_env}")
+                load_dotenv(appdeps_env, override=True)
+        except Exception as e:
+            # logger.warning(f"Error loading env file: {e}")
+            pass
 
     def init(self,name: str, version: str, description: str, author: str):
         """Initialize a new SLMOPS project."""
@@ -127,8 +130,6 @@ class Pyapp:
         from pyapp.model_connection.lm.langchain.litellm import get_lm_model_manager
         click.echo(f"Stopping project dependencies {self.name} in {self.config_path}...")
         config,config_dir = self.read_config()
-        env_path = config_dir.parent / "appdeps.env"
-        load_dotenv(env_path, override=True)
         conf = Config(**config)
         if "ml" in config:
             from pyapp.serve_integration import get_mlflow_embeddings_manager, get_mlflow_lm_manager
@@ -152,8 +153,6 @@ class Pyapp:
           for dependency in self.dependencies:
             dependency.remove()
         config,config_dir = self.read_config()
-        env_path = config_dir.parent / "appdeps.env"
-        load_dotenv(env_path, override=True)
         conf = Config(**config)
         if "ml" in config:
             from pyapp.serve_integration import get_mlflow_embeddings_manager, get_mlflow_lm_manager
