@@ -15,8 +15,8 @@ from functools import wraps
 
 ph_instrumentor = PhoenixLangChainInstrumentor()
 observation = PhoenixObservation()
-logger.info("Starting Phoenix observation")
-observation.start()
+logger.info("please make sure you have started the observation service via ; `pyapp run`")
+# observation.start()
 
 from typing import TypedDict
 
