@@ -30,7 +30,14 @@ class Pyapp:
                 self.dependencies = [Pyapp(config_path=Path(self.config_path / dependency["directory"]).resolve().absolute()) for dependency in config["project"]["dependencies"].values()]
             self.name = config.get("project",{}).get("name",None)
             
-        
+        self.load_env()
+
+    def load_env(self):
+        config,config_dir = self.read_config()
+        appdeps_env = find_config(config_dir.parent, "appdeps.env")
+        if appdeps_env:
+            load_dotenv(appdeps_env, override=True)
+
     def init(self,name: str, version: str, description: str, author: str):
         """Initialize a new SLMOPS project."""
         config,config_dir = self.read_config(give_error=False)
@@ -50,9 +57,6 @@ class Pyapp:
         """Install the project dependencies."""
         click.echo(f"Installing project dependencies {self.name} in {self.config_path}...")
         config,config_dir = self.read_config()
-        appdeps_env = find_config(config_dir.parent, "appdeps.env")
-        if appdeps_env:
-            load_dotenv(appdeps_env, override=True)
         # project = Project(**config["project"])
         if "observability" in config:
             from pyapp.observation.phoneix import observation
