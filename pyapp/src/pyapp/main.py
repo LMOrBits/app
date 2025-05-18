@@ -8,6 +8,7 @@ from dotenv import load_dotenv
 from typing import  Optional
 from pyapp.cli.utils import read_config,write_config
 
+from pyapp.config import find_config
 from pyapp.vectordb.data import ingest_data , get_data , get_data_general, ingest_data_general
 from pyapp.log.log_config import get_logger
 logger = get_logger()
@@ -49,8 +50,9 @@ class Pyapp:
         """Install the project dependencies."""
         click.echo(f"Installing project dependencies {self.name} in {self.config_path}...")
         config,config_dir = self.read_config()
-        env_path = config_dir.parent / "appdeps.env"
-        load_dotenv(env_path, override=True)
+        appdeps_env = find_config(config_dir.parent, "appdeps.env")
+        if appdeps_env:
+            load_dotenv(appdeps_env, override=True)
         # project = Project(**config["project"])
         if "observability" in config:
             from pyapp.observation.phoneix import observation

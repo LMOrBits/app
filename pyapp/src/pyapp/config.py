@@ -1,3 +1,4 @@
+from typing import Optional
 from pathlib import Path
 from pyapp.cli.schemas import Config
 import toml
@@ -20,6 +21,10 @@ def find_config(current_file: str, config_name: str = "appdeps.toml"):
         if parent == root:
             break
     raise FileNotFoundError(f"Config file not found: {config_name}")
+
+
+
+
 
 def get_data_dir(current_file: str):
     config_file = find_config(current_file)
