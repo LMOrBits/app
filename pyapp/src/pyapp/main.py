@@ -56,7 +56,7 @@ class Pyapp:
     def run(self, force:bool=False, download_data:bool=True ):
         if self.dependencies:
             for dependency in self.dependencies:
-                dependency.run(force=True)
+                dependency.run(force=force, download_data=download_data)
         """Install the project dependencies."""
         click.echo(f"Installing project dependencies {self.name} in {self.config_path}...")
         config,config_dir = self.read_config()
