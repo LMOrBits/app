@@ -53,7 +53,7 @@ class Pyapp:
         Path(config_dir.parent / "appdeps.env").touch(exist_ok=True)
         Path(config_dir.parent / "pyapp.yaml").touch(exist_ok=True)
     
-    def run(self, force:bool=False):
+    def run(self, force:bool=False, download_data:bool=True ):
         if self.dependencies:
             for dependency in self.dependencies:
                 dependency.run(force=True)
@@ -89,9 +89,9 @@ class Pyapp:
                         manager.add_serve(model_name=model.model_name, alias=model.alias, port=port)
                     if ml.type == "embeddings":
                         manager.add_serve(model_name=model.model_name, alias=model.alias)
-        if force:
-            if "vectordb" in config:
-                self.download_from_vetordb(raw_data=False, force=force,use_commit_hash=False)
+        
+        if "vectordb" in config and download_data:
+            self.download_from_vetordb(raw_data=False, force=force,use_commit_hash=False)
 
     def run_latest(self):
         """Install the project dependencies."""

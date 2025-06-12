@@ -21,9 +21,11 @@ def init(name: str, version: str, description: str, author: str):
     pyapp_instance.init(name, version, description, author)
 
 @cli.command()
-def run():
+@click.option('--download-data', help='Download data', default="y", type=str)
+def run(download_data:str):
     """▶️ Run all project dependencies including observability, models, data, serve, and subprojects."""
-    pyapp_instance.run()
+    download_data = download_data.lower() == "y"
+    pyapp_instance.run(download_data=download_data)
     
     
 
