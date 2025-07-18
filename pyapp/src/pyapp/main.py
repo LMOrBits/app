@@ -83,7 +83,7 @@ class Pyapp:
                 if status: 
                     click.echo(f"new version of the model `{model.model_name}` with alias `{model.alias}` is available. would you like to update to the latest version?")
                     #   cli(["run-latest"], standalone_mode=False)
-                    self.run_latest(True)
+                    self.run_latest()
                 elif manager is not None:
                     if ml.type == "llm":
                         manager.add_serve(model_name=model.model_name, alias=model.alias, port=port)
