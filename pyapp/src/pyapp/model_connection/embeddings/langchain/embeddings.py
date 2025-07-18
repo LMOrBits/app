@@ -23,7 +23,7 @@ class LiteserveEmbeddings(Embeddings):
 
     def embed_query(self, text: str) -> List[float]:
         """Embed query text."""
-        return self.embed_documents([text])
+        return self.embed_documents([text])[0]
     
 class LitellmEmbeddings(Embeddings):
     
